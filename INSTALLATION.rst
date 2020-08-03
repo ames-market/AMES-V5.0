@@ -64,17 +64,19 @@ Installation
 
 5. 	Install psst:
 
-    	After Python has been locally installed, PSST must be locally installed. PSST is available for downloading which is uploaded as part of AMES V5.0. 
+    	After Python has been locally installed, PSST must be locally installed. PSST is uploaded as part of AMES V5.0, therefore it will be downloaded along with other components of AMES V5.0. 
     
-    	After PSST has been downloaded to a local folder, it can be installed from the command line for this PSST folder in two steps; see below. 
+    	After PSST has been downloaded to a local folder, it can be installed from the command line for this local folder in two steps, as follows:  
+  
+    	Step 1.  Navigate to the psst folder using:
+		
+		 cd C:/YourlocationtoAMES-V5.0/psst
+		
+    	Step 2: Install PSST by means of the following pip install command:
+		
+		pip install -e .
     
-    	First, navigate to the psst folder (Step 1). 
-    	Second, use a pip install command to install PSST (Step 2).
-
-    	Step 1: cd C:/YourlocationtoAMES-V5.0/psst
-    	Step 2: pip install -e .
-    
-    	Remarks: Note the pip install command “pip install -e .” has a period “.” at the end. Also, PSST has its own dependencies, which are installed when the pip install command is given.
+    	Note:  The pip install command “pip install -e .” in Step 2 has a period “.” at the end. Also, PSST has its own dependencies, which are installed when the pip install command is given.
     
    
 6. 	Solver
