@@ -1,0 +1,823 @@
+INFO: fatal set by FNCS_FATAL env var
+INFO: fncs::die() will not call exit()
+DEBUG: broker = tcp://localhost:5570
+DEBUG: time_delta string = 1s
+DEBUG4: fncs::parse_time(string)
+DEBUG4: fncs::time_unit_to_multiplier(string)
+DEBUG: time_delta = 1000000000
+DEBUG4: fncs::time_unit_to_multiplier(string)
+DEBUG: time_delta_multiplier = 1000000000
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE1_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE2_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE3_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE4_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE5_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE6_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE7_H9'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H0'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H1'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H10'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H11'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H12'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H13'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H14'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H15'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H16'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H17'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H18'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H19'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H2'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H20'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H21'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H22'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H23'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H3'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H4'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H5'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H6'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H7'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H8'='1'
+DEBUG2: initializing cache for 'loadforecastDAM_LSE8_H9'='1'
+DEBUG2: initializing cache for 'loadforecastRTM_1'='1'
+DEBUG2: initializing cache for 'loadforecastRTM_2'='1'
+DEBUG2: initializing cache for 'loadforecastRTM_3'=''
+DEBUG2: initializing cache for 'loadforecastRTM_4'='1'
+DEBUG2: initializing cache for 'loadforecastRTM_5'='1'
+DEBUG2: initializing cache for 'loadforecastRTM_6'=''
+DEBUG2: initializing cache for 'loadforecastRTM_7'='1'
+DEBUG2: initializing cache for 'loadforecastRTM_8'='1'
+DEBUG2: -- sending configuration as follows --
+name: ames
+broker: tcp://localhost:5570
+time_delta: 1s
+fatal: no
+values:
+  loadforecastDAM_LSE1_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H0
+    default: 1
+  loadforecastDAM_LSE1_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H1
+    default: 1
+  loadforecastDAM_LSE1_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H10
+    default: 1
+  loadforecastDAM_LSE1_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H11
+    default: 1
+  loadforecastDAM_LSE1_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H12
+    default: 1
+  loadforecastDAM_LSE1_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H13
+    default: 1
+  loadforecastDAM_LSE1_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H14
+    default: 1
+  loadforecastDAM_LSE1_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H15
+    default: 1
+  loadforecastDAM_LSE1_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H16
+    default: 1
+  loadforecastDAM_LSE1_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H17
+    default: 1
+  loadforecastDAM_LSE1_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H18
+    default: 1
+  loadforecastDAM_LSE1_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H19
+    default: 1
+  loadforecastDAM_LSE1_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H2
+    default: 1
+  loadforecastDAM_LSE1_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H20
+    default: 1
+  loadforecastDAM_LSE1_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H21
+    default: 1
+  loadforecastDAM_LSE1_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H22
+    default: 1
+  loadforecastDAM_LSE1_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H23
+    default: 1
+  loadforecastDAM_LSE1_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H3
+    default: 1
+  loadforecastDAM_LSE1_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H4
+    default: 1
+  loadforecastDAM_LSE1_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H5
+    default: 1
+  loadforecastDAM_LSE1_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H6
+    default: 1
+  loadforecastDAM_LSE1_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H7
+    default: 1
+  loadforecastDAM_LSE1_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H8
+    default: 1
+  loadforecastDAM_LSE1_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE1_H9
+    default: 1
+  loadforecastDAM_LSE2_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H0
+    default: 1
+  loadforecastDAM_LSE2_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H1
+    default: 1
+  loadforecastDAM_LSE2_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H10
+    default: 1
+  loadforecastDAM_LSE2_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H11
+    default: 1
+  loadforecastDAM_LSE2_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H12
+    default: 1
+  loadforecastDAM_LSE2_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H13
+    default: 1
+  loadforecastDAM_LSE2_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H14
+    default: 1
+  loadforecastDAM_LSE2_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H15
+    default: 1
+  loadforecastDAM_LSE2_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H16
+    default: 1
+  loadforecastDAM_LSE2_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H17
+    default: 1
+  loadforecastDAM_LSE2_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H18
+    default: 1
+  loadforecastDAM_LSE2_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H19
+    default: 1
+  loadforecastDAM_LSE2_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H2
+    default: 1
+  loadforecastDAM_LSE2_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H20
+    default: 1
+  loadforecastDAM_LSE2_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H21
+    default: 1
+  loadforecastDAM_LSE2_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H22
+    default: 1
+  loadforecastDAM_LSE2_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H23
+    default: 1
+  loadforecastDAM_LSE2_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H3
+    default: 1
+  loadforecastDAM_LSE2_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H4
+    default: 1
+  loadforecastDAM_LSE2_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H5
+    default: 1
+  loadforecastDAM_LSE2_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H6
+    default: 1
+  loadforecastDAM_LSE2_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H7
+    default: 1
+  loadforecastDAM_LSE2_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H8
+    default: 1
+  loadforecastDAM_LSE2_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE2_H9
+    default: 1
+  loadforecastDAM_LSE3_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H0
+    default: 1
+  loadforecastDAM_LSE3_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H1
+    default: 1
+  loadforecastDAM_LSE3_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H10
+    default: 1
+  loadforecastDAM_LSE3_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H11
+    default: 1
+  loadforecastDAM_LSE3_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H12
+    default: 1
+  loadforecastDAM_LSE3_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H13
+    default: 1
+  loadforecastDAM_LSE3_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H14
+    default: 1
+  loadforecastDAM_LSE3_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H15
+    default: 1
+  loadforecastDAM_LSE3_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H16
+    default: 1
+  loadforecastDAM_LSE3_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H17
+    default: 1
+  loadforecastDAM_LSE3_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H18
+    default: 1
+  loadforecastDAM_LSE3_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H19
+    default: 1
+  loadforecastDAM_LSE3_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H2
+    default: 1
+  loadforecastDAM_LSE3_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H20
+    default: 1
+  loadforecastDAM_LSE3_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H21
+    default: 1
+  loadforecastDAM_LSE3_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H22
+    default: 1
+  loadforecastDAM_LSE3_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H23
+    default: 1
+  loadforecastDAM_LSE3_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H3
+    default: 1
+  loadforecastDAM_LSE3_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H4
+    default: 1
+  loadforecastDAM_LSE3_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H5
+    default: 1
+  loadforecastDAM_LSE3_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H6
+    default: 1
+  loadforecastDAM_LSE3_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H7
+    default: 1
+  loadforecastDAM_LSE3_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H8
+    default: 1
+  loadforecastDAM_LSE3_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE3_H9
+    default: 1
+  loadforecastDAM_LSE4_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H0
+    default: 1
+  loadforecastDAM_LSE4_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H1
+    default: 1
+  loadforecastDAM_LSE4_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H10
+    default: 1
+  loadforecastDAM_LSE4_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H11
+    default: 1
+  loadforecastDAM_LSE4_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H12
+    default: 1
+  loadforecastDAM_LSE4_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H13
+    default: 1
+  loadforecastDAM_LSE4_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H14
+    default: 1
+  loadforecastDAM_LSE4_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H15
+    default: 1
+  loadforecastDAM_LSE4_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H16
+    default: 1
+  loadforecastDAM_LSE4_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H17
+    default: 1
+  loadforecastDAM_LSE4_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H18
+    default: 1
+  loadforecastDAM_LSE4_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H19
+    default: 1
+  loadforecastDAM_LSE4_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H2
+    default: 1
+  loadforecastDAM_LSE4_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H20
+    default: 1
+  loadforecastDAM_LSE4_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H21
+    default: 1
+  loadforecastDAM_LSE4_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H22
+    default: 1
+  loadforecastDAM_LSE4_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H23
+    default: 1
+  loadforecastDAM_LSE4_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H3
+    default: 1
+  loadforecastDAM_LSE4_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H4
+    default: 1
+  loadforecastDAM_LSE4_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H5
+    default: 1
+  loadforecastDAM_LSE4_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H6
+    default: 1
+  loadforecastDAM_LSE4_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H7
+    default: 1
+  loadforecastDAM_LSE4_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H8
+    default: 1
+  loadforecastDAM_LSE4_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE4_H9
+    default: 1
+  loadforecastDAM_LSE5_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H0
+    default: 1
+  loadforecastDAM_LSE5_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H1
+    default: 1
+  loadforecastDAM_LSE5_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H10
+    default: 1
+  loadforecastDAM_LSE5_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H11
+    default: 1
+  loadforecastDAM_LSE5_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H12
+    default: 1
+  loadforecastDAM_LSE5_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H13
+    default: 1
+  loadforecastDAM_LSE5_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H14
+    default: 1
+  loadforecastDAM_LSE5_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H15
+    default: 1
+  loadforecastDAM_LSE5_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H16
+    default: 1
+  loadforecastDAM_LSE5_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H17
+    default: 1
+  loadforecastDAM_LSE5_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H18
+    default: 1
+  loadforecastDAM_LSE5_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H19
+    default: 1
+  loadforecastDAM_LSE5_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H2
+    default: 1
+  loadforecastDAM_LSE5_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H20
+    default: 1
+  loadforecastDAM_LSE5_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H21
+    default: 1
+  loadforecastDAM_LSE5_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H22
+    default: 1
+  loadforecastDAM_LSE5_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H23
+    default: 1
+  loadforecastDAM_LSE5_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H3
+    default: 1
+  loadforecastDAM_LSE5_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H4
+    default: 1
+  loadforecastDAM_LSE5_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H5
+    default: 1
+  loadforecastDAM_LSE5_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H6
+    default: 1
+  loadforecastDAM_LSE5_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H7
+    default: 1
+  loadforecastDAM_LSE5_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H8
+    default: 1
+  loadforecastDAM_LSE5_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE5_H9
+    default: 1
+  loadforecastDAM_LSE6_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H0
+    default: 1
+  loadforecastDAM_LSE6_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H1
+    default: 1
+  loadforecastDAM_LSE6_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H10
+    default: 1
+  loadforecastDAM_LSE6_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H11
+    default: 1
+  loadforecastDAM_LSE6_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H12
+    default: 1
+  loadforecastDAM_LSE6_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H13
+    default: 1
+  loadforecastDAM_LSE6_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H14
+    default: 1
+  loadforecastDAM_LSE6_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H15
+    default: 1
+  loadforecastDAM_LSE6_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H16
+    default: 1
+  loadforecastDAM_LSE6_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H17
+    default: 1
+  loadforecastDAM_LSE6_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H18
+    default: 1
+  loadforecastDAM_LSE6_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H19
+    default: 1
+  loadforecastDAM_LSE6_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H2
+    default: 1
+  loadforecastDAM_LSE6_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H20
+    default: 1
+  loadforecastDAM_LSE6_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H21
+    default: 1
+  loadforecastDAM_LSE6_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H22
+    default: 1
+  loadforecastDAM_LSE6_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H23
+    default: 1
+  loadforecastDAM_LSE6_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H3
+    default: 1
+  loadforecastDAM_LSE6_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H4
+    default: 1
+  loadforecastDAM_LSE6_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H5
+    default: 1
+  loadforecastDAM_LSE6_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H6
+    default: 1
+  loadforecastDAM_LSE6_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H7
+    default: 1
+  loadforecastDAM_LSE6_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H8
+    default: 1
+  loadforecastDAM_LSE6_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE6_H9
+    default: 1
+  loadforecastDAM_LSE7_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H0
+    default: 1
+  loadforecastDAM_LSE7_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H1
+    default: 1
+  loadforecastDAM_LSE7_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H10
+    default: 1
+  loadforecastDAM_LSE7_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H11
+    default: 1
+  loadforecastDAM_LSE7_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H12
+    default: 1
+  loadforecastDAM_LSE7_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H13
+    default: 1
+  loadforecastDAM_LSE7_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H14
+    default: 1
+  loadforecastDAM_LSE7_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H15
+    default: 1
+  loadforecastDAM_LSE7_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H16
+    default: 1
+  loadforecastDAM_LSE7_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H17
+    default: 1
+  loadforecastDAM_LSE7_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H18
+    default: 1
+  loadforecastDAM_LSE7_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H19
+    default: 1
+  loadforecastDAM_LSE7_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H2
+    default: 1
+  loadforecastDAM_LSE7_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H20
+    default: 1
+  loadforecastDAM_LSE7_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H21
+    default: 1
+  loadforecastDAM_LSE7_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H22
+    default: 1
+  loadforecastDAM_LSE7_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H23
+    default: 1
+  loadforecastDAM_LSE7_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H3
+    default: 1
+  loadforecastDAM_LSE7_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H4
+    default: 1
+  loadforecastDAM_LSE7_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H5
+    default: 1
+  loadforecastDAM_LSE7_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H6
+    default: 1
+  loadforecastDAM_LSE7_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H7
+    default: 1
+  loadforecastDAM_LSE7_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H8
+    default: 1
+  loadforecastDAM_LSE7_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE7_H9
+    default: 1
+  loadforecastDAM_LSE8_H0:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H0
+    default: 1
+  loadforecastDAM_LSE8_H1:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H1
+    default: 1
+  loadforecastDAM_LSE8_H10:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H10
+    default: 1
+  loadforecastDAM_LSE8_H11:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H11
+    default: 1
+  loadforecastDAM_LSE8_H12:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H12
+    default: 1
+  loadforecastDAM_LSE8_H13:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H13
+    default: 1
+  loadforecastDAM_LSE8_H14:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H14
+    default: 1
+  loadforecastDAM_LSE8_H15:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H15
+    default: 1
+  loadforecastDAM_LSE8_H16:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H16
+    default: 1
+  loadforecastDAM_LSE8_H17:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H17
+    default: 1
+  loadforecastDAM_LSE8_H18:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H18
+    default: 1
+  loadforecastDAM_LSE8_H19:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H19
+    default: 1
+  loadforecastDAM_LSE8_H2:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H2
+    default: 1
+  loadforecastDAM_LSE8_H20:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H20
+    default: 1
+  loadforecastDAM_LSE8_H21:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H21
+    default: 1
+  loadforecastDAM_LSE8_H22:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H22
+    default: 1
+  loadforecastDAM_LSE8_H23:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H23
+    default: 1
+  loadforecastDAM_LSE8_H3:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H3
+    default: 1
+  loadforecastDAM_LSE8_H4:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H4
+    default: 1
+  loadforecastDAM_LSE8_H5:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H5
+    default: 1
+  loadforecastDAM_LSE8_H6:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H6
+    default: 1
+  loadforecastDAM_LSE8_H7:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H7
+    default: 1
+  loadforecastDAM_LSE8_H8:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H8
+    default: 1
+  loadforecastDAM_LSE8_H9:
+    topic: NetLoadForecastDAM/loadforecastDAM_LSE8_H9
+    default: 1
+  loadforecastRTM_1:
+    topic: NetLoadForecastRTM/loadforecastRTM_1
+    default: 1
+  loadforecastRTM_2:
+    topic: NetLoadForecastRTM/loadforecastRTM_2
+    default: 1
+  loadforecastRTM_3:
+    topic: NetLoadForecastRTM/loadforecastRTM_3
+  loadforecastRTM_4:
+    topic: NetLoadForecastRTM/loadforecastRTM_4
+    default: 1
+  loadforecastRTM_5:
+    topic: NetLoadForecastRTM/loadforecastRTM_5
+    default: 1
+  loadforecastRTM_6:
+    topic: NetLoadForecastRTM/loadforecastRTM_6
+  loadforecastRTM_7:
+    topic: NetLoadForecastRTM/loadforecastRTM_7
+    default: 1
+  loadforecastRTM_8:
+    topic: NetLoadForecastRTM/loadforecastRTM_8
+    default: 1
+
+DEBUG2: sending HELLO
+DEBUG4: called zmsg_recv
+DEBUG2: received ACK
+DEBUG2: connection order ID is 3
+DEBUG2: n_sims is 4
+DEBUG2: n_keys is 0
+DEBUG2: time_peer_long is 1000000000 parsed from 1000000000
+DEBUG2: received second ACK
+AMESFrame main
