@@ -66,7 +66,7 @@ Installation
 
     	After Python has been locally installed, PSST must be locally installed. PSST has been uploaded as part of AMES V5.0.  Therefore, PSST will automatically download as part of the AMES V5.0 download.
     
-    	After PSST has been downloaded to a local folder, it can be installed from the command line for this local folder in two steps, as follows  
+    	After PSST has been downloaded to a local folder, it can be installed from the command line for this local folder in two steps, as follows:  
   
     	Step 1. Navigate to the psst folder using:
 			cd C:/YourlocationtoAMES-V5.0/psst
