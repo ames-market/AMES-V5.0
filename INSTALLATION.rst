@@ -41,18 +41,18 @@ Installation
     	Python can be installed using any of the following choices:
     
     	Choice 1: Install Python using the Anaconda Distribution, available for downloading from https://www.anaconda.com/distribution/. 
-	Check https://docs.anaconda.com/anaconda/install/windows/ for installation instructions. 
+		Check https://docs.anaconda.com/anaconda/install/windows/ for installation instructions. 
 
     	Choice 2: Install Python using the Miniconda installer following the instructions given at https://conda.io/miniconda.html. 
-	Note: Pay particular attention to how the conda package manager is used to install various required modules such as numpy. 
+		Note: Pay particular attention to how the conda package manager is used to install various required modules such as numpy. 
 
     	Choice 3: Install standard Python from https://www.python.org/. The optional ‘pip’ is needed to install modules such as numpy.
-	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following
+		Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following
 	the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
 
-	Add C:\Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python.
+	Add C:/Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python.
 	
-	Add C:\Miniconda3\Scripts and C:Miniconda3\Library\bin to use conda to install packages.
+	Add C:/Miniconda3/Scripts and C:Miniconda3/Library/bin to use conda to install packages.
 
 	Verify installation using "python --version" command prompt.  
 	
