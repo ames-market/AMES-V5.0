@@ -79,7 +79,7 @@ Installation
    
 6. 	Solver
 
-    	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
+    	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimization-studio-v1290
     
 
 After installation steps 1-6 are complete, the AMES V5.0 command line takes the form
