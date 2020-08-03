@@ -62,6 +62,10 @@ Installation
 	
 	To uninstall modules, use 'pip uninstall ModuleName' or 'conda uninstall ModuleName'.
 
+        Note: For “version” command line prompts, Python requires the use of a double hyphen “- -version” whereas Ant requires the use of a single hyphen “-version”.  For Java, either option works.
+
+
+
 5. 	Install psst.
 
     	After Python has been locally installed, PSST must be locally installed. PSST has been uploaded as part of AMES V5.0.  Therefore, PSST will automatically download as part of the AMES V5.0 download.
