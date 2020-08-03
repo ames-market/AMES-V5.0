@@ -3,23 +3,23 @@
 Installation
 ============
 
-1. Install Java from https://www.oracle.com/technetwork/java/javase/downloads/index.html
+1. 	Install Java from https://www.oracle.com/technetwork/java/javase/downloads/index.html
 
-   After Java is installed, add 'LocationToJavaDirectory/bin' ( e.g. C:\Java\jdk-13.0.2\bin) to PATH system variable.
+   	After Java is installed, add 'LocationToJavaDirectory/bin' ( e.g. C:\Java\jdk-13.0.2\bin) to PATH system variable.
    
-   As AMES V5.0 is integrated with FNCS, running AMES V5.0 requires FNCS dependencies. 
+  	As AMES V5.0 is integrated with FNCS, running AMES V5.0 requires FNCS dependencies. 
    
-   The FNCS dependencies uploaded as part of this repository need to be downloaded, and their location needs to be added to the PATH system variable. 
-   Advanced users can follow instructions from https://tesp.readthedocs.io/en/latest/ to install the PNNL TESP, with FNCS installation as a prerequisite.
+   	The FNCS dependencies uploaded as part of this repository need to be downloaded, and their location needs to be added to the PATH system variable. 
+   	Advanced users can follow instructions from https://tesp.readthedocs.io/en/latest/ to install the PNNL TESP, with FNCS installation as a prerequisite.
 
-   Add an environmental variable JAVA_HOME with the above ''LocationToJavaDirectory' (e.g. JAVA_HOME is set to C:\Java\jdk-13.0.2). This is required for running ANT.
+   	Add an environmental variable JAVA_HOME with the above ''LocationToJavaDirectory' (e.g. JAVA_HOME is set to C:\Java\jdk-13.0.2). This is required for running ANT.
 	
-   Verify java installation using "java -version" command prompt.  
+   	Verify java installation using "java -version" command prompt.  
    
 
 2.	The ANT tool is used to compile AMES V5.0. ANT must be downloaded and extracted to a local directory.
 
-    Download Apache Ant from https://ant.apache.org/
+    	Download Apache Ant from https://ant.apache.org/
 	
 	Extract the zip file into any directory.
 	
@@ -36,19 +36,19 @@ Installation
 	
 4.	Python
 
-    AMES V5.0 uses modified Power System Simulation Toolbox (PSST), based on Python (V3). Thus, Python must first be locally installed. 
+    	AMES V5.0 uses modified Power System Simulation Toolbox (PSST), based on Python (V3). Thus, Python must first be locally installed. 
     
-    Python can be installed using any of the following choices:
+    	Python can be installed using any of the following choices:
     
-    Choice 1: Install Python using the Anaconda Distribution, available for downloading from https://www.anaconda.com/distribution/. Check
+    	Choice 1: Install Python using the Anaconda Distribution, available for downloading from https://www.anaconda.com/distribution/. Check
 https://docs.anaconda.com/anaconda/install/windows/ for installation instructions. 
 
-    Choice 2: Install Python using the Miniconda installer following the instructions given at https://conda.io/miniconda.html. Pay particular attention
+    	Choice 2: Install Python using the Miniconda installer following the instructions given at https://conda.io/miniconda.html. Pay particular attention
 to how the conda package manager is used to install various required modules such as numpy. 
 
-    Choice 3: Install standard Python from https://www.python.org/. The optional ‘pip’ is needed to install modules such as numpy.
+    	Choice 3: Install standard Python from https://www.python.org/. The optional ‘pip’ is needed to install modules such as numpy.
 
-    Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
+    	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
 
 	Add C:\Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python
 	Add C:\Miniconda3\Scripts and C:Miniconda3\Library\bin to use conda to install packages
@@ -59,24 +59,24 @@ to how the conda package manager is used to install various required modules suc
 	Installing modules - use 'pip install ModuleName' or 'conda install ModuleName'
 	For uninstalling - use 'pip uninstall ModuleName' or 'conda uninstall ModuleName'
 
-5. Install psst:
+5. 	Install psst:
 
-    After Python has been locally installed, PSST must be locally installed. PSST is available for downloading which is uploaded as part of AMES V5.0. 
+    	After Python has been locally installed, PSST must be locally installed. PSST is available for downloading which is uploaded as part of AMES V5.0. 
     
-    After PSST has been downloaded to a local folder, it can be installed from the command line for this PSST folder in two steps; see below. 
+    	After PSST has been downloaded to a local folder, it can be installed from the command line for this PSST folder in two steps; see below. 
     
-    First, navigate to the psst folder (Step 1). 
-    Second, use a pip install command to install PSST (Step 2).
+    	First, navigate to the psst folder (Step 1). 
+    	Second, use a pip install command to install PSST (Step 2).
 
-    Step 1: cd C:/YourlocationtoAMES-V5.0/psst
-    Step 2: pip install -e .
+    	Step 1: cd C:/YourlocationtoAMES-V5.0/psst
+    	Step 2: pip install -e .
     
-    Remarks: Note the pip install command “pip install -e .” has a period “.” at the end. Also, PSST has its own dependencies, which are installed when the pip install command is given.
+    	Remarks: Note the pip install command “pip install -e .” has a period “.” at the end. Also, PSST has its own dependencies, which are installed when the pip install command is given.
     
    
-6. Solver
+6. 	Solver
 
-    AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
+    	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
     
 After the above installation steps are finished, AMES V5.0 can be compiled using compileAMES.bat and can be run using runAMES.bat files (both files located in TESAgents folder) from the command prompt. The path of the super directory that contains folders AMES V5.0, TESAgents need to be added to both compileAMES.bat and runAMES.bat files. 
 
