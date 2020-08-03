@@ -62,7 +62,7 @@ Installation
 	
 	To uninstall modules, use 'pip uninstall ModuleName' or 'conda uninstall ModuleName'.
 
-5. 	Install psst:
+5. 	Install psst.
 
     	After Python has been locally installed, PSST must be locally installed. PSST has been uploaded as part of AMES V5.0.  Therefore, PSST will automatically download as part of the AMES V5.0 download.
     
@@ -82,7 +82,7 @@ Installation
     	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimization-studio-v1290
     
 
-After installation steps 1-6 are complete, the AMES V5.0 command line takes the form
+After installation instructions 1-6 have been carried out, the AMES V5.0 command line takes the form:
 	C:/YourLocationForAmesV5.0/TESAgents/
  
 The batch files `compileAMES.bat’ and `runAMES.bat’ are located in the TESAgents folder.  The path of the super directory that contains the AMES V5.0 folder needs to be added to each of these batch files.
@@ -91,5 +91,5 @@ After this is done, AMES V5.0 can be compiled using the command
 	C:/YourLocationForAmesV5.0/TESAgents/compileAMES.bat
 
 AMES V5.0 can then be run using the command
-	C:/YourLocationForAmesV5.0/TESAgents/compileAMES.bat
+	C:/YourLocationForAmesV5.0/TESAgents/runAMES.bat
 
