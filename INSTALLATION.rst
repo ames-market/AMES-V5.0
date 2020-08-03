@@ -14,7 +14,7 @@ Installation
 
    	Add an environmental variable JAVA_HOME with the above 'LocationToJavaDirectory' (e.g. JAVA_HOME is set to C:\Java\jdk-13.0.2). This is required for running ANT.
 	
-   	Verify java installation using "java -version" command prompt.  
+   	Verify Java installation using "Java -version" command prompt.  
    
 
 2.	The ANT tool used to compile AMES V5.0. ANT must be downloaded and extracted to a local directory.
@@ -50,11 +50,11 @@ Installation
 	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following
 	the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Installing_Windows_Link.html) at the location C:\Miniconda3
 
-	Add C:/Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python.
+	Add C:/Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize Python from cmd (or powershell) else only conda prompt knows Python.
 	
 	Add C:/Miniconda3/Scripts and C:Miniconda3/Library/bin to use conda to install packages.
 
-	Verify installation using "python --version" command prompt.  
+	Verify installation using "Python --version" command prompt.  
 	
 	Verify access to pip and conda (by typing pip/conda).
 	
@@ -72,7 +72,7 @@ Installation
 	
 	cd C:/YourlocationtoAMESV5/psst
 	
-	Step 2: Install PSST by means of the following pip install command:
+	Step 2. Install PSST by means of the following pip install command:
 	
 	pip install -e .
     
