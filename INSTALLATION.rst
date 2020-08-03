@@ -25,7 +25,7 @@ Installation
 	
 	Set ANT_HOME environmental variable to the above directory.
 	
-	Include ANT_HOME\bin in the PATH system variable.
+	Include ANT_HOME/bin in the PATH system variable.
 	
 	Verify installation using "ant -version" command prompt.  
     
