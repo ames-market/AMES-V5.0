@@ -48,7 +48,7 @@ Installation
 
     	Choice 3: Install standard Python from https://www.python.org/ . The optional ‘pip’ is needed to install modules such as numpy.
 	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following
-	the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
+	the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Installing_Windows_Link.html) at the location C:\Miniconda3
 
 	Add C:/Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python.
 	
