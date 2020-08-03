@@ -2632,7 +2632,7 @@ public class AMESFrame extends JFrame {
                         strTemp = String.format("%1$5d\t%2$5d", i + 1, (h+1));
 
                         for (int j = 0; j < iGenNumber; j++) {
-                            strTemp += String.format("\t%1$15f", genDispatch[h][j]);
+                            strTemp += String.format("\t%1$6.2f", genDispatch[h][j]);
                         }
 
                         strTemp += "\n";
@@ -2659,7 +2659,7 @@ public class AMESFrame extends JFrame {
                         strTemp = String.format("%1$5d\t%2$5d", (i+1), (h+1));
 
                         for (int j = 0; j < iGenNumber; j++) {
-                            strTemp += String.format("\t%1$15f", genRealTimeDispatch[h][j]);
+                            strTemp += String.format("\t%1$6.2f", genRealTimeDispatch[h][j]);
                         }
 
                         strTemp += "\n";
@@ -2719,7 +2719,7 @@ public class AMESFrame extends JFrame {
                         strTemp = String.format("%1$5d\t%2$5d", i + 1, (h+1));
 
                         for (int j = 0; j < iNodeNumber; j++) {
-                            strTemp += String.format("\t%1$15f", lmp[h][j]);
+                            strTemp += String.format("\t%1$6.2f", lmp[h][j]);
                         }
 
                         strTemp += "\n";
@@ -2746,7 +2746,7 @@ public class AMESFrame extends JFrame {
                     strTemp = String.format("%1$5d\t%2$5d", i + 1, h+1);
 
                     for (int j = 0; j < iNodeNumber; j++) {
-                        strTemp += String.format("\t%1$15f", realTimelmp[h][j]);
+                        strTemp += String.format("\t%1$6.2f", realTimelmp[h][j]);
                     }
 
                     strTemp += "\n";
