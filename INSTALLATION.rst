@@ -81,5 +81,5 @@ Installation
 
     	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
     
-After installation steps 1-6 are complete, AMES V5.0 can be compiled from the command prompt using compileAMES.bat and run from the command prompt using runAMES.bat. Both of these files are located in TESAgents folder. The path of the super directory that contains AMES V5.0 folder needs to be added to both of these batch files. 
+After installation steps 1-6 are complete, AMES V5.0 can be compiled from the command prompt using compileAMES.bat and run from the command prompt using runAMES.bat from the location C:/YourLocationForAmesV5.0/TESAgents. Both of these files are located in TESAgents folder. The path of the super directory that contains AMES V5.0 folder needs to be added to both of these batch files. 
 
