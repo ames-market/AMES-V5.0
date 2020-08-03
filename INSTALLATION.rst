@@ -1,52 +1,82 @@
-.. highlight:: shell
 
 ============
 Installation
 ============
 
+1. Install Java from https://www.oracle.com/technetwork/java/javase/downloads/index.html
 
-Stable release
---------------
+   After Java is installed, add 'LocationToJavaDirectory/bin' ( e.g. C:\Java\jdk-13.0.2\bin) to PATH system variable.
+   
+   As AMES V5.0 is integrated with FNCS, running AMES V5.0 requires FNCS dependencies. 
+   
+   The FNCS dependencies uploaded as part of this repository need to be downloaded, and their location needs to be added to the PATH system variable. 
+   Advanced users can follow instructions from https://tesp.readthedocs.io/en/latest/ to install the PNNL TESP, with FNCS installation as a prerequisite.
 
-To install psst, run this command in your terminal:
+   Add an environmental variable JAVA_HOME with the above ''LocationToJavaDirectory' (e.g. JAVA_HOME is set to C:\Java\jdk-13.0.2). This is required for running ANT.
+	
+   Verify java installation using "java -version" command prompt.  
+   
 
-.. code-block:: console
+2.	The ANT tool is used to compile AMES V5.0. ANT must be downloaded and extracted to a local directory.
 
-    $ pip install psst
+    Download Apache Ant from https://ant.apache.org/
+	
+	Extract the zip file into any directory.
+	
+	Set ANT_HOME environmental variable to the above directory.
+	
+	Inculde ANT_HOME\bin in the PATH system variable.
+	
+	Verify installation using "ant -version" command prompt.  
+    
+	
+3.	Install NetBeans IDE from https://netbeans.apache.org/download/ 
+	
+	NetBeans IDE is useful in resolving build errors with ant (if any). 
+	
+4.	Python
 
-This is the preferred method to install psst, as it will always install the most recent stable release. 
+    AMES V5.0 uses modified Power System Simulation Toolbox (PSST), based on Python (V3). Thus, Python must first be locally installed. 
+    
+    Python can be installed using any of the following choices:
+    
+    Choice 1: Install Python using the Anaconda Distribution, available for downloading from https://www.anaconda.com/distribution/. Check
+https://docs.anaconda.com/anaconda/install/windows/ for installation instructions. 
 
-If you don't have `pip`_ installed, this `Python installation guide`_ can guide
-you through the process.
+    Choice 2: Install Python using the Miniconda installer following the instructions given at https://conda.io/miniconda.html. Pay particular attention
+to how the conda package manager is used to install various required modules such as numpy. 
 
-.. _pip: https://pip.pypa.io
-.. _Python installation guide: http://docs.python-guide.org/en/latest/starting/installation/
+    Choice 3: Install standard Python from https://www.python.org/. The optional ‘pip’ is needed to install modules such as numpy.
 
+    Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
 
-From sources
-------------
+	Add C:\Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python
+	Add C:\Miniconda3\Scripts and C:Miniconda3\Library\bin to use conda to install packages
 
-The sources for psst can be downloaded from the `Github repo`_.
+	Verify installation using "python --version" command prompt.  
+	Verify access to pip and conda (by typing pip/conda)
+	
+	Installing modules - use 'pip install ModuleName' or 'conda install ModuleName'
+	For uninstalling - use 'pip uninstall ModuleName' or 'conda uninstall ModuleName'
 
-You can either clone the public repository:
+5. Install psst:
 
-.. code-block:: console
+    After Python has been locally installed, PSST must be locally installed. PSST is available for downloading which is uploaded as part of AMES V5.0. 
+    
+    After PSST has been downloaded to a local folder, it can be installed from the command line for this PSST folder in two steps; see below. 
+    
+    First, navigate to the psst folder (Step 1). 
+    Second, use a pip install command to install PSST (Step 2).
 
-    $ git clone git://github.com/power-system-simulation-toolbox/psst
+    Step 1: cd C:/YourlocationtoAMES-V5.0/psst
+    Step 2: pip install -e .
+    
+    Remarks: Note the pip install command “pip install -e .” has a period “.” at the end. Also, PSST has its own dependencies, which are installed when the pip install command is given.
+    
+   
+6. Solver
 
-Or download the `tarball`_:
-
-.. code-block:: console
-
-    $ curl  -OL https://github.com/power-system-simulation-toolbox/psst/tarball/master
-
-Once you have a copy of the source, you can install it with:
-
-.. code-block:: console
-
-    $ python setup.py install
-
-
-.. _Github repo: https://github.com/power-system-simulation-toolbox/psst
-.. _tarball: https://github.com/power-system-simulation-toolbox/psst/tarball/master
+    AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
+    
+After the above installation steps are finished, AMES V5.0 can be compiled using compileAMES.bat and can be run using runAMES.bat files (both files located in TESAgents folder) from the command prompt. The path of the super directory that contains folders AMES V5.0, TESAgents need to be added to both compileAMES.bat and runAMES.bat files. 
 
