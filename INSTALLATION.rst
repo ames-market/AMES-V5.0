@@ -68,9 +68,9 @@ Installation
     
     	After PSST has been downloaded to a local folder, it can be installed from the command line for this local folder in two steps, as follows:  
   	Step 1. Navigate to the psst folder using:
-			cd C:/YourlocationtoAMES-V5.0/psst
+		cd C:/YourlocationtoAMES-V5.0/psst
 	Step 2: Install PSST by means of the following pip install command:
-			pip install -e .
+		pip install -e .
     
     	Note:  The pip install command “pip install -e .” in Step 2 has a period “.” at the end. Also, PSST has its own dependencies, which are installed when the pip install command is given.
     
