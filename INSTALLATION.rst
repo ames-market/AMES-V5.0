@@ -89,10 +89,8 @@ After installation steps 1-6 are complete, the AMES V5.0 command line takes the 
 The batch files `compileAMES.bat’ and `runAMES.bat’ are located in the TESAgents folder.  The path of the super directory that contains the AMES V5.0 folder needs to be added to each of these batch files.
 
 After this is done, AMES V5.0 can be compiled using the command
- 
-       C:/YourLocationForAmesV5.0/TESAgents/compileAMES.bat
+	C:/YourLocationForAmesV5.0/TESAgents/compileAMES.bat
 
 AMES V5.0 can then be run using the command
- 
-       C:/YourLocationForAmesV5.0/TESAgents/compileAMES.bat
+	C:/YourLocationForAmesV5.0/TESAgents/compileAMES.bat
 
