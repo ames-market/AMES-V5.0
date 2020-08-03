@@ -17,7 +17,7 @@ Installation
    	Verify java installation using "java -version" command prompt.  
    
 
-2.	The ANT tool is used to compile AMES V5.0. ANT must be downloaded and extracted to a local directory.
+2.	The ANT tool used to compile AMES V5.0. ANT must be downloaded and extracted to a local directory.
 
     	Download Apache Ant from https://ant.apache.org/
 	
@@ -25,7 +25,7 @@ Installation
 	
 	Set ANT_HOME environmental variable to the above directory.
 	
-	Inculde ANT_HOME\bin in the PATH system variable.
+	Include ANT_HOME\bin in the PATH system variable.
 	
 	Verify installation using "ant -version" command prompt.  
     
@@ -40,24 +40,27 @@ Installation
     
     	Python can be installed using any of the following choices:
     
-    	Choice 1: Install Python using the Anaconda Distribution, available for downloading from https://www.anaconda.com/distribution/. Check
-https://docs.anaconda.com/anaconda/install/windows/ for installation instructions. 
+    	Choice 1: Install Python using the Anaconda Distribution, available for downloading from https://www.anaconda.com/distribution/. 
+	Check https://docs.anaconda.com/anaconda/install/windows/ for installation instructions. 
 
-    	Choice 2: Install Python using the Miniconda installer following the instructions given at https://conda.io/miniconda.html. Pay particular attention
-to how the conda package manager is used to install various required modules such as numpy. 
+    	Choice 2: Install Python using the Miniconda installer following the instructions given at https://conda.io/miniconda.html. 
+	Note: Pay particular attention to how the conda package manager is used to install various required modules such as numpy. 
 
     	Choice 3: Install standard Python from https://www.python.org/. The optional ‘pip’ is needed to install modules such as numpy.
+	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following
+	the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
 
-    	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Windows_Build_Link.html) at the location C:\Miniconda3
-
-	Add C:\Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python
-	Add C:\Miniconda3\Scripts and C:Miniconda3\Library\bin to use conda to install packages
+	Add C:\Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize python from cmd (or powershell) else only conda prompt knows python.
+	
+	Add C:\Miniconda3\Scripts and C:Miniconda3\Library\bin to use conda to install packages.
 
 	Verify installation using "python --version" command prompt.  
-	Verify access to pip and conda (by typing pip/conda)
 	
-	Installing modules - use 'pip install ModuleName' or 'conda install ModuleName'
-	For uninstalling - use 'pip uninstall ModuleName' or 'conda uninstall ModuleName'
+	Verify access to pip and conda (by typing pip/conda).
+	
+	To install modules, use 'pip install ModuleName' or 'conda install ModuleName'.
+	
+	For uninstalling - use 'pip uninstall ModuleName' or 'conda uninstall ModuleName'.
 
 5. 	Install psst:
 
@@ -78,5 +81,5 @@ to how the conda package manager is used to install various required modules suc
 
     	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
     
-After the above installation steps are finished, AMES V5.0 can be compiled using compileAMES.bat and can be run using runAMES.bat files (both files located in TESAgents folder) from the command prompt. The path of the super directory that contains folder AMES V5.0 needs to be added to both compileAMES.bat and runAMES.bat files. 
+After installation steps 1-6 are complete, AMES V5.0 can be compiled from the command prompt using compileAMES.bat and run from the command prompt using runAMES.bat. Both of these files are located in TESAgents folder. The path of the super directory that contains AMES V5.0 folder needs to be added to both of these batch files. 
 
