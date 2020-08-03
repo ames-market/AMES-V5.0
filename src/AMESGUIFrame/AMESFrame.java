@@ -2671,6 +2671,7 @@ public class AMESFrame extends JFrame {
                 outputBufferWriter.write("\n");
 
                 outputBufferWriter.write("#LSEPriceSensitiveDemandDataStart\n");
+                outputBufferWriter.write("Price sensitive demand data is currently not being written to the output file. Next AMES package release fixes this.   \n");
                 strTemp = String.format("//%1$5s\t%2$5s", "Day", "Hour");
                 for (int i = 0; i < iLSENumber; i++) {
                     String LSEID = lseHybridData[i][0].toString();
