@@ -78,5 +78,5 @@ to how the conda package manager is used to install various required modules suc
 
     	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimizationstudio-v1290.
     
-After the above installation steps are finished, AMES V5.0 can be compiled using compileAMES.bat and can be run using runAMES.bat files (both files located in TESAgents folder) from the command prompt. The path of the super directory that contains folders AMES V5.0, TESAgents need to be added to both compileAMES.bat and runAMES.bat files. 
+After the above installation steps are finished, AMES V5.0 can be compiled using compileAMES.bat and can be run using runAMES.bat files (both files located in TESAgents folder) from the command prompt. The path of the super directory that contains folder AMES V5.0 need to be added to both compileAMES.bat and runAMES.bat files. 
 
