@@ -1,7 +1,7 @@
 set ITDdir=C:\Users\swathi\Dropbox\AMESLatestVersion
 set AmesVersion=AMES-V5.0
 set amesdir=%ITDdir%\%AmesVersion%\
-set fncslibdir=%amesdir%\lib
+set fncslibdir=%amesdir%\fncsDependencies
 set apidir=%amesdir%\TESAgents
 set logfilesdir=%apidir%\logfiles
 
