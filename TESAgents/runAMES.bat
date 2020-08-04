@@ -1,4 +1,4 @@
-set ITDdir=C:\Users\swathi\Dropbox\AMESLatestVersion
+set ITDdir=YourLocationForAmesV5SuperDirectory
 set AmesVersion=AMES-V5.0
 set amesdir=%ITDdir%\%AmesVersion%\
 set fncslibdir=%amesdir%\fncsDependencies
