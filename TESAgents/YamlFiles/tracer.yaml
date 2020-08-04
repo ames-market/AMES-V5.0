@@ -1,0 +1,7 @@
+name: tracer
+time_delta: 60s
+broker: tcp://localhost:5570
+values:
+    distribution_load:
+        topic: gridlabdSimulator1/distribution_load
+        default: 0

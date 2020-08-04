@@ -1,4 +1,4 @@
-set ITDdir=%PathToDirectory%
+set ITDdir=C:\Users\swathi\Dropbox\AMESLatestVersion
 set amesdir=%ITDdir%\AMES-V5.0\
 set tesdir=%amesdir%\TESAgents
 
