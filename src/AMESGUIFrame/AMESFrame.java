@@ -3365,7 +3365,7 @@ public class AMESFrame extends JFrame {
 
     private void startItemActionPerformed(java.awt.event.ActionEvent evt) {
 
-        if (false) {
+        if (FNCSActive) {
             fncs.JNIfncs.initialize();
             assert JNIfncs.is_initialized();
         }
@@ -3877,13 +3877,13 @@ public class AMESFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-        if (true) {
-            fncs.JNIfncs.initialize();
-            assert JNIfncs.is_initialized();
-        }
+//        if (true) {
+//            fncs.JNIfncs.initialize();
+//            assert JNIfncs.is_initialized();
+//        }
         //fncs.JNIfncs.initialize();
         //assert JNIfncs.is_initialized();
-        System.out.println("AMESFrame main");
+        //System.out.println("AMESFrame main");
         mainFrameWindow = new AMESFrame();
 
         if (args.length > 0) {
