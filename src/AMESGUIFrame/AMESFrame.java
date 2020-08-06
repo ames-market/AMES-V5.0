@@ -3877,13 +3877,7 @@ public class AMESFrame extends JFrame {
     }
 
     public static void main(String[] args) {
-//        if (true) {
-//            fncs.JNIfncs.initialize();
-//            assert JNIfncs.is_initialized();
-//        }
-        //fncs.JNIfncs.initialize();
-        //assert JNIfncs.is_initialized();
-        //System.out.println("AMESFrame main");
+
         mainFrameWindow = new AMESFrame();
 
         if (args.length > 0) {
