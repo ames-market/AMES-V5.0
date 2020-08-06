@@ -199,29 +199,31 @@ def read_model(model_data):
         if l.strip() == ';':
             READ = False
 
-        if l == 'param: PowerGeneratedT0 UnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=':
+        if l == 'param: PowerGeneratedT0 ScaledUnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=':
             READ = True
             continue
 
         if READ is True:
             g, pg, status, ITO_g, ITF_g, min_g, max_g, scaled_min_up_time, scaled_min_down_time, scaled_ramp_up_rate, scaled_ramp_down_rate, scaled_startup_ramp_rate, scaled_shutdown_ramp_rate, scaled_cold_start_time, coldstartcost, hotstartcost, shutdowncost = l.split()
 
-            case.gen.loc[g, 'PMAX'] = float(max_g.replace(',', '.'))
             case.gen.loc[g, 'PG'] = float(pg.replace(',', '.'))
             case.gen.loc[g, 'UnitOnT0State'] = int(status.replace(',','.'))
             case.gen.loc[g, 'InitialTimeON'] = int(ITO_g)
             case.gen.loc[g, 'InitialTimeOFF'] = int(ITF_g)
             case.gen.loc[g, 'PMIN'] = float(min_g.replace(',', '.'))
+            case.gen.loc[g, 'PMAX'] = float(max_g.replace(',', '.'))
             case.gen.loc[g, 'SCALED_MINIMUM_UP_TIME'] = int(scaled_min_up_time)
             case.gen.loc[g, 'SCALED_MINIMUM_DOWN_TIME'] = int(scaled_min_down_time)
             ramp_up = float(scaled_ramp_up_rate.replace(',', '.'))
-            case.gen.loc[g, 'SCALED_RAMP_UP'] = 9999 if ramp_up == 0 else ramp_up
+            case.gen.loc[g, 'SCALED_RAMP_UP'] = 999999 if ramp_up == 0 else ramp_up
+            # print('SCALED_RAMP_UP:',case.gen.loc[g, 'SCALED_RAMP_UP'])
             ramp_down = float(scaled_ramp_down_rate.replace(',', '.'))
-            case.gen.loc[g, 'SCALED_RAMP_DOWN'] = 9999 if ramp_down == 0 else ramp_down
+            case.gen.loc[g, 'SCALED_RAMP_DOWN'] = 999999 if ramp_down == 0 else ramp_down
+            # print('SCALED_RAMP_DOWN:',case.gen.loc[g, 'SCALED_RAMP_DOWN'])
             startup_ramp = float(scaled_startup_ramp_rate.replace(',', '.'))
-            case.gen.loc[g, 'SCALED_STARTUP_RAMP'] = 9999 if startup_ramp == 0 else startup_ramp
+            case.gen.loc[g, 'SCALED_STARTUP_RAMP'] = 999999 if startup_ramp == 0 else startup_ramp
             shutdown_ramp = float(scaled_shutdown_ramp_rate.replace(',', '.'))
-            case.gen.loc[g, 'SCALED_SHUTDOWN_RAMP'] = 9999 if shutdown_ramp == 0 else shutdown_ramp
+            case.gen.loc[g, 'SCALED_SHUTDOWN_RAMP'] = 999999 if shutdown_ramp == 0 else shutdown_ramp
             scaled_cold_start_time = int(scaled_cold_start_time.replace(',', '.'))
             case.gencost.loc[g, 'SCALED_COLD_START_TIME'] = scaled_cold_start_time
             cold_start_cost = float(coldstartcost.replace(',', '.'))

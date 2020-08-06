@@ -121,6 +121,8 @@ def build_model(case,
                                         minimum_power_output=generator_df['PMIN'].to_dict(),
                                         maximum_power_output=generator_df['PMAX'].to_dict())
 
+    # print('SCALED_RAMP_UP: ', str(generator_df['SCALED_RAMP_UP'].to_dict()))
+    # print('SCALED_RAMP_DOWN: ', str(generator_df['SCALED_RAMP_DOWN'].to_dict()))
     ramp_up_ramp_down_limits(model, scaled_ramp_up_limits=generator_df['SCALED_RAMP_UP'].to_dict(), scaled_ramp_down_limits=generator_df['SCALED_RAMP_DOWN'].to_dict())
 
     start_up_shut_down_ramp_limits(model, scaled_start_up_ramp_limits=generator_df['SCALED_STARTUP_RAMP'].to_dict(), scaled_shut_down_ramp_limits=generator_df['SCALED_SHUTDOWN_RAMP'].to_dict())
