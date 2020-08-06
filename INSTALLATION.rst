@@ -99,5 +99,4 @@ After this is done, AMES V5.0 can be compiled using the command
 AMES V5.0 can then be run using the command
 	C:/YourLocationForAmesV5/TESAgents/runAMES.bat
 	
-Note: User needs to make sure that MaxDay set in the runAMES.bat file and input data file of AMES V5.0 are the same. 
-
+Note: The user-set parameter `MaxDay’ determines the duration (number of days) of each simulation run.  While running AMES with FNCS, the user needs to ensure that the setting for `MaxDay’ in the AMES V5.0 batch file `runAMES.bat’ is the same as the setting for `MaxDay’ in the AMES V5.0 input data file 'xxxxxx.dat'.
