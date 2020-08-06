@@ -81,8 +81,8 @@ public class ISO {
             rtm.RTMCollectBidsAndOffers(h, day-1, FNCSActive);
             
             this.RTPSLdemandBidByLSE = this.rtm.getRTPSLDemandBidByLSE();
-            double[][] realtimeload = this.getRealTimeLoadForecast(h - 1, day-1, FNCSActive); // fncs.get_events() is called to receive RT load forecast
-            double[][] realtimeNDG = this.getRealTimeNDGForecast(h - 1, day-1, FNCSActive); // fncs.get_events() is called to receive RT NDG forecast
+            double[][] realtimeload = this.getRealTimeLoadForecast(h, FNCSActive); // fncs.get_events() is called to receive RT load forecast
+            double[][] realtimeNDG = this.getRealTimeNDGForecast(h, FNCSActive); // fncs.get_events() is called to receive RT NDG forecast
 
             System.out.println("\n\nRTM Optimization executing on Day " + (day-1) + " at Hour " + h + "- Interval " + (interval+1) + "\n");
             this.rtm.RTMarketOptimization(this.genRTCommitmentVector,
@@ -114,7 +114,7 @@ public class ISO {
         }
 
         if (h == 10 && m == 0) {
-            System.out.println("\n\nDAM Optimization for DAY " + day + " is executing at hour: " + h + "\n");
+            System.out.println("\n\nDAM Optimization for Day " + day + " is executing at Hour: " + h + "\n");
 
             this.dam.DAMarketOptimization(day, loadProfileByLSE, GenProfileByNDG, PSLdemandBidByLSE, supplyOfferByGen);
             SolutionStatus = this.dam.getSolutionStatus();
@@ -149,7 +149,7 @@ public class ISO {
 
     }
 
-    private double[][] getRealTimeLoadForecast(int h, int d, boolean FNCSActive) {
+    private double[][] getRealTimeLoadForecast(int h, boolean FNCSActive) {
 
         int ColSize = (int) this.ames.NIRTM;
 
@@ -176,14 +176,14 @@ public class ISO {
             for (int j = 0; j < J; j++) {
                 for (int k = 0; k < (ColSize); k++) {
                     //Hourly forecast is converted uniformly into per interval forecast
-                    LoadProfileByLSE[j][k] = this.RTloadProfileforLSEs[j][h];
+                    LoadProfileByLSE[j][k] = this.RTloadProfileforLSEs[j][h-1];
                 }
             }
         }
         return LoadProfileByLSE;
     }
 
-    private double[][] getRealTimeNDGForecast(int h, int d, boolean FNCSActive) {
+    private double[][] getRealTimeNDGForecast(int h, boolean FNCSActive) {
 
         int ColSize = (int) this.ames.NIRTM;
 
@@ -210,7 +210,7 @@ public class ISO {
 
             for (int j = 0; j < L; j++) {
                 for (int k = 0; k < (ColSize); k++) {
-                    hourlyNDGProfileByBus[j][k] = this.dam.getGenProfileByNDG()[j][h]; 
+                    hourlyNDGProfileByBus[j][k] = this.dam.getGenProfileByNDG()[j][h-1]; 
                 }
             }
         }
@@ -245,7 +245,7 @@ public class ISO {
                 // it is a canary. Work around to ensure enough capacity for any
                 // load when a reserve market doesn't exist in the program.
                 if (ga.isCanary()) {
-                    System.out.println("Canary: " + ga.getID() + ga.isCanary() + ga.getGenID());
+                    //System.out.println("Canary: " + ga.getID() + ga.isCanary() + ga.getGenID());
                     for (int h = 0; h < rtcd.commitmentDecisions.length; h++) {
                         rtcd.commitmentDecisions[h] = 1;
                     }
@@ -272,6 +272,7 @@ public class ISO {
             int[] result = new int[this.ames.NUM_HOURS_PER_DAY];
             result = Arrays.copyOf(cd.commitmentDecisions, cd.commitmentDecisions.length);
             this.ames.getGenAgentByName(cd.generatorName).addCommitmentForDay(day, result); 
+            this.ames.getGenAgentByName(cd.generatorName).CalUnitONT0State(day);
         }
     }
 

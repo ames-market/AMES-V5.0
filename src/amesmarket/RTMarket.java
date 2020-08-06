@@ -100,7 +100,7 @@ public class RTMarket {
             LSEAgent lse = (LSEAgent) lseAgentList.get(j);
 
             //Receive price sensitive demand bid into demandBid and then into demandBidbyLSE for each LSE
-            RTPSLdemandBid = lse.submitRTMPriceSensitiveDemandBid(h-1, d, j, ames.getPriceSensitiveDemandFlag(), ames.NIRTM, FNCSActive);
+            RTPSLdemandBid = lse.submitRTMPriceSensitiveDemandBid(h, d, j, ames.getPriceSensitiveDemandFlag(), ames.NIRTM, FNCSActive);
             RTPSLdemandBidByLSE[j] = RTPSLdemandBid;
 
             //String lseName = String.format("%1$10d", lse.getID());
@@ -136,7 +136,7 @@ public class RTMarket {
             Logger.getLogger(RTMarket.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            dfw.writeScedScenDatFile(RTMReferenceModelFile, ames, m, h, d, rtDemand, rtNDG, RTPSLdemandBidByLSE, ames.NIRTM);
+            dfw.writeScedScenDatFile(ames, m, h, d, rtDemand, rtNDG, RTPSLdemandBidByLSE, ames.NIRTM, genCoCommitments, RTMReferenceModelFile);
         } catch (AMESMarketException ex) {
             Logger.getLogger(RTMarket.class.getName()).log(Level.SEVERE, null, ex);
         }

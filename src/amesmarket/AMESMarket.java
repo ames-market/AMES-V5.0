@@ -631,14 +631,14 @@ public class AMESMarket extends SimModelImpl {
                 int NIH = (int) hour_len / (min_len * M); // number of intervals in an hour
                 interval = (hour - 1) * NIH + (int) min / M;
 
-                //System.out.println("\nMarketOperation for Day: " + day + " Hour: " + hour + " Interval: " + (interval+1));
+                //System.out.println("\nMarket Operation for Day: " + day + " Hour: " + hour + " Interval: " + (interval));
 
                 if (day > 1) {
                     if (min % M == 0) {
                         time_next = (day - 1) * (day_len) + (hour - 1) * (hour_len) + min * (min_len) - M * min_len;
                     }
                 }
-                //System.out.print("time_next: " + time_next);
+                //System.out.print("time requested: " + time_next);
 
                 if (FNCSActive) {
                     while (time_granted < time_next) {
@@ -646,7 +646,7 @@ public class AMESMarket extends SimModelImpl {
                     }
                 }
 
-                //System.out.println(" time_granted: " + time_granted);
+                //System.out.println("   time granted: " + time_granted);
                 iso.marketOperation(min, interval, hour, day, FNCSActive);
 
                 if (hour == 10 || day > 1) {

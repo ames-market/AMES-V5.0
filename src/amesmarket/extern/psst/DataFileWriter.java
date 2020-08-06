@@ -1,4 +1,3 @@
-
 package amesmarket.extern.psst;
 
 import java.io.BufferedWriter;
@@ -32,8 +31,6 @@ import java.util.Arrays;
  *
  */
 public class DataFileWriter {
-
-
 
     /**
      *
@@ -75,7 +72,6 @@ public class DataFileWriter {
         hasStorage = ames.gethasStorage();
         hasNDG = 0; //ames.gethasNDG();
 
-
         //Now that we have all the parameters. Write it out.
         try {
 
@@ -112,8 +108,8 @@ public class DataFileWriter {
             for (int i = 0; i < branchIndex.length; i++) {
                 refBufferWriter.write((i + 1) + " Bus"
                         + (int) numBranchData[i][0] + " Bus"
-                        + (int) numBranchData[i][1] + " " + numBranchData[i][2]/ baseS
-                        + " " + (numBranchData[i][3] * baseS/ (baseV * baseV)) + "\n");
+                        + (int) numBranchData[i][1] + " " + numBranchData[i][2] / baseS
+                        + " " + (numBranchData[i][3] * baseS / (baseV * baseV)) + "\n");
             }
 
             refBufferWriter.write(";\n\n");
@@ -154,8 +150,8 @@ public class DataFileWriter {
                 refBufferWriter.write(" ;\n");
             }
 
-            int BalPenPos = ames.getTestCaseConfig().BalPenPos ;
-            int BalPenNeg = ames.getTestCaseConfig().BalPenNeg ;
+            int BalPenPos = ames.getTestCaseConfig().BalPenPos;
+            int BalPenNeg = ames.getTestCaseConfig().BalPenNeg;
 
             refBufferWriter.write("\nparam BalPenPos := " + BalPenPos
                     + " ;\n\n");
@@ -171,9 +167,8 @@ public class DataFileWriter {
             refBufferWriter.write("\nparam NumTimePeriods := " + numTimeSteps
                     + " ;\n\n");
 
-
             refBufferWriter
-                    .write("param: PowerGeneratedT0 UnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=\n");
+                    .write("param: PowerGeneratedT0 ScaledUnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=\n");
 
             for (GenAgent ga : ames.getGenAgentList()) {
                 refBufferWriter.write(genAgentToSCUCDesc(ga, day, ames.getTestCaseConfig().DATDur, numTimeSteps, baseS, true));
@@ -191,9 +186,9 @@ public class DataFileWriter {
             }
 
             refBufferWriter.write(" ;\n");
-            
+
             refBufferWriter.write("param PriceSenLoadFlag := "
-                + ames.getPriceSensitiveDemandFlag() + " ;\n\n");
+                    + ames.getPriceSensitiveDemandFlag() + " ;\n\n");
 
             refBufferWriter.write("param StorageFlag := "
                     + hasStorage + " ;\n\n");
@@ -205,40 +200,39 @@ public class DataFileWriter {
                     + UpReservePercent + " ;\n\n");
 
             boolean HasZonalReserves = false;
-            if(ames.getTestCaseConfig().NumberOfReserveZones > 1){
+            if (ames.getTestCaseConfig().NumberOfReserveZones > 1) {
                 HasZonalReserves = true;
-            }            
-            
-            if(HasZonalReserves) {
-            refBufferWriter.write("param HasZonalReserves := "
-                    + HasZonalReserves + " ;\n\n");
-            
-            refBufferWriter.write("param NumberOfZones := "
-                    + ames.getTestCaseConfig().NumberOfReserveZones + " ;\n\n");
-
-
-            refBufferWriter.write("set Zones := ");
-
-            for (int i = 0; i < ames.getTestCaseConfig().NumberOfReserveZones; i++) {
-                refBufferWriter.write("Zone" + (i + 1) + " ");
             }
-            refBufferWriter.write(";\n\n");
 
-            refBufferWriter
-                    .write("param: Buses ZonalDownReservePercent ZonalUpReservePercent :=\n");
+            if (HasZonalReserves) {
+                refBufferWriter.write("param HasZonalReserves := "
+                        + HasZonalReserves + " ;\n\n");
 
-            for (String zName : ames.getTestCaseConfig().getZonalData().keySet()) {
-                CaseFileData.ZonalData ZoneData = ames.getTestCaseConfig().getZonalData().get(zName);
-                int[] buses = ZoneData.getBuses();
-                String stemp = "";
-                for (int i = 0; i < buses.length; i++) {
-                    stemp = stemp + "Bus" + buses[i] + ",";
+                refBufferWriter.write("param NumberOfZones := "
+                        + ames.getTestCaseConfig().NumberOfReserveZones + " ;\n\n");
+
+                refBufferWriter.write("set Zones := ");
+
+                for (int i = 0; i < ames.getTestCaseConfig().NumberOfReserveZones; i++) {
+                    refBufferWriter.write("Zone" + (i + 1) + " ");
                 }
-                refBufferWriter.write(zName + " " + stemp + " " + ZoneData.getZonalDARRD() + " " + ZoneData.getZonalDARRU());
-                refBufferWriter.write("\n");
-            }
+                refBufferWriter.write(";\n\n");
 
-            refBufferWriter.write(";\n\n");
+                refBufferWriter
+                        .write("param: Buses ZonalDownReservePercent ZonalUpReservePercent :=\n");
+
+                for (String zName : ames.getTestCaseConfig().getZonalData().keySet()) {
+                    CaseFileData.ZonalData ZoneData = ames.getTestCaseConfig().getZonalData().get(zName);
+                    int[] buses = ZoneData.getBuses();
+                    String stemp = "";
+                    for (int i = 0; i < buses.length; i++) {
+                        stemp = stemp + "Bus" + buses[i] + ",";
+                    }
+                    refBufferWriter.write(zName + " " + stemp + " " + ZoneData.getZonalDARRD() + " " + ZoneData.getZonalDARRU());
+                    refBufferWriter.write("\n");
+                }
+
+                refBufferWriter.write(";\n\n");
 
             }
 
@@ -250,17 +244,17 @@ public class DataFileWriter {
                 for (int i = 0; i < numLSEAgents; i++) {
                     LSEAgent lse = ames.getLSEAgentList().get(i);
                     int lseNode = lse.getAtNode();
-                    if ((n+1) == lseNode) {
+                    if ((n + 1) == lseNode) {
                         for (int h = 0; h < numTimeSteps; h++) {
                             NetFixedLoadForecast[n][h] = NetFixedLoadForecast[n][h] + LoadProfileLSE[i][h];
                         }
                     }
                 }
-                
+
                 for (int i = 0; i < numNDGAgents; i++) {
                     NDGenAgent ndg = ames.getNDGenAgentList().get(i);
                     int ndgNode = ndg.getAtNode();
-                    if ((n+1) == ndgNode) {
+                    if ((n + 1) == ndgNode) {
                         for (int h = 0; h < numTimeSteps; h++) {
 //                            NetDemand[n][h] = NetDemand[n][h]; // - GenProfileNDG[i][h];
                             NetFixedLoadForecast[n][h] = NetFixedLoadForecast[n][h] - GenProfileNDG[i][h];
@@ -269,22 +263,22 @@ public class DataFileWriter {
                 }
 
                 for (int h = 0; h < numTimeSteps; h++) {
-                    refBufferWriter.write("Bus" + (n+1) + " " + (h + 1) + " "
+                    refBufferWriter.write("Bus" + (n + 1) + " " + (h + 1) + " "
                             + (NetFixedLoadForecast[n][h] / baseS) + "\n");
                 }
                 refBufferWriter.write("\n");
             }
-            
-            refBufferWriter.write("; \n\n");
-            
 
-            if (ames.getPriceSensitiveDemandFlag() > 0) { 
+            refBufferWriter.write("; \n\n");
+
+            if (ames.getPriceSensitiveDemandFlag() > 0) {
                 refBufferWriter.write("set PricesSensitiveLoadNames :=");
                 for (int i = 0; i < numLSEAgents; i++) {
                     LSEAgent lse = ames.getLSEAgentList().get(i);
                     int lseNode = lse.getAtNode();
-                    if (i > 0)
-                      refBufferWriter.write(", ");
+                    if (i > 0) {
+                        refBufferWriter.write(", ");
+                    }
                     refBufferWriter.write("LSE" + lseNode);
                 }
                 refBufferWriter.write(";\n");
@@ -297,19 +291,18 @@ public class DataFileWriter {
                     double[][] bid = PSLDemandBidLSE[i];
                     for (int h = 0; h < bid.length; h++) {
                         //System.out.print(" h: "+ h + " LoadProfileLSE[i][h]: " + LoadProfileLSE[i][h]);
-                        refBufferWriter.write("LSE" + lseID + " " + lseID + " Bus" + lse.getAtNode() + " " + (h + 1)  + " "
-                            + bid[h][0] + " "
-                            + bid[h][1] * baseS + " "
-                            + bid[h][2] * baseS * baseS + " "
-                            + bid[h][3]/baseS + " "
-                            + (int) bid[h][4] + "\n");
+                        refBufferWriter.write("LSE" + lseID + " " + lseID + " Bus" + lse.getAtNode() + " " + (h + 1) + " "
+                                + bid[h][0] + " "
+                                + bid[h][1] * baseS + " "
+                                + bid[h][2] * baseS * baseS + " "
+                                + bid[h][3] / baseS + " "
+                                + (int) bid[h][4] + "\n");
                     }
                     refBufferWriter.write("\n");
                 }
                 refBufferWriter.write(";\n\n");
             }
 
-            
             refBufferWriter.write("param: a b c NS :=\n");
 
             final ArrayList<GenAgent> genagents = ames.getGenAgentList();
@@ -339,11 +332,13 @@ public class DataFileWriter {
      * @param hour
      * @param day
      * @param LoadProfileLSE
+     * @param PSLDemandBidLSE
      * @param GenProfileNDG
+     * @param gencoCommitments
      * @param numTimeSteps
      * @throws AMESMarketException
      */
-    public void writeScedScenDatFile(File fileObj, AMESMarket ames, int min, int hour, int day, double[][] LoadProfileLSE, double[][] GenProfileNDG, double[][][] PSLDemandBidLSE, int numTimeSteps) throws AMESMarketException {
+    public void writeScedScenDatFile(AMESMarket ames, int min, int hour, int day, double[][] LoadProfileLSE, double[][] GenProfileNDG, double[][][] PSLDemandBidLSE, int numTimeSteps, List<CommitmentDecision> gencoCommitments, File fileObj) throws AMESMarketException {
         //set up all the elements we need.
         // Important: Resolve the minimum up time and minimum down time values of the generators
 
@@ -369,12 +364,11 @@ public class DataFileWriter {
         }
 
         numBranchData = ames.getBranchData();
-        DownReservePercent = ames.getRTRRD(); 
-        UpReservePercent = ames.getRTRRU(); 
+        DownReservePercent = ames.getRTRRD();
+        UpReservePercent = ames.getRTRRU();
         branchIndex = ames.getTransGrid().getBranchIndex();
         hasStorage = ames.gethasStorage();
         hasNDG = 0; //ames.gethasNDG();
-
 
         //Now that we have all the parameters. Write it out.
         try {
@@ -412,8 +406,8 @@ public class DataFileWriter {
             for (int i = 0; i < branchIndex.length; i++) {
                 refBufferWriter.write((i + 1) + " Bus"
                         + (int) numBranchData[i][0] + " Bus"
-                        + (int) numBranchData[i][1] + " " + numBranchData[i][2]/ baseS
-                        + " " + (numBranchData[i][3] * baseS/ (baseV * baseV)) + "\n"); //(branchData[n][3]*INIT.getBaseS())/(INIT.getBaseV()*INIT.getBaseV())
+                        + (int) numBranchData[i][1] + " " + numBranchData[i][2] / baseS
+                        + " " + (numBranchData[i][3] * baseS / (baseV * baseV)) + "\n"); //(branchData[n][3]*INIT.getBaseS())/(INIT.getBaseV()*INIT.getBaseV())
             }
             refBufferWriter.write(";\n\n");
 
@@ -473,10 +467,10 @@ public class DataFileWriter {
 //                    + " ;\n\n");
 
             refBufferWriter
-                    .write("param: PowerGeneratedT0 UnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=\n");
+                    .write("param: PowerGeneratedT0 ScaledUnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=\n");
 
             for (GenAgent ga : ames.getGenAgentList()) {
-                refBufferWriter.write(genAgentToSCEDDesc(ga, hour, ames.getTestCaseConfig().RTKDur, numTimeSteps, baseS, false));
+                refBufferWriter.write(genAgentToSCEDDesc(ga, hour, ames.getTestCaseConfig().RTKDur, numTimeSteps, baseS, false, gencoCommitments));
                 refBufferWriter.write("\n");
             }
 
@@ -491,9 +485,9 @@ public class DataFileWriter {
             }
 
             refBufferWriter.write(" ;\n");
-            
+
             refBufferWriter.write("param PriceSenLoadFlag := "
-                + ames.getPriceSensitiveDemandFlag() + " ;\n\n");
+                    + ames.getPriceSensitiveDemandFlag() + " ;\n\n");
 
             refBufferWriter.write("param StorageFlag := "
                     + hasStorage + " ;\n\n");
@@ -505,16 +499,15 @@ public class DataFileWriter {
                     + UpReservePercent + " ;\n\n");
 
             boolean HasZonalReserves = false;
-            if(ames.getTestCaseConfig().NumberOfReserveZones > 1){
+            if (ames.getTestCaseConfig().NumberOfReserveZones > 1) {
                 HasZonalReserves = true;
             }
-            
-            if(HasZonalReserves){
+
+            if (HasZonalReserves) {
                 refBufferWriter.write("param HasZonalReserves := "
                         + HasZonalReserves + " ;\n\n");
                 refBufferWriter.write("param NumberOfZones := "
                         + ames.getTestCaseConfig().NumberOfReserveZones + " ;\n\n");
-
 
                 refBufferWriter.write("set Zones := ");
 
@@ -548,18 +541,18 @@ public class DataFileWriter {
                 for (int i = 0; i < numLSEAgents; i++) {
                     LSEAgent lse = ames.getLSEAgentList().get(i);
                     int lseNode = lse.getAtNode();
-                    if ((n+1) == lseNode) {
+                    if ((n + 1) == lseNode) {
                         for (int h = 0; h < numTimeSteps; h++) {
 //                            NetDemand[n][h] = NetDemand[n][h]; // + LoadProfileLSE[i][min+h];
                             NetFixedLoadForecast[n][h] = NetFixedLoadForecast[n][h] + LoadProfileLSE[i][h];
                         }
                     }
                 }
-                
+
                 for (int i = 0; i < numNDGAgents; i++) {
                     NDGenAgent ndg = ames.getNDGenAgentList().get(i);
                     int ndgNode = ndg.getAtNode();
-                    if ((n+1) == ndgNode) {
+                    if ((n + 1) == ndgNode) {
                         for (int h = 0; h < numTimeSteps; h++) {
 //                            NetDemand[n][h] = NetDemand[n][h]; // - GenProfileNDG[i][min+h];
                             NetFixedLoadForecast[n][h] = NetFixedLoadForecast[n][h] - GenProfileNDG[i][h];
@@ -568,76 +561,40 @@ public class DataFileWriter {
                 }
 
                 for (int h = 0; h < numTimeSteps; h++) {
-                    refBufferWriter.write("Bus" + (n+1) + " " + (min+h + 1) + " "
+                    refBufferWriter.write("Bus" + (n + 1) + " " + (h + 1) + " "
                             + (NetFixedLoadForecast[n][h] / baseS) + "\n");
                 }
                 refBufferWriter.write("\n");
             }
-            
+
             refBufferWriter.write("; \n\n");
-            
-//            refBufferWriter.write("param: Demand :=\n");
-//
-//            for (int i = 0; i < numLSEAgents; i++) {
-//                LSEAgent lse = ames.getLSEAgentList().get(i);
-//                int lseNode = lse.getAtNode();
-//
-//                for (int h = 0; h < numIntervalsInSim; h++) {
-//                    //System.out.println("min+h: "+ (min+h));
-//                    refBufferWriter.write("Bus" + lseNode + " " + (min + h + 1) + " "
-//                            + LoadProfileLSE[i][min + h] / baseS + "\n");
-//                }
-//
-//                refBufferWriter.write("\n");
-//            }
-//
-//            refBufferWriter.write("; \n");
-//            if (hasNDG > 0) {
-//                refBufferWriter.write("param: NDG :=\n");
-//
-//                for (int i = 0; i < numNDGAgents; i++) {
-//                    NDGenAgent ndg = ames.getNDGenAgentList().get(i);
-//                    int ndgNode = ndg.getAtNode();
-//
-//                    for (int h = 0; h < numIntervalsInSim; h++) {
-//                        refBufferWriter.write("Bus" + ndgNode + " " + (min + h + 1) + " "
-//                                + GenProfileNDG[i][min + h] / baseS + "\n");
-//                    }
-//
-//                    refBufferWriter.write("\n");
-//                }
-//
-//                refBufferWriter.write("; \n");
-//
-//            }
 
             if (ames.getPriceSensitiveDemandFlag() > 0) {
                 refBufferWriter.write("set PricesSensitiveLoadNames :=");
                 for (int i = 0; i < numLSEAgents; i++) {
                     LSEAgent lse = ames.getLSEAgentList().get(i);
                     int lseNode = lse.getAtNode();
-                    if (i > 0)
-                      refBufferWriter.write(", ");
+                    if (i > 0) {
+                        refBufferWriter.write(", ");
+                    }
                     refBufferWriter.write("LSE" + lseNode);
                 }
                 refBufferWriter.write(";\n");
 
-                 
                 refBufferWriter.write("param: Name ID atBus hourIndex d e f SLMax NS :=\n");
                 for (int i = 0; i < numLSEAgents; i++) {
                     LSEAgent lse = ames.getLSEAgentList().get(i);
                     int lseID = lse.getID();
-                    int TAU = (int) (ames.M/ames.getTestCaseConfig().RTKDur); 
+                    int TAU = (int) (ames.M / ames.getTestCaseConfig().RTKDur);
                     double[][] bid = PSLDemandBidLSE[i];
-                    // System.out.println("hour: "+hour);
                     for (int k = 0; k < TAU; k++) {
                         // System.out.print(" k: "+ k);
-                        refBufferWriter.write("LSE" + lseID + " " + lseID + " Bus" + lse.getAtNode() + " " + (k + 1)  + " "
-                            + bid[k][0] + " "
-                            + bid[k][1] * baseS + " "
-                            + bid[k][2] * baseS * baseS + " "
-                            + bid[k][3]/baseS + " "
-                            + (int) bid[k][4] + "\n");
+                        refBufferWriter.write("LSE" + lseID + " " + lseID + " Bus" + lse.getAtNode() + " " + (k + 1) + " "
+                                + bid[k][0] + " "
+                                + bid[k][1] * baseS + " "
+                                + bid[k][2] * baseS * baseS + " "
+                                + bid[k][3] / baseS + " "
+                                + (int) bid[k][4] + "\n");
                     }
                     refBufferWriter.write("\n");
                 }
@@ -653,11 +610,11 @@ public class DataFileWriter {
             for (int i = 0; i < numGenAgents; i++) {
                 GenAgent ga = genagents.get(i);
                 refBufferWriter.write(
-                          ga.getID() + " "
+                        ga.getID() + " "
                         + supplyOfferByGen[i][0] + " "
                         + (supplyOfferByGen[i][1] * baseS) + " "
-                        + (supplyOfferByGen[i][2] * baseS * baseS) + " " 
-                        + (int) supplyOfferByGen[i][3]  + " " + "\n");
+                        + (supplyOfferByGen[i][2] * baseS * baseS) + " "
+                        + (int) supplyOfferByGen[i][3] + " " + "\n");
             }
 
             refBufferWriter.write("; \n");
@@ -681,17 +638,20 @@ public class DataFileWriter {
             return "";
         }
 
-        int UnitONT0State = ga.getUnitOnT0State(day); 
+        int UnitONT0State = ga.getUnitOnT0State();
         int SUnitONT0State = 1;
-        
-        if (Math.abs(UnitONT0State) >= 1){
-           SUnitONT0State = (int) Math.round(UnitONT0State/DeltaT);
-        } else if (0<UnitONT0State && UnitONT0State<1) {
+        //System.out.println("");
+
+        if (Math.abs(UnitONT0State) >= 1) {
+            SUnitONT0State = (int) Math.round(UnitONT0State / DeltaT);
+        } else if (0 < UnitONT0State && UnitONT0State < 1) {
             SUnitONT0State = 1;
-        } else if (-1<UnitONT0State && UnitONT0State<0) {
+        } else if (-1 < UnitONT0State && UnitONT0State < 0) {
             SUnitONT0State = -1;
-        } 
-        
+        }
+
+        //System.out.println("Gen: " + ga.getID() + " UnitONT0State: " + UnitONT0State);
+        //System.out.println("Gen: " + ga.getID() + " SUnitONT0State: " + SUnitONT0State);
         //do all the conversions
         double powerT0 = ga.getPowerT0NextDay() / baseS;
         double capMin = ga.getCapacityMin() / baseS;
@@ -700,40 +660,37 @@ public class DataFileWriter {
         double ScaledRampDownLimit;
         double ScaledStartUpRampLimit;
         double ScaledShutDownRampLimit;
-        
+
         int ScaledMinUpTime;
         int ScaledMinDownTime;
         int ScaledColdStartTime;
-        
+
         int InitialTimeON;
         int InitialTimeOFF;
-        
+
         double DeltaK = DeltaT * 60; // DeltaK (min) = DeltaT (h) * 60 (min/h)
         // DAM SCUC : Units MW/min
-        ScaledRampUpLimit = ( ga.getNominalRampUpLim() * DeltaK ) / ( baseS );
-        ScaledRampDownLimit = ( ga.getNominalRampDownLim() * DeltaK ) / ( baseS );
-        ScaledStartUpRampLimit = ( ga.getStartupRampLim() * DeltaK ) / ( baseS );
-        ScaledShutDownRampLimit = ( ga.getShutdownRampLim() * DeltaK ) / ( baseS );
-        
-        ScaledMinUpTime = (int) Math.round( ga.getMinUpTime() / DeltaT );
-        ScaledMinDownTime = (int) Math.round( ga.getMinDownTime() / DeltaT );
-        ScaledColdStartTime = (int) Math.round( ga.getColdStartUpTime() / DeltaT);
-        
-        if(UnitONT0State > 0){
-            InitialTimeON = Math.min( numTimeSteps , Math.max( 0 , (int) Math.round( (ga.getMinUpTime() - UnitONT0State)/DeltaT ) ) );    
-        }
-        else{
+        ScaledRampUpLimit = (ga.getNominalRampUpLim() * DeltaK) / (baseS);
+        ScaledRampDownLimit = (ga.getNominalRampDownLim() * DeltaK) / (baseS);
+        ScaledStartUpRampLimit = (ga.getStartupRampLim() * DeltaK) / (baseS);
+        ScaledShutDownRampLimit = (ga.getShutdownRampLim() * DeltaK) / (baseS);
+
+        ScaledMinUpTime = (int) Math.round(ga.getMinUpTime() / DeltaT);
+        ScaledMinDownTime = (int) Math.round(ga.getMinDownTime() / DeltaT);
+        ScaledColdStartTime = (int) Math.round(ga.getColdStartUpTime() / DeltaT);
+
+        if (UnitONT0State > 0) {
+            InitialTimeON = Math.min(numTimeSteps, Math.max(0, (int) Math.round((ga.getMinUpTime() - UnitONT0State) / DeltaT)));
+        } else {
             InitialTimeON = 0;
         }
-        
-        
-        if(UnitONT0State < 0){
-            InitialTimeOFF = Math.min( numTimeSteps , Math.max( 0 , (int) Math.round( (ga.getMinDownTime() + UnitONT0State)/DeltaT ) ) );    
-        }
-        else{
+
+        if (UnitONT0State < 0) {
+            InitialTimeOFF = Math.min(numTimeSteps, Math.max(0, (int) Math.round((ga.getMinDownTime() + UnitONT0State) / DeltaT)));
+        } else {
             InitialTimeOFF = 0;
         }
-        
+
         double coldstartupcost = ga.getColdStartUpCost();
         double hotstartupcost = ga.getHotStartUpCost();
         double shutdowncost = ga.getShutDownCost();
@@ -755,19 +712,16 @@ public class DataFileWriter {
         // System.out.print(ga.getMinUpTime());
         return String.format(// 1     2          3       4       5       6       7       8               9               10          11
                 //Name, powerTO, On/OffT0, InitialTimeON, InitialTimeOFF, MinPow, MaxPow, ScaledMinUp, ScaledMinDown, ScaledRampUp, ScaledRampDown, ScaledStartupLim, ScaledShutdownLim, ScaledColdStartTime, ColdStartupCost, HotStartupCost, ShutDownCost
-                "%1$s %2$.15f %3$d %4$d %5$d %6$.15f %7$.15f %8$d %9$d %10$.15f %11$.15f %12$.15f %13$.15f %14$d %15$.15f %16$.15f %17$.15f" 
-                ,
-                 ga.getID() //1
+                "%1$s %2$.15f %3$d %4$d %5$d %6$.15f %7$.15f %8$d %9$d %10$.15f %11$.15f %12$.15f %13$.15f %14$d %15$.15f %16$.15f %17$.15f",
+                ga.getID() //1
                 ,
                  powerT0 //2
                 ,
                  SUnitONT0State//3
                 ,
-                 InitialTimeON
-                ,
-                 InitialTimeOFF
-                ,
-                 capMin //4
+                 InitialTimeON,
+                InitialTimeOFF,
+                capMin //4
                 ,
                  capMax//5
                 ,
@@ -793,24 +747,58 @@ public class DataFileWriter {
         );
     }
 
-    private String genAgentToSCEDDesc(GenAgent ga, int hour, int DeltaK, int numTimeSteps,double baseS, boolean scuctype) {
+    private String genAgentToSCEDDesc(GenAgent ga, int hour, int DeltaK, int numTimeSteps, double baseS, boolean scuctype, List<CommitmentDecision> gencoCommitments) {
         if (ga == null) {
             return "";
         }
-
-
-        int UnitONT0State = 0; 
+        int UnitONT0State = -1;
+        int lastHourState = 0;
+        int numHourSame = 0;
+        if (hour == 1) {
+            UnitONT0State = ga.getUnitOnT0State();
+        } else {
+            for (CommitmentDecision cd : gencoCommitments) {
+                if (cd.generatorName.equals(ga.getID())) {
+                    lastHourState = cd.commitmentDecisions[hour - 2];
+                    int[] GenCoCD = cd.commitmentDecisions;
+                    for (int i = (hour - 2); i >= 0; i--) {
+                        if (cd.commitmentDecisions[i] == lastHourState) {
+                            //System.out.print(" : " + cd.commitmentDecisions[i]);
+                            numHourSame++;
+                        } else { //state changed, done counting.
+                            break;
+                        }
+                    }
+                    if (lastHourState == 1) { //Generator has been on.
+                        if (numHourSame == (hour-1)) {
+                            UnitONT0State = (numHourSame + ga.getUnitOnT0State());
+                        } else {
+                            UnitONT0State = numHourSame;
+                        }
+                    } else { //invert the sign. Generator has been off.
+                        if (numHourSame == (hour-1)) {
+                            UnitONT0State = (-numHourSame + ga.getUnitOnT0State());
+                        } else {
+                            UnitONT0State = -numHourSame;
+                        }
+                    }
+                }
+            }
+        }
         int SUnitONT0State = 1;
-        double DeltaT = DeltaK/60;
-        
-        if (Math.abs(UnitONT0State) >= 1){
-           SUnitONT0State = (int) Math.round(UnitONT0State/DeltaT);
-        } else if (0<UnitONT0State && UnitONT0State<1) {
+        double DeltaT = DeltaK / 60.0;
+
+        if (Math.abs(UnitONT0State) >= 1) {
+            SUnitONT0State = (int) Math.round(UnitONT0State / DeltaT);
+        } else if (0 < UnitONT0State && UnitONT0State < 1) {
             SUnitONT0State = 1;
-        } else if (-1<UnitONT0State && UnitONT0State<0) {
+        } else if (-1 < UnitONT0State && UnitONT0State < 0) {
             SUnitONT0State = -1;
         }
 
+        //System.out.println("Gen: " + ga.getID() + " UnitONT0State: " + UnitONT0State);
+        //System.out.println("Gen: " + ga.getID() + " SUnitONT0State: " + SUnitONT0State);
+        
         //do all the conversions
         double powerT0 = ga.getPowerPrevInterval() / baseS;
         double capMin = ga.getCapacityMin() / baseS;
@@ -822,35 +810,32 @@ public class DataFileWriter {
 
         // RTM SCED : scaled ramp up and down limits (MW)
         ScaledRampUpLimit = (ga.getNominalRampUpLim() * DeltaK) / (baseS);  // 
-        ScaledRampDownLimit = (ga.getNominalRampDownLim()* DeltaK) / (baseS);
-        ScaledStartUpRampLimit = (ga.getStartupRampLim()* DeltaK) / (baseS);
-        ScaledShutDownRampLimit = (ga.getShutdownRampLim()* DeltaK) / (baseS);
-        
+        ScaledRampDownLimit = (ga.getNominalRampDownLim() * DeltaK) / (baseS);
+        ScaledStartUpRampLimit = (ga.getStartupRampLim() * DeltaK) / (baseS);
+        ScaledShutDownRampLimit = (ga.getShutdownRampLim() * DeltaK) / (baseS);
+
         int ScaledMinUpTime;
         int ScaledMinDownTime;
         int ScaledColdStartTime;
         int InitialTimeON;
         int InitialTimeOFF;
-        
-        ScaledMinUpTime = (int) Math.round( ga.getMinUpTime() * 60 / DeltaK);
-        ScaledMinDownTime = (int) Math.round( ga.getMinDownTime() * 60 / DeltaK);
-        ScaledColdStartTime = (int) Math.round( ga.getColdStartUpTime() * 60 / DeltaK);
-        
-        if(UnitONT0State > 0){
-            InitialTimeON = Math.min( numTimeSteps , Math.max( 0 , (int) Math.round( (ga.getMinUpTime() - UnitONT0State)/DeltaT ) ) );    
-        }
-        else{
+
+        ScaledMinUpTime = (int) Math.round(ga.getMinUpTime() * 60 / DeltaK);
+        ScaledMinDownTime = (int) Math.round(ga.getMinDownTime() * 60 / DeltaK);
+        ScaledColdStartTime = (int) Math.round(ga.getColdStartUpTime() * 60 / DeltaK);
+
+        if (UnitONT0State > 0) {
+            InitialTimeON = Math.min(numTimeSteps, Math.max(0, (int) Math.round((ga.getMinUpTime() - UnitONT0State) / DeltaT)));
+        } else {
             InitialTimeON = 0;
         }
-        
-        
-        if(UnitONT0State < 0){
-            InitialTimeOFF = Math.min( numTimeSteps , Math.max( 0 , (int) Math.round( (ga.getMinDownTime() + UnitONT0State)/DeltaT ) ) );    
-        }
-        else{
+
+        if (UnitONT0State < 0) {
+            InitialTimeOFF = Math.min(numTimeSteps, Math.max(0, (int) Math.round((ga.getMinDownTime() + UnitONT0State) / DeltaT)));
+        } else {
             InitialTimeOFF = 0;
         }
-        
+
         double coldstartupcost = ga.getColdStartUpCost();
         double hotstartupcost = ga.getHotStartUpCost();
         double shutdowncost = ga.getShutDownCost();
@@ -872,19 +857,16 @@ public class DataFileWriter {
         //System.out.println("");
         return String.format(// 1     2          3       4       5       6       7       8               9               10          11
                 //Name, powerTO, On/OffT0, InitialTimeON, InitialTimeOFF, MinPow, MaxPow, ScaledMinUp, ScaledMinDown, ScaledRampUp, ScaledRampDown, ScaledStartupLim, ScaledShutdownLim, ScaledColdStartTime, ColdStartupCost, HotStartupCost, ShutDownCost
-                "%1$s %2$.15f %3$d %4$d %5$d %6$.15f %7$.15f %8$d %9$d %10$.15f %11$.15f %12$.15f %13$.15f %14$d %15$.15f %16$.15f %17$.15f" 
-                ,
-                 ga.getID() //1
+                "%1$s %2$.15f %3$d %4$d %5$d %6$.15f %7$.15f %8$d %9$d %10$.15f %11$.15f %12$.15f %13$.15f %14$d %15$.15f %16$.15f %17$.15f",
+                ga.getID() //1
                 ,
                  powerT0 //2
                 ,
                  SUnitONT0State//3
                 ,
-                 InitialTimeON
-                ,
-                 InitialTimeOFF
-                ,
-                 capMin //4
+                 InitialTimeON,
+                InitialTimeOFF,
+                capMin //4
                 ,
                  capMax//5
                 ,
@@ -910,7 +892,6 @@ public class DataFileWriter {
         );
     }
 
-    
     /**
      * Get a string to write into the Storage input file describing the Storage
      * Unit.
@@ -947,9 +928,8 @@ public class DataFileWriter {
         // System.out.print(ga.getMinUpTime());
         return String.format(// 1     2          3       4       5       6       7       8               9               10          11
                 // ID, atBus EndPointSoc MaxEnergy ScaledRampDownInput ScaledRampUpInput ScaledRampDownOutput ScaledRampUpOutput MaxPowInput MinPowInput MaxPowOutput  MinPowOutput MinimumSoc EfficiencyEnergy
-                "%1$s %2$.15f %3$.15f %4$.15f %5$.15f %6$.15f %7$.15f %8$.15f %9$.15f %10$.15f %11$.15f %12$.15f %13$.15f %14$.15f "
-                ,
-                 ID //1
+                "%1$s %2$.15f %3$.15f %4$.15f %5$.15f %6$.15f %7$.15f %8$.15f %9$.15f %10$.15f %11$.15f %12$.15f %13$.15f %14$.15f ",
+                ID //1
                 ,
                  atBus //2
                 ,
@@ -978,7 +958,7 @@ public class DataFileWriter {
                  EfficiencyEnergy //14
         );
     }
-    
+
     /**
      * Get a string to write into the Storage input file describing the Storage
      * Unit.
@@ -1014,9 +994,8 @@ public class DataFileWriter {
         // System.out.print(ga.getMinUpTime());
         return String.format(// 1     2          3       4       5       6       7       8               9               10          11
                 // ID, atBus EndPointSoc MaxEnergy ScaledRampDownInput ScaledRampUpInput ScaledRampDownOutput ScaledRampUpOutput MaxPowInput MinPowInput MaxPowOutput  MinPowOutput MinimumSoc EfficiencyEnergy
-                "%1$s %2$.15f %3$.15f %4$.15f %5$.15f %6$.15f %7$.15f %8$.15f %9$.15f %10$.15f %11$.15f %12$.15f %13$.15f %14$.15f " 
-                ,
-                 ID //1
+                "%1$s %2$.15f %3$.15f %4$.15f %5$.15f %6$.15f %7$.15f %8$.15f %9$.15f %10$.15f %11$.15f %12$.15f %13$.15f %14$.15f ",
+                ID //1
                 ,
                  atBus //2
                 ,
@@ -1060,7 +1039,7 @@ public class DataFileWriter {
      */
     public void writeGenCommitments(AMESMarket ames, int M, int m, int h, List<CommitmentDecision> gencoCommitments, File ucVectorFile) throws AMESMarketException {
 
-        int TAU = (int) (M/ames.getTestCaseConfig().RTKDur);      // Tau - number of sub-intervals of each RTM interval 
+        int TAU = (int) (M / ames.getTestCaseConfig().RTKDur);      // Tau - number of sub-intervals of each RTM interval 
         if (gencoCommitments == null) {
             throw new IllegalArgumentException();
         }
@@ -1080,7 +1059,7 @@ public class DataFileWriter {
             final String ucOff = "0";
 
             for (CommitmentDecision cd : gencoCommitments) {
-                out.println(cd.generatorName); 
+                out.println(cd.generatorName);
                 StringBuilder sb = new StringBuilder();
 
                 int[] commitmentVector = new int[TAU];

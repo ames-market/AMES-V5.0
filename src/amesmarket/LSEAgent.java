@@ -266,14 +266,14 @@ public class LSEAgent implements Drawable {
                 for (int n = 0; n < NIRTM; n++) {
                     if (reportDemandBid[n][1] == 0 && reportDemandBid[n][2] == 0) {
                         for (int i = 0; i < PRICE_PARAM_LEN; i++) {
-                            reportDemandBid[n][i] = priceSensitiveDemand[h][i];
+                            reportDemandBid[n][i] = priceSensitiveDemand[h-1][i];
                         }
-                    }  else if (reportDemandBid[h][2] > 0){
-                        if(reportDemandBid[h][3] == 0){
-                             reportDemandBid[h][3] = reportDemandBid[h][1] / (2 * reportDemandBid[h][2]);
+                    }  else if (reportDemandBid[n][2] > 0){
+                        if(reportDemandBid[n][3] == 0){
+                             reportDemandBid[n][3] = reportDemandBid[n][1] / (2 * reportDemandBid[n][2]);
                         }
-                        if(reportDemandBid[h][4] == 0){
-                            reportDemandBid[h][3] = 5;
+                        if(reportDemandBid[n][4] == 0){
+                            reportDemandBid[n][3] = 5;
                         }
                     }
 
@@ -286,7 +286,7 @@ public class LSEAgent implements Drawable {
 
                 for (int n = 0; n < NIRTM; n++) {
                     for (int i = 0; i < PRICE_PARAM_LEN; i++) {
-                        reportDemandBid[n][i] = priceSensitiveDemand[h][i];
+                        reportDemandBid[n][i] = priceSensitiveDemand[h-1][i];
                         //System.out.print(": " + reportDemandBid[n][i]);
                     }
                     //System.out.println("");
@@ -296,7 +296,7 @@ public class LSEAgent implements Drawable {
         } else {
                 for (int n = 0; n < NIRTM; n++) {
                     for (int i = 0; i < PRICE_PARAM_LEN; i++) {
-                        reportDemandBid[n][i] = priceSensitiveDemand[h][i];
+                        reportDemandBid[n][i] = priceSensitiveDemand[h-1][i];
                         //System.out.print(": " + reportDemandBid[n][i]);
                     }
                     //System.out.println("");

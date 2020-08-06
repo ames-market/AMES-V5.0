@@ -531,30 +531,9 @@ public class GenAgent implements Drawable, JReLMAgent {
         return PMaxReported;
     }
 
-    /**
-     * On/off Status for T0, day d. From the pyomo model:
-     * <blockquote>
-     * if positive, the number of hours prior to (and including) t=0 that the
-     * unit has been on. if negative, the number of hours prior to (and
-     * including) t=0 that the unit has been off. the value cannot be 0, by
-     * definition.
-     *
-     * </blockquote>
-     *
-     * @param day
-     * @return The on/off is whether or not the unit was on/off on the last hour
-     * of day-1, or, 1, if the generator does not have a record for day d-1.
-     *
-     */
-    public int getUnitOnT0State(int day) {
-        if(day ==1){
-            return UnitOnT0State;
-        }
-        final int[] commitmentsForDay = getCommitmentsForDay(day-1);
+    public void CalUnitONT0State(int day){
 
-        if (commitmentsForDay == null) {
-            return 1;
-        }
+        final int[] commitmentsForDay = getCommitmentsForDay(day);
         
         final int lastHourState = commitmentsForDay[commitmentsForDay.length - 1];
         int numHourSame = 0;
@@ -571,24 +550,83 @@ public class GenAgent implements Drawable, JReLMAgent {
         if (lastHourState == 1) { //Generator has been on.
             if (numHourSame == 24){
                 setUnitOnT0State(numHourSame+UnitOnT0State);
-                return UnitOnT0State;
             }
             else{
                 setUnitOnT0State(numHourSame);
-                return numHourSame;
             }
         } else { //invert the sign. Generator has been off.
             if (numHourSame == 24){
                 setUnitOnT0State(-numHourSame+UnitOnT0State);
-                return UnitOnT0State;
             }
             else{
                 setUnitOnT0State(-numHourSame);
-                return -numHourSame;
             }
         }
         
     }
+    
+    public int getUnitOnT0State() {
+        return UnitOnT0State;
+    }
+    
+    /**
+     * On/off Status for T0, day d. From the pyomo model:
+     * <blockquote>
+     * if positive, the number of hours prior to (and including) t=0 that the
+     * unit has been on. if negative, the number of hours prior to (and
+     * including) t=0 that the unit has been off. the value cannot be 0, by
+     * definition.
+     *
+     * </blockquote>
+     *
+     * @param day
+     * @return The on/off is whether or not the unit was on/off on the last hour
+     * of day-1, or, 1, if the generator does not have a record for day d-1.
+     *
+     */
+//    public int getUnitOnT0State(int day) {
+//        if(day ==1){
+//            return UnitOnT0State;
+//        }
+//        final int[] commitmentsForDay = getCommitmentsForDay(day-1);
+//
+//        if (commitmentsForDay == null) {
+//            return 1;
+//        }
+//        
+//        final int lastHourState = commitmentsForDay[commitmentsForDay.length - 1];
+//        int numHourSame = 0;
+//
+//        //count how many hours were the same generator state (on or off)
+//        for (int i=commitmentsForDay.length-1; i>=0; i--) {
+//            if (commitmentsForDay[i] == lastHourState) {
+//                numHourSame++;
+//            } else { //state changed, done counting.
+//                break;
+//            }
+//        }
+//
+//        if (lastHourState == 1) { //Generator has been on.
+//            if (numHourSame == 24){
+//                setUnitOnT0State(numHourSame+UnitOnT0State);
+//                return UnitOnT0State;
+//            }
+//            else{
+//                setUnitOnT0State(numHourSame);
+//                return numHourSame;
+//            }
+//        } else { //invert the sign. Generator has been off.
+//            if (numHourSame == 24){
+//                setUnitOnT0State(-numHourSame+UnitOnT0State);
+//                return UnitOnT0State;
+//            }
+//            else{
+//                setUnitOnT0State(-numHourSame);
+//                return -numHourSame;
+//            }
+//        }
+//        
+//    }
 
     public int getUnitOnHour() {
         return HourUnitON; //
