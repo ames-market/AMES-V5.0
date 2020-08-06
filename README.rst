@@ -71,7 +71,7 @@ Documentation
 Publications
 ------------
 
-- Swathi Battula, Leigh Tesfatsion, and Thomas E. McDermott, "An ERCOT Test System for Market Design Studies,” Energy, Vol. 275, October, 2020. DOI:10.1016/j.apenergy.2020.115182. Working Paper Preprint: https://lib.dr.iastate.edu/econ_workingpapers/79/
+- Swathi Battula, Leigh Tesfatsion, and Thomas E. McDermott (2020), "An ERCOT Test System for Market Design Studies,” Energy, Vol. 275, October. DOI:10.1016/j.apenergy.2020.115182. Working Paper Preprint: https://lib.dr.iastate.edu/econ_workingpapers/79/
 - Charles Gieseler (2005), "A Java Reinforcement Learning Module for the Repast Toolkit: Facilitating Study and Implementation with Reinforcement Learning in Social Science Multi-Agent Simulations" (`pdf, 1.1MB <http://www2.econ.iastate.edu/tesfatsi/CharlesGieseler_thesis.pdf>`_), (`ppt, 1.1MB <http://www2.econ.iastate.edu/tesfatsi/CharlieGieseler_thesisPresentation.pdf>`_), Department of Computer Science, Iowa State University, M.S. Thesis.
 - Deddy Koesrindartoto and Leigh Tesfatsion (2004), "Testing the Reliability of FERC's Wholesale Power Market Platform: An Agent-Based Computational Economics Approach" (`pdf, 45KB <http://www2.econ.iastate.edu/tesfatsi/usaeetalk.pdf>`_), Energy, Environment, and Economics in a New Era, Proceedings of the 24th USAEE/IAEE North American Conference, Washington, D.C., July 8-10.
 - Deddy Koesrindartoto, Junie Sun, and Leigh Tesfatsion (2005), "An Agent-Based Computational Laboratory for Testing the Economic Reliability of Wholesale Power Market Designs" (`pdf, 112KB <http://www2.econ.iastate.edu/tesfatsi/ieeepow.pdf>`_), Proceedings of the IEEE Power and Energy Society General Meeting, San Francisco, California, June 12-16, pp. 931-936.
