@@ -3880,7 +3880,7 @@ public class AMESFrame extends JFrame {
 
         mainFrameWindow = new AMESFrame();
 
-        if (args.length > 0) {
+        if (args.length > 0 && args[0].equals("true")) {
             mainFrameWindow.noGUI = true;
             for (String arg : args) {
                 System.out.println(arg);
