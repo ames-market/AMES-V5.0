@@ -99,4 +99,4 @@ After this is done, AMES V5.0 can be compiled using the command
 AMES V5.0 can then be run using the command
 	C:/YourLocationForAmesV5/TESAgents/runAMES.bat
 	
-Note: The user-set parameter `MaxDay’ determines the duration (number of days) of each simulation run.  While running AMES with FNCS, the user needs to ensure that the setting for `MaxDay’ in the AMES V5.0 batch file `runAMES.bat’ is the same as the setting for `MaxDay’ in the AMES V5.0 input data file 'xxxxxx.dat'.
+Note: The user-set parameter `MaxDay’ determines the duration (number of days) of each simulation run.  To run AMES with FNCS, the user parameter 'FNCSActive' inside the input data file 'NBusTestCase.dat' (N indicates the number of buses of the test case grid) needs to be set to 'true'. While running with FNCS ensure that the setting for `MaxDay’ in the AMES V5.0 batch file `runAMES.bat’ is the same as the setting for `MaxDay’ in the AMES V5.0 input data file 'NBusTestCase.dat'. 
