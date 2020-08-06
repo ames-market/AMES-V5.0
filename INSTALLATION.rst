@@ -98,4 +98,6 @@ After this is done, AMES V5.0 can be compiled using the command
 
 AMES V5.0 can then be run using the command
 	C:/YourLocationForAmesV5/TESAgents/runAMES.bat
+	
+Note: User needs to make sure that MaxDay set in the runAMES.bat file and input data file of AMES V5.0 are the same. 
 
