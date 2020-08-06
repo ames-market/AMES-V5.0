@@ -1,3 +1,5 @@
+#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to read Price Sensitive Load and Zonal data.
+
 import os
 import click
 

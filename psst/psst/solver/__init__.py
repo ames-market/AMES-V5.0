@@ -1,3 +1,4 @@
+#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to return solver termination condition.
 
 from pyomo.environ import SolverFactory
 import warnings

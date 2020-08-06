@@ -1,3 +1,6 @@
+#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to make the code consistent with AMES V5.0 documentation dated 7-2-2020. 
+
+
 from pyomo.environ import *
 
 

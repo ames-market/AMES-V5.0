@@ -1,3 +1,5 @@
+#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to include Price Sensitive Load and Zonal data constraints.
+
 import logging
 import click
 

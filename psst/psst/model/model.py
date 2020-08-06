@@ -1,3 +1,5 @@
+#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to include both Positive and Negative Mismatch Penalty Terms.
+
 from pyomo.environ import *
 
 def create_model():

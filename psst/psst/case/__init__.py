@@ -1,3 +1,5 @@
+#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to include SCALED_COLD_START_TIME parameter and rename a few others.
+
 import os
 import logging
 import click
