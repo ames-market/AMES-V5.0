@@ -87,16 +87,3 @@ Installation
 
     	AMES V5.0 uses the CPLEX optimization solver, available at: https://www.ibm.com/support/pages/downloading-ibm-ilog-cplex-optimization-studio-v1290
     
-
-After installation instructions 1-6 have been carried out, the AMES V5.0 command line takes the form:
-	C:/YourLocationForAmesV5/TESAgents/
- 
-The batch files `compileAMES.bat’ and `runAMES.bat’ are located in the TESAgents folder.  The path of the super directory that contains the AMES V5.0 folder needs to be added to each of these batch files.
-
-After this is done, AMES V5.0 can be compiled using the command
-	C:/YourLocationForAmesV5/TESAgents/compileAMES.bat
-
-AMES V5.0 can then be run using the command
-	C:/YourLocationForAmesV5/TESAgents/runAMES.bat
-	
-Note: The user-set parameter `MaxDay’ determines the duration (number of days) of each simulation run.  To run AMES with FNCS, the user parameter 'FNCSActive' inside the input data file 'NBusTestCase.dat' (N indicates the number of buses of the test case grid) needs to be set to 'true'. While running with FNCS ensure that the setting for `MaxDay’ in the AMES V5.0 batch file `runAMES.bat’ is the same as the setting for `MaxDay’ in the AMES V5.0 input data file 'NBusTestCase.dat'. 
