@@ -2794,12 +2794,12 @@ public class AMESFrame extends JFrame {
 //            outputBufferWriter.write("#NodeDifferenceBetweenLMPsDataEnd\n");
 //            outputBufferWriter.write("\n");
 //
-                outputBufferWriter.write("\n\n\n");
-                strTemp = "StopCode=";
-                strTemp += String.format("\t%1$15d", this.amesMarket.getStopCode());
-                strTemp += "\n";
-                outputBufferWriter.write(strTemp);
-                outputBufferWriter.write("\n");
+//                outputBufferWriter.write("\n\n\n");
+//                strTemp = "StopCode=";
+//                strTemp += String.format("\t%1$15d", this.amesMarket.getStopCode());
+//                strTemp += "\n";
+//                outputBufferWriter.write(strTemp);
+//                outputBufferWriter.write("\n");
 
                 outputBufferWriter.close();
 
@@ -3880,7 +3880,7 @@ public class AMESFrame extends JFrame {
 
         mainFrameWindow = new AMESFrame();
 
-        if (args.length > 0 && args[0].equals("true")) {
+        if (args.length > 0) {
             mainFrameWindow.noGUI = true;
             for (String arg : args) {
                 System.out.println(arg);

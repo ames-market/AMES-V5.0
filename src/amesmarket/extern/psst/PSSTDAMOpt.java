@@ -267,7 +267,6 @@ public class PSSTDAMOpt implements DAMOptimization {
         }
 
         // read any errors from the attempted command
-        System.err.println("Here is the standard error of the command with SCUC (if any):\n");
         while ((s = stdError.readLine()) != null) {
             System.out.println("There is error with SCUC: ");
             System.out.println(s);

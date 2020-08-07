@@ -271,7 +271,6 @@ public class PSSTRTMOpt implements RTMOptimization {
         }
 
         // read any errors from the attempted command
-        System.err.println("\nHere is the standard error of the command with SCED (if any):\n");
         while ((s = stdError.readLine()) != null) {
             System.out.println("There is error with SCED: ");
             System.out.println(s);

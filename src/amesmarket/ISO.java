@@ -163,7 +163,7 @@ public class ISO {
 
                 for (int j = 0; j < J; j++) {
                     if (events[i].equals("loadforecastRTM_" + String.valueOf(j + 1))) {
-                        System.out.println("\n Receiving RTM loadforecast: " + values[0]);
+                        System.out.println("\nReceiving RTM loadforecast: " + values[0]);
 
                         //Hourly forecast is converted uniformly into per interval forecast
                         for (int k = 0; k < (ColSize); k++) {

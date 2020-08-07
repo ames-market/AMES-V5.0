@@ -714,7 +714,7 @@ public class AMESMarket extends SimModelImpl {
                     if (bMaximumDay) {
 
                         if ((hour == 24) && (day == dayMax)) {// Only dayMax has been reached
-                            System.out.println("in STOPCODE: 1");
+                            //System.out.println("in STOPCODE: 1");
                             stop();
                             stopCode = stopCode | 0x1;   // first bit
                         }
@@ -726,7 +726,7 @@ public class AMESMarket extends SimModelImpl {
                         bCalculationEnd = true;
 
                         Date sysDate = new Date();
-                        System.out.println("Simulation End time: " + sysDate.toString() + "\n");
+                        System.out.println("\nSimulation End time: " + sysDate.toString() + "\n");
 
                         String stopStr = "";
                         int iStopNumber = 0;
@@ -762,7 +762,7 @@ public class AMESMarket extends SimModelImpl {
                             stopCode /= 2;
                         }
 
-                        System.out.println("\n\nThe current simulation run concluded on day " + day + " in response to the activation of the following \nstopping rule:(" + stopStr + ")\n\n");
+                        System.out.println("\nThe current simulation run is concluded on Day " + day + "\n"); // + " in response to the activation of the following \nstopping rule:(" + stopStr + ")\n\n");
 
                     }
 
