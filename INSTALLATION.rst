@@ -3,6 +3,8 @@
 Installation
 ============
 
+AMES V5.0 is only supported on Windows Platform. 
+
 1. 	Install Java from https://www.oracle.com/technetwork/java/javase/downloads/index.html
 
    	After Java is installed, add 'LocationToJavaDirectory/bin' ( e.g. C:\Java\jdk-13.0.2\bin) to the PATH system variable.
@@ -10,7 +12,6 @@ Installation
   	As AMES V5.0 is integrated with FNCS, running AMES V5.0 requires FNCS dependencies. 
    
    	The FNCS dependencies uploaded as part of this repository need to be downloaded, and their location needs to be added to the PATH system variable. 
-   	Advanced users can follow instructions from https://tesp.readthedocs.io/en/latest/ to install the PNNL TESP, with FNCS installation as a prerequisite.
 
    	Add an environmental variable JAVA_HOME with the above 'LocationToJavaDirectory' (e.g. JAVA_HOME is set to C:\Java\jdk-13.0.2). This is required for running ANT.
 	
