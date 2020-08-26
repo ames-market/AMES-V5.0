@@ -48,8 +48,9 @@ AMES V5.0 is only supported on Windows Platform.
 	Note: Pay particular attention to how the conda package manager is used to install various required modules such as numpy. 
 
     	Choice 3: Install standard Python from https://www.python.org/ . The optional ‘pip’ is needed to install modules such as numpy.
-	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) by following
-	the instructions given at TESP website (link: https://tesp.readthedocs.io/en/latest/Installing_Windows_Link.html) at the location C:\Miniconda3
+	
+	Note: The current study used the Miniconda installer from https://docs.conda.io/en/latest/miniconda.html to install Python (V3) at the location 	
+	C:\Miniconda3
 
 	Add C:/Miniconda3 to path (python.exe is located at C:\Miniconda3) to recognize Python from cmd (or powershell) else only conda prompt knows Python.
 	
