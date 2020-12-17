@@ -66,7 +66,7 @@ Documentation
 
 - Leigh Tesfatsion and Swathi Battula (2020), "Analytical SCUC/SCED Optimization Formulation for AMES V5.0," Economics Working Paper #20014, Iowa State University, Ames, IA. Available online: https://lib.dr.iastate.edu/econ_workingpapers/109/
 
-- Leigh Tesfatsion and Swathi Battula, “AMES V5.0 Implementation of Price-Sensitive Demand Bids for Day-Ahead and Real-Time Market Operations,”Documentation Notes, Iowa State University, December 2020. http://www2.econ.iastate.edu/tesfatsi/AMESV5ImplementationPriceSensitiveDemandBids.TesfatsionBattula.pdf
+- Leigh Tesfatsion and Swathi Battula (2020), “AMES V5.0 Implementation of Price-Sensitive Demand Bids for Day-Ahead and Real-Time Market Operations,” Documentation Notes, Iowa State University, Ames, IA. Available online: http://www2.econ.iastate.edu/tesfatsi/AMESV5ImplementationPriceSensitiveDemandBids.TesfatsionBattula.pdf
 
 .. _publications:
 
