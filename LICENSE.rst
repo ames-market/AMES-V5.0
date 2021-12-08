@@ -1,8 +1,6 @@
-AMES V5.0 License BSD 3-Clause
+AMES V5.0, BSD 3-Clause License
 
 Copyright (c) 2020, Battelle Memorial Institute
-
-https://github.com/ames-market
 
 TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
 
