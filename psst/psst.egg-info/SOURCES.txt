@@ -1,6 +1,4 @@
-AUTHORS.rst
 CONTRIBUTING.rst
-LICENSE
 MANIFEST.in
 README.rst
 setup.cfg
@@ -28,5 +26,3 @@ psst.egg-info/entry_points.txt
 psst.egg-info/not-zip-safe
 psst.egg-info/requires.txt
 psst.egg-info/top_level.txt
-tests/__init__.py
-tests/test_psst.py

@@ -96,10 +96,8 @@ def read_unit_commitment(ucfile):
         else:
             uc = []
             uc_dict[l] = uc
-    #print('uc_dict:', uc_dict)
-    for item in uc_dict:
-        NumEntry = len(uc_dict[item])
-    return pd.DataFrame(uc_dict, index=range(1,NumEntry+1))
+    NumEntry = len(uc) + 1
+    return pd.DataFrame(uc_dict, index=range(1, NumEntry))
 
 
 def find_generators(data):
