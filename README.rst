@@ -2,8 +2,6 @@
 Agent-Based Modeling of Electricity Systems (AMES) - Version 5.0
 =================================================================
 
-BSD 3-Clause License 
-
 Copyright (c) 2020, Battelle Memorial Institute
 
 AMES V5.0 Developers -- Swathi Battula and Leigh Tesfatsion at Iowa State University, with support from Pacific Northwest National Laboratory (PNNL) researchers Tom McDermott, Mitch Pelton, Qiuhua Huang, and Sarmad Hanif
