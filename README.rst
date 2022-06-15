@@ -17,7 +17,7 @@ The key features of AMES V5.0 include:
 
 * Agent-based computational platform designed for federation with other domain simulators, thus permitting the study of larger systems such as integrated transmission and distribution systems.
 
-* Implementation in Python with CPLEX as the default solver, with an option to use any user-specified solver that is supported by Pyomo (Python-based open-source optimization modeling language). 
+* Implementation in Java/Python with CPLEX as the default solver, with an option to use any user-specified solver that is supported by Pyomo (Python-based open-source optimization modeling language). 
 
 See documentation_ and publications_ for more information.
 
