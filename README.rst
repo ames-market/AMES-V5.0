@@ -13,12 +13,12 @@ Summary
 
 The key features of AMES V5.0 include:
 
-* An agent-based computational platform modeling the operations of an RTO/ISO-managed wholesale power market over successive days.
+* Agent-based computational platform modeling **RTO/ISO-managed wholesale power market operations over a high-voltage transmission grid for successive days,** with congestion handled by locational marginal pricing.
 * Simulates **day-ahead SCUC/SCED** (security-constrained unit commitment and security-constrained economic dispatch) optimizations running in tandem with **real-time SCED** optimizations over successive days of operation, with **continually updated state conditions**.
 * Market-participant agents can be endowed with **reinforcement learning capabilities** by means of an incorporated Java Reinforcement Learning Module (JReLM).  
 * **Designed for federation with other domain simulators**, thus permitting the co-simulation study of larger systems such as integrated transmission and distribution systems.
 
-* Implementation in Java/Python with CPLEX as the default solver, with an option to use any user-specified solver that is supported by Pyomo (Python-based open-source optimization modeling language). 
+* **Implementation in Java/Python with CPLEX as the default solver**, with an option to use any user-specified solver that is supported by Pyomo (Python-based open-source optimization modeling language). 
 
 See documentation_ and publications_ for more information.
 
