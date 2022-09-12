@@ -21,7 +21,7 @@ requirements = [
 ]
 
 test_requirements = [
-    
+
 ]
 
 setup(
@@ -36,7 +36,7 @@ setup(
         'psst',
     ],
     package_dir={'psst':
-                 'psst'},
+                     'psst'},
     entry_points={
         'console_scripts': [
             'psst=psst.cli:cli'

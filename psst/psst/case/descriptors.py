@@ -1,10 +1,8 @@
 from __future__ import print_function
-from collections import OrderedDict
-import logging
 
+import logging
 import traceback
 from builtins import super
-import six
 
 import pandas as pd
 
@@ -13,7 +11,7 @@ logging.basicConfig()
 
 
 class Descriptor(object):
-    ''' Descriptor Base class for psst case '''
+    """ Descriptor Base class for psst case """
     name = None
     ty = None
 
@@ -39,7 +37,7 @@ class Descriptor(object):
 
 
 class IndexDescriptor(Descriptor):
-    ''' IndexDescriptor Base class for psst case '''
+    """ IndexDescriptor Base class for psst case """
 
     def __get__(self, instance, cls):
         try:
@@ -58,7 +56,8 @@ class IndexDescriptor(Descriptor):
         try:
             self.setattributeindex(instance, value)
         except AttributeError:
-            logger.debug('AttributeError on instance.{} when setting index as {}'.format(self.name.replace('_name', ''), self.name))
+            logger.debug('AttributeError on instance.{} when setting index as {}'
+                         .format(self.name.replace('_name', ''), self.name))
             logger.debug(traceback.format_exc())
 
         super().__set__(instance, value)
@@ -66,41 +65,41 @@ class IndexDescriptor(Descriptor):
     def getattributeindex(self, instance):
         raise AttributeError('IndexDescriptor does not have attribute')
 
-    def setattributeindex(self, instance):
+    def setattributeindex(self, instance, value):
         raise AttributeError('IndexDescriptor does not have attribute')
 
 
 class Name(Descriptor):
-    ''' Name Descriptor for a case '''
+    """ Name Descriptor for a case """
     name = 'name'
     ty = str
 
 
 class Version(Descriptor):
-    ''' Version Descriptor for a case '''
+    """ Version Descriptor for a case """
     name = 'version'
     ty = str
 
 
 class BaseMVA(Descriptor):
-    ''' BaseMVA Descriptor for a case '''
+    """ BaseMVA Descriptor for a case """
     name = 'baseMVA'
     ty = float
 
 
 class Bus(Descriptor):
-    ''' Bus Descriptor for a case '''
+    """ Bus Descriptor for a case """
     name = 'bus'
     ty = pd.DataFrame
 
 
 class BusName(IndexDescriptor):
-    ''' Bus Name Descriptor for a case
+    """ Bus Name Descriptor for a case
 
     Bus Name is used to set the index for bus dataframe
-    Bus Name is also used to set the from bus, to bus and gen bus for the remaining data
+    Bus Name is also used to set the 'from bus', 'to bus' and 'gen bus' for the remaining data
 
-    '''
+    """
     name = 'bus_name'
     ty = pd.Index
 
@@ -128,17 +127,17 @@ class BusName(IndexDescriptor):
 
 
 class Branch(Descriptor):
-    ''' Branch Descriptor for a case '''
+    """ Branch Descriptor for a case """
     name = 'branch'
     ty = pd.DataFrame
 
 
 class BranchName(IndexDescriptor):
-    ''' Branch Name Descriptor for a case
+    """ Branch Name Descriptor for a case
 
     Branch Name is used to set the index for the branch dataframe
 
-    '''
+    """
     name = 'branch_name'
     ty = pd.Index
 
@@ -150,26 +149,27 @@ class BranchName(IndexDescriptor):
 
 
 class Gen(Descriptor):
-    ''' Gen Descriptor for a case '''
+    """ Gen Descriptor for a case """
     name = 'gen'
     ty = pd.DataFrame
 
 
 class GenCost(Descriptor):
-    ''' GenCost Descriptor for a case '''
+    """ GenCost Descriptor for a case """
     name = 'gencost'
     ty = pd.DataFrame
 
 
 class GenName(IndexDescriptor):
-    ''' Gen Name for a case '''
+    """ Gen Name for a case """
     name = 'gen_name'
     ty = pd.Index
 
     def getattributeindex(self, instance):
         try:
             if not all(instance.gen.index == instance.gencost.index):
-                logger.warning('Indices for attributes `gen` and `gencost` do not match. `gen` index will be mapped to `gencost` index')
+                logger.warning('Indices for attributes `gen` and `gencost` do not match.'
+                               + '`gen` index will be mapped to `gencost` index')
                 instance.gencost.index = instance.gen.index
         except AttributeError:
             logger.debug('Unable to map `gen` indices to `gencost`')
@@ -181,7 +181,8 @@ class GenName(IndexDescriptor):
         instance.gen.index = value
         instance.gencost.index = value
 
-        if isinstance(instance.gen_name, pd.RangeIndex) or isinstance(instance.bus_name, pd.Int64Index):
+        if isinstance(instance.gen_name, pd.RangeIndex) or isinstance(instance.gen_name, pd.Int64Index):
+            logger.debug('Forcing string types for all gen names')
             instance.gen_name = ['GenCo{}'.format(g) for g in instance.gen_name]
 
 
@@ -201,7 +202,6 @@ class Load(Descriptor):
             raise AttributeError("Unable to set load. Please check that columns in load match bus names")
 
 
-
 class Period(IndexDescriptor):
     name = 'period'
     ty = pd.Index
@@ -214,8 +214,6 @@ class Period(IndexDescriptor):
         instance.bus.index = value
 
 
-
 class _Attributes(Descriptor):
     name = '_attributes'
     ty = list
-

@@ -1,18 +1,15 @@
-#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to include SCALED_COLD_START_TIME parameter and rename a few others.
+# This PSST file, originally due to Dheepak Krishnamurthy,
+# has been modified by Swathi Battula to include SCALED_COLD_START_TIME parameter and rename a few others.
 
-import os
 import logging
-import click
-
-from builtins import super
-import pandas as pd
+import os
 
 import numpy as np
-
-from .descriptors import (Name, Version, BaseMVA, BusName, Bus, Branch, BranchName,
-                        Gen, GenName, GenCost, Load, Period, _Attributes)
+import pandas as pd
 
 from . import matpower
+from .descriptors import (Name, Version, BaseMVA, BusName, Bus, Branch, BranchName,
+                          Gen, GenName, GenCost, Load, Period, _Attributes)
 
 logger = logging.getLogger(__name__)
 pd.options.display.max_rows = 999
@@ -22,7 +19,6 @@ current_directory = os.path.realpath(os.path.dirname(__file__))
 
 
 class PSSTCase(object):
-
     name = Name()
     version = Version()
     baseMVA = BaseMVA()
@@ -55,22 +51,19 @@ class PSSTCase(object):
         gen_string = 'Generators={}'.format(len(gen_name)) if gen_name is not None else ''
         bus_string = 'Buses={}'.format(len(bus_name)) if bus_name is not None else ''
         branch_string = 'Branches={}'.format(len(branch_name)) if branch_name is not None else ''
-        l = [s for s in [name_string, gen_string, bus_string, branch_string] if s != '']
-        if len(l) > 1:
-            repr_string = ', '.join(l)
-        elif len(l) == 1:
-            repr_string = l[0]
+        lns = [s for s in [name_string, gen_string, bus_string, branch_string] if s != '']
+        if len(lns) > 1:
+            repr_string = ', '.join(lns)
+        elif len(lns) == 1:
+            repr_string = lns[0]
         else:
             repr_string = ''
 
-        return '<{}.{}({})>'.format(
-                    self.__class__.__module__,
-                    self.__class__.__name__,
-                    repr_string,
-                )
+        return '<{}.{}({})>'.format(self.__class__.__module__, self.__class__.__name__, repr_string)
 
     @classmethod
-    def _read_matpower(cls, mpc, auto_assign_names=True, fill_loads=True, remove_empty=True, reset_generator_status=True):
+    def _read_matpower(cls, mpc, auto_assign_names=True, fill_loads=True, remove_empty=True,
+                       reset_generator_status=True):
 
         if not isinstance(mpc, cls):
             filename = mpc
@@ -82,20 +75,21 @@ class PSSTCase(object):
         for attribute in matpower.find_attributes(string):
             _list = matpower.parse_file(attribute, string)
             if _list is not None:
-                if len(_list) == 1 and (attribute=='version' or attribute=='baseMVA'):
+                if len(_list) == 1 and (attribute == 'version' or attribute == 'baseMVA'):
                     setattr(mpc, attribute, _list[0][0])
                 else:
-                    cols = max([len(l) for l in _list])
+                    cols = max([len(ln) for ln in _list])
                     columns = matpower.COLUMNS.get(attribute, [i for i in range(0, cols)])
                     columns = columns[:cols]
                     if cols > len(columns):
                         if attribute != 'gencost':
                             logger.warning('Number of columns greater than expected number.')
-                        columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in range(cols - len(columns), -1, -1)]
+                        columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in
+                                                  range(cols - len(columns), -1, -1)]
                     df = pd.DataFrame(_list, columns=columns)
 
                     if attribute == 'bus':
-                        df.set_index('BUS_I',inplace=True)
+                        df.set_index('BUS_I', inplace=True)
 
                     setattr(mpc, attribute, df)
                 mpc._attributes.append(attribute)
@@ -122,7 +116,7 @@ class PSSTCase(object):
         mpc.gen['InitialTimeOFF'] = 0
         mpc.gencost['SCALED_COLD_START_TIME'] = 0
 
-        mpc.gen_status = pd.DataFrame([mpc.gen['GEN_STATUS'] for i in mpc.load.index])
+        mpc.gen_status = pd.DataFrame([mpc.gen['GEN_STATUS'] for _ in mpc.load.index])
         mpc.gen_status.index = mpc.load.index
         if reset_generator_status:
             mpc.gen_status.loc[:, :] = np.nan

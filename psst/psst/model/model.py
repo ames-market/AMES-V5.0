@@ -1,22 +1,24 @@
-#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to include both Positive and Negative Mismatch Penalty Terms.
+# This PSST file, originally due to Dheepak Krishnamurthy,
+# has been modified by Swathi Battula to include both Positive and Negative Mismatch Penalty Terms.
 
 from pyomo.environ import *
+
 
 def create_model():
     model = ConcreteModel()
     return model
 
-def initialize_buses(model,
-                    bus_names=None,
-                    ):
 
+def initialize_buses(model,
+                     bus_names=None,
+                     ):
     model.Buses = Set(ordered=True, initialize=bus_names)
 
-def initialize_time_periods(model,
-                    time_periods=None,
-                    time_period_length=1.0
-                    ):
 
+def initialize_time_periods(model,
+                            time_periods=None,
+                            time_period_length=1.0
+                            ):
     if time_periods is None:
         number_of_time_periods = None
     else:
@@ -26,26 +28,26 @@ def initialize_time_periods(model,
     model.NumTimePeriods = Param(initialize=number_of_time_periods)
     model.TimePeriodLength = Param(initialize=time_period_length)
 
-def initialize_model(model,
-                    time_period_length=1.0,
-                    stage_set=['FirstStage', 'SecondStage'],
-                    positive_mismatch_penalty=1e5,
-                    negative_mismatch_penalty=1e5
-                    ):
 
+def initialize_model(model,
+                     time_period_length=1.0,
+                     stage_set=['FirstStage', 'SecondStage'],
+                     positive_mismatch_penalty=1e5,
+                     negative_mismatch_penalty=1e5
+                     ):
     model.CostCurveType = Param(mutable=True)
 
     model.StageSet = Set(initialize=stage_set)
 
     model.CommitmentTimeInStage = Set(model.StageSet,
                                       within=model.TimePeriods,
-                                     initialize={'FirstStage': model.TimePeriods,
-                                                'SecondStage': list()})
+                                      initialize={'FirstStage': model.TimePeriods,
+                                                  'SecondStage': list()})
 
     model.GenerationTimeInStage = Set(model.StageSet,
                                       within=model.TimePeriods,
-                                     initialize={'FirstStage': list(),
-                                                'SecondStage': model.TimePeriods})
+                                      initialize={'FirstStage': list(),
+                                                  'SecondStage': model.TimePeriods})
 
     model.CommitmentStageCost = Var(model.StageSet, within=NonNegativeReals)
     model.GenerationStageCost = Var(model.StageSet, within=NonNegativeReals)
@@ -64,13 +66,13 @@ def initialize_model(model,
     # TotalDemand can be used to handle all kinds of loads, NDGs and DERs
     model.TotalNetDemand = Var(model.TimePeriods, within=NonNegativeReals)
 
-    #\Lambda
+    # Lambda
     model.LoadPositiveMismatchPenalty = Param(within=NonNegativeReals, initialize=positive_mismatch_penalty)
     model.LoadNegativeMismatchPenalty = Param(within=NonNegativeReals, initialize=negative_mismatch_penalty)
 
     # amount of power produced by each generator, at each time period.
     def power_bounds_rule(m, g, t):
-        return (0, m.MaximumPowerOutput[g])
+        return 0, m.MaximumPowerOutput[g]
 
     model.PowerGenerated = Var(model.Generators, model.TimePeriods, within=NonNegativeReals, bounds=power_bounds_rule)
 
@@ -81,7 +83,7 @@ def initialize_model(model,
     model.MinimumPowerAvailable = Var(model.Generators, model.TimePeriods, within=NonNegativeReals)
 
     # voltage angles at the buses (S) (lock the first bus at 0) in radians
-    model.Angle = Var(model.Buses, model.TimePeriods, within=Reals, bounds=(-3.14159265,3.14159265))
+    model.Angle = Var(model.Buses, model.TimePeriods, within=Reals, bounds=(-3.14159265, 3.14159265))
 
     ###################
     # cost components #
@@ -95,16 +97,16 @@ def initialize_model(model,
     model.ShutdownCost = Var(model.Generators, model.TimePeriods, within=NonNegativeReals)
 
     # (implicit) binary denoting whether starting up a generator will cost HotStartCost or ColdStartCost
-    model.HotStart = Var(model.Generators, model.TimePeriods, bounds=(0,1))
+    model.HotStart = Var(model.Generators, model.TimePeriods, bounds=(0, 1))
 
     #################
     # Load Mismatch #
     #################
 
-    model.LoadGenerateMismatch = Var(model.Buses, model.TimePeriods, within = Reals, initialize=0)
-    model.posLoadGenerateMismatch = Var(model.Buses, model.TimePeriods, within = NonNegativeReals, initialize=0)
-    model.negLoadGenerateMismatch = Var(model.Buses, model.TimePeriods, within = NonNegativeReals, initialize=0)
+    model.LoadGenerateMismatch = Var(model.Buses, model.TimePeriods, within=Reals, initialize=0)
+    model.posLoadGenerateMismatch = Var(model.Buses, model.TimePeriods, within=NonNegativeReals, initialize=0)
+    model.negLoadGenerateMismatch = Var(model.Buses, model.TimePeriods, within=NonNegativeReals, initialize=0)
 
-    model.GlobalReserveMismatch = Var(model.TimePeriods, within = Reals, initialize=0)
-    model.posGlobalReserveMismatch = Var(model.TimePeriods, within = NonNegativeReals, initialize=0)
-    model.negGlobalReserveMismatch = Var(model.TimePeriods, within = NonNegativeReals, initialize=0)
+    model.GlobalReserveMismatch = Var(model.TimePeriods, within=Reals, initialize=0)
+    model.posGlobalReserveMismatch = Var(model.TimePeriods, within=NonNegativeReals, initialize=0)
+    model.negGlobalReserveMismatch = Var(model.TimePeriods, within=NonNegativeReals, initialize=0)

@@ -6,12 +6,10 @@ Copyright (C) 2016 Dheepak Krishnamurthy
 
 from __future__ import print_function, absolute_import
 
-import os
-from builtins import open
 import logging
 
-import numpy as np
-from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine, OneOrMore, Optional, Keyword, Group, printables
+from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine
+from pyparsing import OneOrMore, Optional, Keyword, Group, printables
 
 from ...utils import int_else_float_except_string
 
@@ -35,8 +33,8 @@ def parse_file(attribute, string):
 
 
 def parse_line(attribute, string):
-
-    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';') + Optional(Comments))
+    Grammar = Suppress(
+        Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';') + Optional(Comments))
     result, i, j = Grammar.scanString(string).next()
 
     return [int_else_float_except_string(s) for s in result['data'].asList()]
@@ -44,8 +42,8 @@ def parse_line(attribute, string):
 
 def parse_table(attribute, string):
     Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
-    Grammar = Suppress(Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
-
+    Grammar = Suppress(
+        Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
     result, i, j = Grammar.scanString(string).next()
 
     _list = list()
@@ -53,4 +51,3 @@ def parse_table(attribute, string):
         _list.append([int_else_float_except_string(s) for s in r['data'].asList()])
 
     return _list
-

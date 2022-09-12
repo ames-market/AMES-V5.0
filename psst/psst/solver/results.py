@@ -1,7 +1,8 @@
-#This PSST file, originally due to Dheepak Krishnamurthy, has been modified by Swathi Battula to return the sorted list of LMPs.
+# This PSST file, originally due to Dheepak Krishnamurthy,
+# has been modified by Swathi Battula to return the sorted list of LMPs.
 
 import pandas as pd
-import click
+
 
 class PSSTResults(object):
 
@@ -14,19 +15,23 @@ class PSSTResults(object):
     def production_cost(self):
         m = self._model
         st = 'SecondStage'
-        return sum([m.ProductionCost[g, t].value for t in m.GenerationTimeInStage[st] if t < self._maximum_hours for g in m.Generators])
+        return sum(
+            [m.ProductionCost[g, t].value for t in m.GenerationTimeInStage[st] if t < self._maximum_hours for g in
+             m.Generators])
 
     @property
     def commitment_cost(self):
         m = self._model
         st = 'FirstStage'
-        return sum([m.StartupCost[g, t].value + m.ShutdownCost[g, t].value for g in m.Generators for t in m.CommitmentTimeInStage[st] if t < self._maximum_hours])
+        return sum([m.StartupCost[g, t].value + m.ShutdownCost[g, t].value for g in m.Generators for t in
+                    m.CommitmentTimeInStage[st] if t < self._maximum_hours])
 
     @property
     def noload_cost(self):
         m = self._model
         st = 'FirstStage'
-        return sum([sum([m.UnitOn[g, t].value for t in m.CommitmentTimeInStage[st] if t < self._maximum_hours]) * m.MinimumProductionCost[g].value * m.TimePeriodLength.value for g in m.Generators])
+        return sum([sum([m.UnitOn[g, t].value for t in m.CommitmentTimeInStage[st] if t < self._maximum_hours]) *
+                    m.MinimumProductionCost[g].value * m.TimePeriodLength.value for g in m.Generators])
 
     @property
     def unit_commitment(self):
@@ -86,7 +91,7 @@ class PSSTResults(object):
         return self._get('HotStart', self._model)
 
     @property
-    def hot_start(self):
+    def startup_cost(self):
         return self._get('StartupCost', self._model)
 
     @staticmethod
@@ -96,31 +101,29 @@ class PSSTResults(object):
         if set1 is not None and set2 is None:
             for s1 in set1:
                 _dict[s1] = getattr(model, attribute)[s1]
-
             return pd.Series(_dict)
 
         else:
             if set1 is None and set2 is None:
                 set1 = set()
                 set2 = set()
-                if attribute is 'PowerBalance':
+                if attribute == 'PowerBalance':
                     index = getattr(model, attribute + '_index')
                     for i, j in index:
                         set1.add(i)
                         set2.add(j)
-                elif attribute is 'EnforceReserveDownRequirements':
+                elif attribute == 'EnforceReserveDownRequirements':
                     index = getattr(model, attribute)
                     _dict = list()
                     for i in index:
-                        _dict.append(model.dual.get(getattr(model,attribute)[i]))
+                        _dict.append(model.dual.get(getattr(model, attribute)[i]))
                     return pd.DataFrame(_dict)
-                elif attribute is 'EnforceReserveUpRequirements':
+                elif attribute == 'EnforceReserveUpRequirements':
                     index = getattr(model, attribute)
                     _dict = list()
                     for i in index:
-                        _dict.append(model.dual.get(getattr(model,attribute)[i]))
+                        _dict.append(model.dual.get(getattr(model, attribute)[i]))
                     return pd.DataFrame(_dict)
-
 
             for s1 in set1:
                 _dict[s1] = list()
@@ -132,6 +135,5 @@ class PSSTResults(object):
                         _dict[s1].append(getattr(model, attribute)[s1, s2].value)
 
             pd_unsorted = pd.DataFrame(_dict)
-            pd_sorted = pd_unsorted.reindex(sorted(pd_unsorted.columns),axis=1)
-            return pd_sorted 
-
+            pd_sorted = pd_unsorted.reindex(sorted(pd_unsorted.columns), axis=1)
+            return pd_sorted

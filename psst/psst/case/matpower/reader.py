@@ -1,9 +1,7 @@
 from __future__ import print_function, absolute_import
 
-import re
 import logging
-
-import numpy as np
+import re
 
 from ...utils import int_else_float_except_string
 
@@ -21,7 +19,6 @@ def find_attributes(string):
 
 
 def parse_file(attribute, string):
-
     match = search_file(attribute, string)
 
     if match is not None:
@@ -42,7 +39,6 @@ def parse_file(attribute, string):
 
 
 def search_file(attribute, string):
-
     if attribute in ['gen', 'gencost', 'bus', 'branch']:
         pattern = r'mpc\.{}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'.format(attribute)
     elif attribute in ['version', 'baseMVA']:
@@ -58,5 +54,3 @@ def search_file(attribute, string):
         return match.groupdict().get('data', None)
     else:
         return match
-
-

@@ -1,12 +1,11 @@
 import logging
 import os
-
-import pandas as pd
 import numpy as np
+import pandas as pd
 
 from pypower.makePTDF import makePTDF
-from pypower.runpf import runpf
 from pypower.rundcpf import rundcpf
+from pypower.runpf import runpf
 
 logger = logging.getLogger(__name__)
 
@@ -20,16 +19,17 @@ def generate_segments(case, number_of_segments):
     for g in case.gen_name:
         pmin, pmax = case.gen.loc[g, ['PMIN', 'PMAX']]
         N = int(case.gencost.loc[g, 'NCOST'])
-        cost = case.gencost.loc[g, ['COST_{}'.format(i) for i in range(0, N )]]
-        x = np.linspace(pmin, pmax, number_of_segments+1)
+        cost = case.gencost.loc[g, ['COST_{}'.format(i) for i in range(0, N)]]
+        x = np.linspace(pmin, pmax, number_of_segments + 1)
         for i, p in enumerate(x[:-1]):
             # p = ( x[i] + x[i+1] ) / 2.0
             p_seg = dict()
             p_seg['slope'] = incremental_cost(p, cost, N)
-            p_seg['segment'] = (x[i], x[i+1])
+            p_seg['segment'] = (x[i], x[i + 1])
             p_seg['name'] = g
             segments.append(p_seg)
     return segments
+
 
 def sort_segments(segments):
     minimum = sorted(segments, key=lambda x: x['slope'])[0]['segment'][0]
@@ -41,7 +41,7 @@ def sort_segments(segments):
 
 
 def incremental_cost(p, cost, N):
-    return sum(cost['COST_{}'.format(i)] * i * p ** (i-1) for i in range(1, N))
+    return sum(cost['COST_{}'.format(i)] * i * p ** (i - 1) for i in range(1, N))
 
 
 def calculate_PTDF(case, precision=None, tolerance=None):
@@ -64,10 +64,9 @@ def calculate_PTDF(case, precision=None, tolerance=None):
 
 
 def solve_dcopf(case, hour=None,
-        results=None,
-        ppopt={'VERBOSE': False},
-        fname='./runpf.log'):
-
+                results=None,
+                ppopt={'VERBOSE': False},
+                fname='./runpf.log'):
     fname = os.path.abspath(fname)
 
     baseMVA = case.baseMVA
@@ -106,12 +105,12 @@ def solve_dcopf(case, hour=None,
                 'bus': bus}
 
     return rundcpf(casedata, ppopt=ppopt, fname=fname)
+
 
 def solve_dcpf(case, hour=None,
-        results=None,
-        ppopt={'VERBOSE': False},
-        fname='./runpf.log'):
-
+               results=None,
+               ppopt={'VERBOSE': False},
+               fname='./runpf.log'):
     fname = os.path.abspath(fname)
 
     baseMVA = case.baseMVA
@@ -151,12 +150,12 @@ def solve_dcpf(case, hour=None,
 
     return rundcpf(casedata, ppopt=ppopt, fname=fname)
 
-def solve_pf(case, hour=None,
-        results=None,
-        ppopt={'VERBOSE': False},
-        set_generator_status=False,
-        fname='./runpf.log'):
 
+def solve_pf(case, hour=None,
+             results=None,
+             ppopt={'VERBOSE': False},
+             set_generator_status=False,
+             fname='./runpf.log'):
     fname = os.path.abspath(fname)
 
     baseMVA = case.baseMVA
@@ -199,5 +198,6 @@ def solve_pf(case, hour=None,
 
 
 def find_violated_lines(original_case_branch, results_case_branch):
-    s = (pd.Series(abs(results_case_branch[:, 13])) > original_case_branch['RATE_A']) & (original_case_branch['RATE_A'] != 0)
-    return s[s==True].index
+    s = (pd.Series(abs(results_case_branch[:, 13])) > original_case_branch['RATE_A']) & (
+                original_case_branch['RATE_A'] != 0)
+    return s[s is True].index
