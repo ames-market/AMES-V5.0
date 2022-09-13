@@ -161,7 +161,7 @@ def build_model(case,
     initial_time_periods_online_dict = generator_df['InitialTimeON'].to_dict()
     initial_time_periods_offline_dict = generator_df['InitialTimeOFF'].to_dict()
 
-    initial_state(model, initial_state=initial_state_dict, initial_power_generated=initial_power_generated_dict,
+    initial_state(model, init_state=initial_state_dict, initial_power_generated=initial_power_generated_dict,
                   initial_time_periods_online=initial_time_periods_online_dict,
                   initial_time_periods_offline=initial_time_periods_offline_dict)
 
@@ -216,8 +216,6 @@ def build_model(case,
     segments = config.pop('segments', 10)
     psl_points = dict()
     psl_values = dict()
-
-    pmin_values = dict()
     pmax_values = dict()
 
     # print('segments=',segments)
@@ -255,8 +253,7 @@ def build_model(case,
             load_benefit(model)
             constraint_for_benefit(model)
         else:
-            PriceSenLoadFlag = False
-            raise RuntimeError('PriceSenLoadFlag is set to be True, but no Price Sensitive Load Data is correctly loaded')
+            raise RuntimeError('PriceSenLoadFlag is True, but no Price Sensitive Load Data is correctly loaded')
 
     initialize_global_reserves(model, DownReservePercent=DownReservePercent, UpReservePercent=UpReservePercent)
 

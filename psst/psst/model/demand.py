@@ -1,4 +1,4 @@
-from pyomo.environ import *
+from pyomo.environ import Param
 
 
 def initialize_demand(model, NetFixedLoad=None):

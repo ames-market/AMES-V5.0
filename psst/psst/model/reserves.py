@@ -1,15 +1,15 @@
 # This PSST file, originally due to Dheepak Krishnamurthy,
 # has been modified by Swathi Battula to handle reserve zones.
 
-from pyomo.environ import *
+from pyomo.environ import Set, Param, Reals, NonNegativeReals, value
 
 
 def _build_price_sen_load_buses_at_each_zone(m, rz):
     price_sen_load_at_each_zone = []
     for b in m.Buses:
         if b in m.BusesAtEachReserveZone[rz]:
-            for l in m.PriceSensitiveLoadsAtBus[b]:
-                price_sen_load_at_each_zone.append(l)
+            for ld in m.PriceSensitiveLoadsAtBus[b]:
+                price_sen_load_at_each_zone.append(ld)
     return price_sen_load_at_each_zone
 
 

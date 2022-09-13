@@ -92,14 +92,14 @@ def scuc(uc, data, output, solver):
                 outfile.write("PSLResults\n")
                 instance = model._model
                 PriceSenLoadDemand = {}
-                for l in instance.PriceSensitiveLoads.value:
+                for ld in instance.PriceSensitiveLoads.value:
                     for t in instance.TimePeriods:
-                        PriceSenLoadDemand[(l, t)] = instance.PSLoadDemand[l, t].value
+                        PriceSenLoadDemand[(ld, t)] = instance.PSLoadDemand[ld, t].value
 
-                for l in sorted(instance.PriceSensitiveLoads.value):
-                    outfile.write("%s\n" % str(l).ljust(8))
+                for ld in sorted(instance.PriceSensitiveLoads.value):
+                    outfile.write("%s\n" % str(ld).ljust(8))
                     for t in sorted(instance.TimePeriods):
-                        outfile.write(" %d %6.4f \n" % (t, PriceSenLoadDemand[(l, t)]))
+                        outfile.write(" %d %6.4f \n" % (t, PriceSenLoadDemand[(ld, t)]))
                 # print ('PriceSenLoadDemand = \n',PriceSenLoadDemand)
                 outfile.write("END_PSLResults\n")
 
@@ -165,14 +165,14 @@ def sced(uc, data, output, solver):
                 f.write("PSLResults\n")
                 instance = model._model
                 PriceSenLoadDemand = {}
-                for l in instance.PriceSensitiveLoads.value:
+                for ld in instance.PriceSensitiveLoads.value:
                     for t in instance.TimePeriods:
-                        PriceSenLoadDemand[(l, t)] = instance.PSLoadDemand[l, t].value
+                        PriceSenLoadDemand[(ld, t)] = instance.PSLoadDemand[ld, t].value
 
-                for l in sorted(instance.PriceSensitiveLoads.value):
-                    f.write("%s\n" % str(l).ljust(8))
+                for ld in sorted(instance.PriceSensitiveLoads.value):
+                    f.write("%s\n" % str(ld).ljust(8))
                     for t in sorted(instance.TimePeriods):
-                        f.write(" %d %6.4f \n" % (t, PriceSenLoadDemand[(l, t)]))
+                        f.write(" %d %6.4f \n" % (t, PriceSenLoadDemand[(ld, t)]))
                 # print ('PriceSenLoadDemand = \n',PriceSenLoadDemand)
                 f.write("END_PSLResults\n")
 

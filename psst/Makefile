@@ -30,6 +30,11 @@ clean: clean-build clean-pyc clean-test ## remove all build, test, coverage and 
 
 
 clean-build: ## remove build artifacts
+	rm -f docs/cli.rst
+	rm -f docs/utils.rst
+	rm -f docs/case.*.rst
+	rm -f docs/model*.rst
+	rm -f docs/solver*.rst
 	rm -fr build/
 	rm -fr dist/
 	rm -fr .eggs/

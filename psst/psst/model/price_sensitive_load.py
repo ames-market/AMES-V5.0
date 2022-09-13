@@ -23,8 +23,8 @@ def piece_wise_linear_benefit(model, points=None, values=None):
 
 def initialize_load_demand(model):
     # amount of power consumed by load, at each time period.
-    def demand_bounds_rule(m, l, t):
-        return (0, m.MaximumPowerDemand[l, t])
+    def demand_bounds_rule(m, ld, t):
+        return 0, m.MaximumPowerDemand[ld, t]
 
     model.PSLoadDemand = Var(model.PriceSensitiveLoads, model.TimePeriods, within=NonNegativeReals,
                              bounds=demand_bounds_rule)
@@ -34,15 +34,15 @@ def initialize_load_demand(model):
 def load_benefit(model):
     model.LoadDemandPiecewisePoints = {}
     model.LoadDemandPiecewiseValues = {}
-    for l in model.PriceSensitiveLoads:
+    for ld in model.PriceSensitiveLoads:
         for t in model.TimePeriods:
-            load_demand_piecewise_points_rule(model, l, t)
+            load_demand_piecewise_points_rule(model, ld, t)
 
 
-def load_demand_piecewise_points_rule(m, l, t):
-    if len(m.BenefitPiecewisePoints[l, t]) > 0:
-        m.LoadDemandPiecewisePoints[l, t] = list(m.BenefitPiecewisePoints[l, t])
-        temp = list(m.BenefitPiecewiseValues[l, t])
-        m.LoadDemandPiecewiseValues[l, t] = {}
-        for i in range(len(m.BenefitPiecewisePoints[l, t])):
-            m.LoadDemandPiecewiseValues[l, t][m.LoadDemandPiecewisePoints[l, t][i]] = temp[i]
+def load_demand_piecewise_points_rule(m, ld, t):
+    if len(m.BenefitPiecewisePoints[ld, t]) > 0:
+        m.LoadDemandPiecewisePoints[ld, t] = list(m.BenefitPiecewisePoints[ld, t])
+        temp = list(m.BenefitPiecewiseValues[ld, t])
+        m.LoadDemandPiecewiseValues[ld, t] = {}
+        for i in range(len(m.BenefitPiecewisePoints[ld, t])):
+            m.LoadDemandPiecewiseValues[ld, t][m.LoadDemandPiecewisePoints[ld, t][i]] = temp[i]

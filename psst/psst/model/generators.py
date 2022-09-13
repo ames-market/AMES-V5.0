@@ -2,7 +2,7 @@
 # has been modified by Swathi Battula to make the
 # code consistent with AMES V5.0 documentation dated 7-2-2020.
 
-from pyomo.environ import *
+from pyomo.environ import Set, Param, Binary, NonNegativeIntegers, NonNegativeReals, Reals, value
 
 
 def initialize_generators(model,
@@ -52,17 +52,17 @@ def minimum_up_minimum_down_time(model, scaled_minimum_up_time=None, scaled_mini
                                         initialize=scaled_minimum_down_time)
 
 
-def initial_state(model, initial_state=None,
+def initial_state(model, init_state=None,
                   initial_power_generated=None,
                   initial_time_periods_online=None,
                   initial_time_periods_offline=None
                   ):
-    model.UnitOnT0State = Param(model.Generators, within=Reals, initialize=initial_state, mutable=True)
+    model.UnitOnT0State = Param(model.Generators, within=Reals, initialize=init_state, mutable=True)
 
     def t0_unit_on_rule(m, g):
         return int(value(m.UnitOnT0State[g]) >= 1)
 
-    # v_j(0) --> Value follows immediated from \hat{v}_j value. DON'T SET
+    # v_j(0) --> Value follows immediately from \hat{v}_j value. DON'T SET
     model.UnitOnT0 = Param(model.Generators, within=Binary, initialize=t0_unit_on_rule, mutable=True)
 
     model.PowerGeneratedT0 = Param(model.Generators, within=NonNegativeReals, default=0,

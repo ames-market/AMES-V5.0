@@ -7,7 +7,7 @@ from functools import partial
 import logging
 import numpy as np
 
-from pyomo.environ import *
+from pyomo.environ import Constraint, Objective, Piecewise, minimize, value, simple_constraint_rule
 
 logger = logging.getLogger(__file__)
 eps = 1e-3
@@ -255,11 +255,11 @@ def enforce_up_time_constraints_subsequent(m, g, t):
     elif t <= (value(m.NumTimePeriods - m.ScaledMinimumUpTime[g]) + 1):
         if t == 1:
             return sum(
-                m.UnitOn[g, n] for n in m.TimePeriods if n >= t and n <= (t + value(m.ScaledMinimumUpTime[g]) - 1)) >= \
+                m.UnitOn[g, n] for n in m.TimePeriods if t <= n <= (t + value(m.ScaledMinimumUpTime[g]) - 1)) >= \
                    m.ScaledMinimumUpTime[g] * (m.UnitOn[g, t] - m.UnitOnT0[g])
         else:
             return sum(
-                m.UnitOn[g, n] for n in m.TimePeriods if n >= t and n <= (t + value(m.ScaledMinimumUpTime[g]) - 1)) >= \
+                m.UnitOn[g, n] for n in m.TimePeriods if t <= n <= (t + value(m.ScaledMinimumUpTime[g]) - 1)) >= \
                    m.ScaledMinimumUpTime[g] * (m.UnitOn[g, t] - m.UnitOn[g, t - 1])
     else:
         if t == 1:
@@ -281,11 +281,11 @@ def enforce_down_time_constraints_subsequent(m, g, t):
     elif t <= (value(m.NumTimePeriods - m.ScaledMinimumDownTime[g]) + 1):
         if t == 1:
             return sum((1 - m.UnitOn[g, n]) for n in m.TimePeriods if
-                       n >= t and n <= (t + value(m.ScaledMinimumDownTime[g]) - 1)) >= \
+                       t <= n <= (t + value(m.ScaledMinimumDownTime[g]) - 1)) >= \
                    m.ScaledMinimumDownTime[g] * (m.UnitOnT0[g] - m.UnitOn[g, t])
         else:
             return sum((1 - m.UnitOn[g, n]) for n in m.TimePeriods if
-                       n >= t and n <= (t + value(m.ScaledMinimumDownTime[g]) - 1)) >= \
+                       t <= n <= (t + value(m.ScaledMinimumDownTime[g]) - 1)) >= \
                    m.ScaledMinimumDownTime[g] * (m.UnitOn[g, t - 1] - m.UnitOn[g, t])
     else:
         if t == 1:

@@ -202,10 +202,10 @@ def read_model(model_data):
 
         if READ is True:
             g, pg, status, ITO_g, ITF_g, min_g, max_g, \
-            scaled_min_up_time, scaled_min_down_time, \
-            scaled_ramp_up_rate, scaled_ramp_down_rate, \
-            scaled_startup_ramp_rate, scaled_shutdown_ramp_rate, \
-            scaled_cold_start_time, coldstartcost, hotstartcost, shutdowncost = ln.split()
+             scaled_min_up_time, scaled_min_down_time, \
+             scaled_ramp_up_rate, scaled_ramp_down_rate, \
+             scaled_startup_ramp_rate, scaled_shutdown_ramp_rate, \
+             scaled_cold_start_time, coldstartcost, hotstartcost, shutdowncost = ln.split()
 
             case.gen.loc[g, 'PG'] = float(pg.replace(',', '.'))
             case.gen.loc[g, 'UnitOnT0State'] = int(status.replace(',', '.'))

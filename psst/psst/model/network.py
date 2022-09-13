@@ -1,4 +1,4 @@
-from pyomo.environ import *
+from pyomo.environ import Set, Param
 
 
 def initialize_network(model,
