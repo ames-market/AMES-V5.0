@@ -116,8 +116,8 @@ class PSSTCase(object):
         mpc.gen['InitialTimeOFF'] = 0
         mpc.gencost['SCALED_COLD_START_TIME'] = 0
 
-        mpc.gen_status = pd.DataFrame([mpc.gen['GEN_STATUS'] for _ in mpc.load.index])
-        mpc.gen_status.index = mpc.load.index
+        mpc.gen_status = pd.DataFrame([mpc.gen['GEN_STATUS'] for _ in mpc.gen.index])
+        mpc.gen_status.index = mpc.gen.index
         if reset_generator_status:
             mpc.gen_status.loc[:, :] = np.nan
 

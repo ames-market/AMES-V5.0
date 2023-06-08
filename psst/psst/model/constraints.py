@@ -14,7 +14,7 @@ eps = 1e-3
 
 
 def fix_first_angle_rule(m, t, slack_bus=1):
-    return m.Angle[m.Buses[slack_bus], t] == 0.0
+    return m.Angle[m.Buses.at(slack_bus), t] == 0.0
 
 
 def lower_line_power_bounds_rule(m, l, t):
@@ -85,9 +85,12 @@ def power_balance(m, b, t):
 
 # This function defines m.NetPowerInjectionAtBus[b, t] constraint
 def net_power_at_bus_rule(m, b, t, PriceSenLoadFlag=False):
-    _constraint = sum(
-        (1 - m.GeneratorForcedOutage[g, t]) * m.GeneratorBusContributionFactor[g, b] * m.PowerGenerated[g, t] for g in
-        m.GeneratorsAtBus[b])
+    try:
+        _constraint = sum(
+            (1 - m.GeneratorForcedOutage[g, t]) * m.GeneratorBusContributionFactor[g, b] * m.PowerGenerated[g, t] for g in
+            m.GeneratorsAtBus[b])
+    except:
+        _constraint = 0
 
     _constraint = _constraint - m.NetFixedLoad[b, t]
 

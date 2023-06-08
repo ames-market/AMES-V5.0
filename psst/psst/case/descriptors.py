@@ -107,23 +107,22 @@ class BusName(IndexDescriptor):
         return instance.bus.index
 
     def setattributeindex(self, instance, value):
+        instance.branch['F_BUS'] = instance.branch['F_BUS'].apply(lambda x: value[value.get_loc(x)])
+        instance.branch['T_BUS'] = instance.branch['T_BUS'].apply(lambda x: value[value.get_loc(x)])
+        instance.gen['GEN_BUS'] = instance.gen['GEN_BUS'].apply(lambda x: value[value.get_loc(x)])
+
         bus_name = instance.bus.index
-        instance.branch['F_BUS'] = instance.branch['F_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
-        instance.branch['T_BUS'] = instance.branch['T_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
-        instance.gen['GEN_BUS'] = instance.gen['GEN_BUS'].apply(lambda x: value[bus_name.get_loc(x)])
+        if isinstance(bus_name, pd.RangeIndex) or isinstance(bus_name, pd.Index):
+            logger.debug('Forcing string types for all bus names')
+            bus_name = ['Bus{}'.format(b) for b in bus_name]
+            instance.bus.index = bus_name
 
         try:
-            instance.load.columns = [v for b, v in zip(instance.bus_name.isin(instance.load.columns), value) if b == True]
+            instance.load.columns = [v for b, v in zip(instance.bus_name.isin(instance.load.columns), bus_name) if b == True]
         except ValueError:
-            instance.load.columns = value
+            instance.load.columns = bus_name
         except AttributeError:
-            instance.load = pd.DataFrame(0, index=range(0, 1), columns=value, dtype='float')
-
-        instance.bus.index = value
-
-        if isinstance(instance.bus_name, pd.RangeIndex) or isinstance(instance.bus_name, pd.Int64Index):
-            logger.debug('Forcing string types for all bus names')
-            instance.bus_name = ['Bus{}'.format(b) for b in instance.bus_name]
+            instance.load = pd.DataFrame(0, index=range(0, 1), columns=bus_name, dtype='float')
 
 
 class Branch(Descriptor):
@@ -181,9 +180,12 @@ class GenName(IndexDescriptor):
         instance.gen.index = value
         instance.gencost.index = value
 
-        if isinstance(instance.gen_name, pd.RangeIndex) or isinstance(instance.gen_name, pd.Int64Index):
+        gen_name = instance.gen.index
+        if isinstance(gen_name, pd.RangeIndex) or isinstance(gen_name, pd.Index):
             logger.debug('Forcing string types for all gen names')
-            instance.gen_name = ['GenCo{}'.format(g) for g in instance.gen_name]
+            gen_name = ['GenCo{}'.format(g) for g in gen_name]
+            instance.gen.index = gen_name
+            instance.gencost.index = gen_name
 
 
 class Load(Descriptor):

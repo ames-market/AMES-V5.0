@@ -45,11 +45,11 @@ def scuc(uc, data, output, solver):
         with open(uc.strip("'"), 'w') as outfile:
             instance = model._model
             results = {}
-            for g in instance.Generators.value:
+            for g in instance.Generators.data():
                 for t in instance.TimePeriods:
                     results[(g, t)] = instance.UnitOn[g, t]
 
-            for g in sorted(instance.Generators.value):
+            for g in sorted(instance.Generators.data()):
                 outfile.write("%s\n" % str(g).ljust(8))
                 for t in sorted(instance.TimePeriods):
                     outfile.write("% 1d \n" % (int(results[(g, t)].value + 0.5)))
@@ -65,7 +65,7 @@ def scuc(uc, data, output, solver):
             instance = model._model
             results = {}
             resultsPowerGen = {}
-            for g in instance.Generators.value:
+            for g in instance.Generators.data():
                 for t in instance.TimePeriods:
                     results[(g, t)] = instance.UnitOn[g, t]
                     resultsPowerGen[(g, t)] = instance.PowerGenerated[g, t]
@@ -74,14 +74,14 @@ def scuc(uc, data, output, solver):
             outfile.write("optimal \t")
             outfile.write("\nEND_SOLUTION_STATUS\n")
 
-            for g in sorted(instance.Generators.value):
+            for g in sorted(instance.Generators.data()):
                 outfile.write("%s\n" % str(g).ljust(8))
                 for t in sorted(instance.TimePeriods):
                     outfile.write("% 1d %6.4f\n" % (int(results[(g, t)].value + 0.5), resultsPowerGen[(g, t)].value))
             outfile.write("DAMLMP\n")
             for h, r in model.results.lmp.iterrows():
                 bn = 1
-                for _, lmp in r.iteritems():
+                for _, lmp in r.items():
                     if lmp is None:
                         lmp = 0
                     outfile.write(str(bn) + ' : ' + str(h + 1) + ' : ' + str(round(lmp, 2)) + "\n")
@@ -92,11 +92,11 @@ def scuc(uc, data, output, solver):
                 outfile.write("PSLResults\n")
                 instance = model._model
                 PriceSenLoadDemand = {}
-                for ld in instance.PriceSensitiveLoads.value:
+                for ld in instance.PriceSensitiveLoads.data():
                     for t in instance.TimePeriods:
                         PriceSenLoadDemand[(ld, t)] = instance.PSLoadDemand[ld, t].value
 
-                for ld in sorted(instance.PriceSensitiveLoads.value):
+                for ld in sorted(instance.PriceSensitiveLoads.data()):
                     outfile.write("%s\n" % str(ld).ljust(8))
                     for t in sorted(instance.TimePeriods):
                         outfile.write(" %d %6.4f \n" % (t, PriceSenLoadDemand[(ld, t)]))
@@ -144,7 +144,7 @@ def sced(uc, data, output, solver):
             f.write("LMP\n")
             for h, r in model.results.lmp.iterrows():
                 bn = 1
-                for _, lmp in r.iteritems():
+                for _, lmp in r.items():
                     if lmp is None:
                         lmp = 0
                     f.write(str(bn) + ' : ' + str(h + 1) + ' : ' + str(round(lmp, 2)) + "\n")
@@ -154,7 +154,7 @@ def sced(uc, data, output, solver):
             f.write("GenCoResults\n")
             instance = model._model
 
-            for g in instance.Generators.value:
+            for g in instance.Generators.data():
                 f.write("%s\n" % str(g).ljust(8))
                 for t in instance.TimePeriods:
                     f.write("Interval: {}\n".format(str(t)))
@@ -165,11 +165,11 @@ def sced(uc, data, output, solver):
                 f.write("PSLResults\n")
                 instance = model._model
                 PriceSenLoadDemand = {}
-                for ld in instance.PriceSensitiveLoads.value:
+                for ld in instance.PriceSensitiveLoads.data():
                     for t in instance.TimePeriods:
                         PriceSenLoadDemand[(ld, t)] = instance.PSLoadDemand[ld, t].value
 
-                for ld in sorted(instance.PriceSensitiveLoads.value):
+                for ld in sorted(instance.PriceSensitiveLoads.data()):
                     f.write("%s\n" % str(ld).ljust(8))
                     for t in sorted(instance.TimePeriods):
                         f.write(" %d %6.4f \n" % (t, PriceSenLoadDemand[(ld, t)]))
@@ -191,3 +191,5 @@ def sced(uc, data, output, solver):
 
 if __name__ == "__main__":
     cli()
+    # path = "/home/osboxes/tesp/repository/AMES-V5.0/DATA/"
+    # scuc(path+"uc.dat",path+"dam.dat",path+"res.out", SOLVER)

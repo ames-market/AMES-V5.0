@@ -122,10 +122,12 @@ def read_model(model_data):
     for g in ag:
         case.gen.loc[g] = case.gen.loc['GenCo0']
         case.gencost.loc[g] = case.gencost.loc['GenCo0']
+        case.gen_status.loc[g] = case.gen_status.loc['GenCo0']
 
     if 'GenCo0' not in ag:
         case.gen.drop('GenCo0', inplace=True)
         case.gencost.drop('GenCo0', inplace=True)
+        case.gen_status.drop('GenCo0', inplace=True)
 
     DIRECTIVE = 'set ThermalGeneratorsAtBus'
     for ln in data.splitlines():

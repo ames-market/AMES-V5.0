@@ -5,7 +5,7 @@ import os
 import warnings
 
 from pyomo.environ import SolverFactory
-from pyutilib.services import TempfileManager
+from pyomo.common.tempfiles import TempfileManager
 
 from .results import PSSTResults
 
@@ -18,7 +18,7 @@ def solve_model(model, solver='glpk', solver_io=None, keepfiles=True, verbose=Tr
         solver_instance = SolverFactory(solver, solver_io=solver_io, is_mip=is_mip)
     else:
         solver_instance = SolverFactory(solver, solver_io=solver_io)
-    model.preprocess()
+
     if is_mip and solver != 'ipopt':
         solver_instance.options['mipgap'] = mipgap
 

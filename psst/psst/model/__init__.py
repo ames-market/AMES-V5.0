@@ -287,7 +287,7 @@ def build_model(case,
     objective_function(model, PriceSenLoadFlag=PriceSenLoadFlag)
 
     for t, row in case.gen_status.iterrows():
-        for g, v in row.iteritems():
+        for g, v in row.items():
             if not pd.isnull(v):
                 model.UnitOn[g, t].fixed = True
                 model.UnitOn[g, t] = int(float(v))

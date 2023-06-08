@@ -12,7 +12,7 @@ requirements = [
     'ghp-import>=0.4.1',
     'sphinxcontrib-fulltoc>=1.1',
     'sphinxcontrib-jsdemo>=0.1.4',
-    'pandas',
+    'pandas>=2.0.1',
     'future',
     'networkx',
     'matplotlib',
