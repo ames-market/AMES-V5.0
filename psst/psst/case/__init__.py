@@ -118,6 +118,7 @@ class PSSTCase(object):
 
         mpc.gen_status = pd.DataFrame([mpc.gen['GEN_STATUS'] for _ in mpc.gen.index])
         mpc.gen_status.index = mpc.gen.index
+        mpc.gen_status['GenCo0'] = np.nan
         if reset_generator_status:
             mpc.gen_status.loc[:, :] = np.nan
 

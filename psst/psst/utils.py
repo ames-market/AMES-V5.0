@@ -136,6 +136,7 @@ def read_model(model_data):
             bus = bus.replace(']', '').replace('[', '').strip()
             gen = gen.replace(';', '').strip()
             # case.gen.loc[gen, 'GEN_BUS'] = bus
+            case.gen['GEN_BUS'] = ""
             gen_ary = gen.split(' ')
             for gen_i in gen_ary:
                 case.gen.loc[gen_i, 'GEN_BUS'] = bus
@@ -243,6 +244,11 @@ def read_model(model_data):
 
         if ln == 'param: BusFrom BusTo ThermalLimit Reactance :=':
             READ = True
+            # Set data type for columns
+            case.branch['F_BUS'] = ""
+            case.branch['T_BUS'] = ""
+            case.branch['BR_X'] = float(1.0)
+            case.branch['RATE_A'] = float(1.0)
             continue
 
         if READ is True:

@@ -191,5 +191,6 @@ def sced(uc, data, output, solver):
 
 if __name__ == "__main__":
     cli()
-    # path = "/home/osboxes/tesp/repository/AMES-V5.0/DATA/"
+    # path = "/home/d3j331/grid/repo/AMES-V5.0/DATA/"
     # scuc(path+"uc.dat",path+"dam.dat",path+"res.out", SOLVER)
+    # sced(path+"uc.dat",path+"rtm.dat",path+"res.out", SOLVER)
