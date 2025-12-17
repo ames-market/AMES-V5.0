@@ -5,6 +5,7 @@ import logging
 
 import numpy as np
 import pandas as pd
+from matplotlib.sphinxext.plot_directive import exception_template
 
 from .constraints import (constraint_line, constraint_total_demand, constraint_net_power,
                           constraint_load_generation_mismatch,
@@ -27,7 +28,7 @@ from .model import (create_model, initialize_buses,
                     initialize_time_periods, initialize_model, Suffix
                     )
 from .network import (initialize_network, derive_network, calculate_network_parameters, enforce_thermal_limits)
-from .price_sensitive_load import (initialize_price_senstive_load, maximum_power_demand_loads,
+from .price_sensitive_load import (initialize_price_sensitive_load, maximum_power_demand_loads,
                                    piece_wise_linear_benefit, initialize_load_demand,
                                    load_benefit)
 from .reserves import initialize_global_reserves, initialize_zonal_reserves
@@ -46,20 +47,16 @@ def build_model(case,
                 PriceSenLoadData=None,
                 Op=None,
                 previous_unit_commitment_df=None,
-                base_MVA=None,
-                base_KV=1,
                 config=None):
-    if base_MVA is None:
-        base_MVA = case.baseMVA
 
     # Configuration
     if config is None:
         config = dict()
 
-    zonalData = ZonalDataComplete['zonalData']
-    zonalBusData = ZonalDataComplete['zonalBusData']
-    ZonalUpReservePercent = ZonalDataComplete['ZonalUpReservePercent']
-    ZonalDownReservePercent = ZonalDataComplete['ZonalDownReservePercent']
+    zonal_data = ZonalDataComplete['zonal_data']
+    zonal_bus_data = ZonalDataComplete['zonal_bus_data']
+    zonal_up_reserve_percent = ZonalDataComplete['zonal_up_reserve_percent']
+    zonal_down_reserve_percent = ZonalDataComplete['zonal_down_reserve_percent']
 
     # Get configuration parameters from dictionary
     use_ptdf = config.pop('use_ptdf', False)
@@ -68,8 +65,8 @@ def build_model(case,
     load_df = load_df or case.load
     branch_df = branch_df or case.branch
     bus_df = bus_df or case.bus
-    DownReservePercent = case.DownReservePercent
-    UpReservePercent = case.UpReservePercent
+    down_reserve_percent = case.DownReservePercent
+    up_reserve_percent = case.UpReservePercent
 
     branch_df.index = branch_df.index.astype(object)
     generator_df.index = generator_df.index.astype(object)
@@ -83,13 +80,13 @@ def build_model(case,
 
     # Build model information
 
-    model = create_model()
+    mdl = create_model()
 
-    initialize_buses(model, bus_names=bus_df.index)
-    initialize_time_periods(model, time_periods=list(load_df.index), time_period_length=case.TimePeriodLength)
+    initialize_buses(mdl, bus_names=bus_df.index)
+    initialize_time_periods(mdl, time_periods=list(load_df.index), time_period_length=case.TimePeriodLength)
 
     # Build network data
-    initialize_network(model, transmission_lines=list(branch_df.index), bus_from=branch_df['F_BUS'].to_dict(),
+    initialize_network(mdl, transmission_lines=list(branch_df.index), bus_from=branch_df['F_BUS'].to_dict(),
                        bus_to=branch_df['T_BUS'].to_dict())
 
     lines_to = {b: list() for b in bus_df.index.unique()}
@@ -99,9 +96,9 @@ def build_model(case,
         lines_from[l['F_BUS']].append(i)
         lines_to[l['T_BUS']].append(i)
 
-    derive_network(model, lines_from=lines_from, lines_to=lines_to)
-    calculate_network_parameters(model, reactance=(branch_df['BR_X']).to_dict())
-    enforce_thermal_limits(model, thermal_limit=branch_df['RATE_A'].to_dict())
+    derive_network(mdl, lines_from=lines_from, lines_to=lines_to)
+    calculate_network_parameters(mdl, reactance=(branch_df['BR_X']).to_dict())
+    enforce_thermal_limits(mdl, thermal_limit=branch_df['RATE_A'].to_dict())
 
     # Build generator data
     generator_at_bus = {b: list() for b in generator_df['GEN_BUS'].unique()}
@@ -109,28 +106,28 @@ def build_model(case,
     for i, g in generator_df.iterrows():
         generator_at_bus[g['GEN_BUS']].append(i)
 
-    initialize_generators(model,
+    initialize_generators(mdl,
                           generator_names=generator_df.index,
                           generator_at_bus=generator_at_bus)
 
-    maximum_minimum_power_output_generators(model,
+    maximum_minimum_power_output_generators(mdl,
                                             minimum_power_output=generator_df['PMIN'].to_dict(),
                                             maximum_power_output=generator_df['PMAX'].to_dict())
 
     # print('SCALED_RAMP_UP: ', str(generator_df['SCALED_RAMP_UP'].to_dict()))
     # print('SCALED_RAMP_DOWN: ', str(generator_df['SCALED_RAMP_DOWN'].to_dict()))
-    ramp_up_ramp_down_limits(model, scaled_ramp_up_limits=generator_df['SCALED_RAMP_UP'].to_dict(),
+    ramp_up_ramp_down_limits(mdl, scaled_ramp_up_limits=generator_df['SCALED_RAMP_UP'].to_dict(),
                              scaled_ramp_down_limits=generator_df['SCALED_RAMP_DOWN'].to_dict())
 
-    start_up_shut_down_ramp_limits(model, scaled_start_up_ramp_limits=generator_df['SCALED_STARTUP_RAMP'].to_dict(),
+    start_up_shut_down_ramp_limits(mdl, scaled_start_up_ramp_limits=generator_df['SCALED_STARTUP_RAMP'].to_dict(),
                                    scaled_shut_down_ramp_limits=generator_df['SCALED_SHUTDOWN_RAMP'].to_dict())
 
-    minimum_up_minimum_down_time(model, scaled_minimum_up_time=generator_df['SCALED_MINIMUM_UP_TIME'].to_dict(),
+    minimum_up_minimum_down_time(mdl, scaled_minimum_up_time=generator_df['SCALED_MINIMUM_UP_TIME'].to_dict(),
                                  scaled_minimum_down_time=generator_df['SCALED_MINIMUM_DOWN_TIME'].to_dict())
 
-    forced_outage(model)
+    forced_outage(mdl)
 
-    generator_bus_contribution_factor(model)
+    generator_bus_contribution_factor(mdl)
 
     if previous_unit_commitment_df is None:
         previous_unit_commitment = dict()
@@ -161,7 +158,7 @@ def build_model(case,
     initial_time_periods_online_dict = generator_df['InitialTimeON'].to_dict()
     initial_time_periods_offline_dict = generator_df['InitialTimeOFF'].to_dict()
 
-    initial_state(model, init_state=initial_state_dict, initial_power_generated=initial_power_generated_dict,
+    initial_state(mdl, init_state=initial_state_dict, initial_power_generated=initial_power_generated_dict,
                   initial_time_periods_online=initial_time_periods_online_dict,
                   initial_time_periods_offline=initial_time_periods_offline_dict)
 
@@ -179,10 +176,10 @@ def build_model(case,
     for k, v in values.items():
         values[k] = [float(i) for i in v]
 
-    piece_wise_linear_cost(model, points, values)
+    piece_wise_linear_cost(mdl, points, values)
 
-    minimum_production_cost(model)
-    production_cost(model)
+    minimum_production_cost(mdl)
+    production_cost(mdl)
 
     # setup start up and shut down costs for generators
     scaled_cold_start_time = case.gencost['SCALED_COLD_START_TIME'].to_dict()
@@ -190,7 +187,7 @@ def build_model(case,
     cold_start_costs = case.gencost['STARTUP_COLD'].to_dict()
     shutdown_cost = case.gencost['SHUTDOWN_COST'].to_dict()
 
-    hot_start_cold_start_costs(model, hot_start_costs=hot_start_costs, cold_start_costs=cold_start_costs,
+    hot_start_cold_start_costs(mdl, hot_start_costs=hot_start_costs, cold_start_costs=cold_start_costs,
                                scaled_cold_start_time=scaled_cold_start_time, shutdown_cost=shutdown_cost)
 
     # Build load data
@@ -200,17 +197,17 @@ def build_model(case,
         for col in columns:
             load_dict[(col, i)] = t[col]
 
-    initialize_demand(model, NetFixedLoad=load_dict)
+    initialize_demand(mdl, net_fixed_load=load_dict)
 
     # Initialize Pyomo Variables
-    initialize_model(model, positive_mismatch_penalty=case.PositiveMismatchPenalty,
+    initialize_model(mdl, positive_mismatch_penalty=case.PositiveMismatchPenalty,
                      negative_mismatch_penalty=case.NegativeMismatchPenalty)
 
     # price sensitive load
     if case.PriceSenLoadFlag == 0:
-        PriceSenLoadFlag = False
+        price_sen_load_flag = False
     else:
-        PriceSenLoadFlag = True
+        price_sen_load_flag = True
 
     # adding segments for price sensitive loads
     segments = config.pop('segments', 10)
@@ -219,7 +216,7 @@ def build_model(case,
     pmax_values = dict()
 
     # print('segments=',segments)
-    if PriceSenLoadFlag is True:
+    if price_sen_load_flag:
         if PriceSenLoadData is not None:
             psl_names = []
             psl_at_buses = {}
@@ -241,60 +238,64 @@ def build_model(case,
                 psl_points[k] = [float(i) for i in v]
             for k, v in psl_values.items():
                 psl_values[k] = [float(i) for i in v]
-            initialize_price_senstive_load(model,
+            initialize_price_sensitive_load(mdl,
                                            price_sensitive_load_names=psl_names,
                                            price_sensitive_load_at_bus=psl_at_buses)
 
-            maximum_power_demand_loads(model, maximum_power_demand=pmax_values)
+            maximum_power_demand_loads(mdl, maximum_power_demand=pmax_values)
 
-            initialize_load_demand(model)
+            initialize_load_demand(mdl)
 
-            piece_wise_linear_benefit(model, psl_points, psl_values)
-            load_benefit(model)
-            constraint_for_benefit(model)
+            piece_wise_linear_benefit(mdl, psl_points, psl_values)
+            load_benefit(mdl)
+            constraint_for_benefit(mdl)
         else:
             raise RuntimeError('PriceSenLoadFlag is True, but no Price Sensitive Load Data is correctly loaded')
 
-    initialize_global_reserves(model, DownReservePercent=DownReservePercent, UpReservePercent=UpReservePercent)
+    initialize_global_reserves(mdl, down_reserve_percent=down_reserve_percent, up_reserve_percent=up_reserve_percent)
 
-    if zonalData['HasZonalReserves'] is True:
-        initialize_zonal_reserves(model, PriceSenLoadFlag=PriceSenLoadFlag, zone_names=zonalData['Zones'],
-                                  buses_at_each_zone=zonalBusData, ZonalDownReservePercent=ZonalDownReservePercent,
-                                  ZonalUpReservePercent=ZonalUpReservePercent)
+    if zonal_data['HasZonalReserves'] is True:
+        initialize_zonal_reserves(mdl, price_sen_load_flag=price_sen_load_flag, zone_names=zonal_data['Zones'],
+                                  buses_at_each_zone=zonal_bus_data,
+                                  zonal_down_reserve_percent=zonal_down_reserve_percent,
+                                  zonal_up_reserve_percent=zonal_up_reserve_percent)
 
-    constraint_net_power(model, PriceSenLoadFlag=PriceSenLoadFlag)
+    constraint_net_power(mdl, price_sen_load_flag=price_sen_load_flag)
 
-    if use_ptdf is True:
+    if use_ptdf:
         ptdf = calculate_PTDF(case, precision=config.pop('ptdf_precision', None),
                               tolerance=config.pop('ptdf_tolerance', None))
-        constraint_line(model, ptdf=ptdf)
+        constraint_line(mdl, ptdf=ptdf)
     else:
-        constraint_line(model, slack_bus=bus_df.index.get_loc(bus_df[bus_df['TYPE'] == 3].index[0]) + 1)
+        constraint_line(mdl, slack_bus=bus_df.index.get_loc(bus_df[bus_df['TYPE'] == 3].index[0]) + 1)
         # Pyomo is 1-indexed for sets, and MATPOWER type of bus should be used to get the slack bus
 
-    constraint_power_balance(model)
+    constraint_power_balance(mdl)
 
-    constraint_total_demand(model, PriceSenLoadFlag=PriceSenLoadFlag)
-    constraint_load_generation_mismatch(model)
-    constraint_reserves(model, PriceSenLoadFlag=PriceSenLoadFlag, has_global_reserves=True,
-                        has_zonal_reserves=zonalData['HasZonalReserves'])
-    constraint_generator_power(model)
+    constraint_total_demand(mdl, price_sen_load_flag=price_sen_load_flag)
+    constraint_load_generation_mismatch(mdl)
+    constraint_reserves(mdl, price_sen_load_flag=price_sen_load_flag, has_global_reserves=True,
+                        has_zonal_reserves=zonal_data['HasZonalReserves'])
+    constraint_generator_power(mdl)
     if Op == 'scuc':
-        constraint_up_down_time(model)
-    constraint_for_cost(model)
+        constraint_up_down_time(mdl)
+    constraint_for_cost(mdl)
 
     # Add objective function
-    objective_function(model, PriceSenLoadFlag=PriceSenLoadFlag)
+    objective_function(mdl, price_sen_load_flag=price_sen_load_flag)
 
     for t, row in case.gen_status.iterrows():
         for g, v in row.items():
             if not pd.isnull(v):
-                model.UnitOn[g, t].fixed = True
-                model.UnitOn[g, t] = int(float(v))
+                try:
+                    mdl.UnitOn[g, t].fixed = True
+                    mdl.UnitOn[g, t].value = v
+                except KeyError:
+                    pass
 
-    model.dual = Suffix(direction=Suffix.IMPORT)
+    mdl.dual = Suffix(direction=Suffix.IMPORT)
 
-    return PSSTModel(model)
+    return PSSTModel(mdl)
 
 
 class PSSTModel(object):
@@ -310,10 +311,10 @@ class PSSTModel(object):
         string = '<{}.{}({})>'.format(self.__class__.__module__, self.__class__.__name__, repr_string)
         return string
 
-    def solve(self, solver='glpk', verbose=False, keepfiles=True, **kwargs):
-        TC = solve_model(self._model, solver=solver, verbose=verbose, keepfiles=keepfiles, **kwargs)
+    def solve(self, solver='glpk', verbose=False, keep_files=True, **kwargs):
+        termination_condition = solve_model(self._model, solver=solver, verbose=verbose, keep_files=keep_files, **kwargs)
         self._results = PSSTResults(self._model)
-        return TC
+        return termination_condition
 
     @property
     def results(self):

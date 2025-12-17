@@ -44,10 +44,10 @@ def line_power_rule(m, l, t):
         return m.LinePower[l, t] == m.B[l] * (m.Angle[m.BusFrom[l], t] - m.Angle[m.BusTo[l], t])
 
 
-def calculate_total_demand(m, t, PriceSenLoadFlag=False):
+def calculate_total_demand(m, t, price_sen_load_flag=False):
     _constraint = sum(m.NetFixedLoad[b, t] for b in m.Buses)
 
-    if PriceSenLoadFlag is True:
+    if price_sen_load_flag:
         _constraint = _constraint + \
                       sum(sum(m.PSLoadDemand[l, t] for l in m.PriceSensitiveLoadsAtBus[b]) for b in m.Buses)
 
@@ -84,7 +84,7 @@ def power_balance(m, b, t):
 
 
 # This function defines m.NetPowerInjectionAtBus[b, t] constraint
-def net_power_at_bus_rule(m, b, t, PriceSenLoadFlag=False):
+def net_power_at_bus_rule(m, b, t, price_sen_load_flag=False):
     try:
         _constraint = sum(
             (1 - m.GeneratorForcedOutage[g, t]) * m.GeneratorBusContributionFactor[g, b] * m.PowerGenerated[g, t] for g in
@@ -94,7 +94,7 @@ def net_power_at_bus_rule(m, b, t, PriceSenLoadFlag=False):
 
     _constraint = _constraint - m.NetFixedLoad[b, t]
 
-    if PriceSenLoadFlag is True:
+    if price_sen_load_flag:
         _constraint = _constraint - sum(m.PSLoadDemand[l, t] for l in m.PriceSensitiveLoadsAtBus[b])
 
     _constraint = m.NetPowerInjectionAtBus[b, t] == _constraint
@@ -138,10 +138,10 @@ def enforce_reserve_up_requirements_rule(m, t):
     return _constraint
 
 
-def enforce_zonal_reserve_down_requirement_rule(m, rz, t, PriceSenLoadFlag=False):
+def enforce_zonal_reserve_down_requirement_rule(m, rz, t, price_sen_load_flag=False):
     _constraint = sum(m.MinimumPowerAvailable[g, t] for g in m.GeneratorsInReserveZone[rz])
 
-    if PriceSenLoadFlag is False:
+    if not price_sen_load_flag:
         _constraint = _constraint <= (1 - m.ZonalDownReservePercent[rz]) * sum(
             m.NetFixedLoad[d, t] for d in m.DemandInReserveZone[rz])
     else:
@@ -152,10 +152,10 @@ def enforce_zonal_reserve_down_requirement_rule(m, rz, t, PriceSenLoadFlag=False
     return _constraint
 
 
-def enforce_zonal_reserve_up_requirement_rule(m, rz, t, PriceSenLoadFlag=False):
+def enforce_zonal_reserve_up_requirement_rule(m, rz, t, price_sen_load_flag=False):
     _constraint = sum(m.MaximumPowerAvailable[g, t] for g in m.GeneratorsInReserveZone[rz])
 
-    if PriceSenLoadFlag is False:
+    if not price_sen_load_flag:
         _constraint = _constraint <= (1 - m.ZonalUpReservePercent[rz]) * sum(
             m.NetFixedLoad[d, t] for d in m.DemandInReserveZone[rz])
     else:
@@ -229,7 +229,7 @@ def compute_hot_start_rule(m, g, t):
         return m.HotStart[g, t] <= sum(m.UnitOn[g, i] for i in range(t - m.ScaledColdStartTime[g], t))
 
 
-def compute_startup_costs_rule_minusM(m, g, t):
+def compute_startup_costs_rule_minus(m, g, t):
     if t == 1:
         return m.StartupCost[g, t] >= m.ColdStartCost[g] - (m.ColdStartCost[g] - m.HotStartCost[g]) * m.HotStart[g, t] \
                - m.ColdStartCost[g] * (1 - (m.UnitOn[g, t] - m.UnitOnT0[g]))
@@ -315,19 +315,19 @@ def generation_in_stage_st_cost_rule(m, st):
            (sum(m.negLoadGenerateMismatch[b, t] for b in m.Buses for t in m.GenerationTimeInStage[st]))
 
 
-def StageCost_rule(m, st):
+def stage_cost_rule(m, st):
     return m.StageCost[st] == m.GenerationStageCost[st] + m.CommitmentStageCost[st]
 
 
-def total_cost_objective_rule(m, PriceSenLoadFlag=False):
-    if PriceSenLoadFlag:
+def total_cost_objective_rule(m, price_sen_load_flag=False):
+    if price_sen_load_flag:
         return (- sum(m.LoadBenefit[l, t] for l in m.PriceSensitiveLoads for t in m.TimePeriods) + sum(
             m.StageCost[st] for st in m.StageSet))
     return sum(m.StageCost[st] for st in m.StageSet)
 
 
-def constraint_net_power(model, PriceSenLoadFlag=False):
-    partial_net_power_at_bus_rule = partial(net_power_at_bus_rule, PriceSenLoadFlag=PriceSenLoadFlag)
+def constraint_net_power(model, price_sen_load_flag=False):
+    partial_net_power_at_bus_rule = partial(net_power_at_bus_rule, price_sen_load_flag=price_sen_load_flag)
     model.CalculateNetPowerAtBus = Constraint(model.Buses, model.TimePeriods, rule=partial_net_power_at_bus_rule)
 
 
@@ -348,8 +348,8 @@ def constraint_line(model, ptdf=None, slack_bus=1):
         model.CalculateLinePower = Constraint(model.TransmissionLines, model.TimePeriods, rule=line_power_rule)
 
 
-def constraint_total_demand(model, PriceSenLoadFlag=False):
-    partial_calculate_total_demand = partial(calculate_total_demand, PriceSenLoadFlag=PriceSenLoadFlag)
+def constraint_total_demand(model, price_sen_load_flag=False):
+    partial_calculate_total_demand = partial(calculate_total_demand, price_sen_load_flag=price_sen_load_flag)
     model.CalculateTotalDemand = Constraint(model.TimePeriods, rule=partial_calculate_total_demand)
 
 
@@ -365,18 +365,18 @@ def constraint_power_balance(model):
     model.PowerBalance = Constraint(model.Buses, model.TimePeriods, rule=fn_power_balance)
 
 
-def constraint_reserves(model, PriceSenLoadFlag=False, has_global_reserves=True, has_zonal_reserves=False):
-    if has_global_reserves is True:
+def constraint_reserves(model, price_sen_load_flag=False, has_global_reserves=True, has_zonal_reserves=False):
+    if has_global_reserves:
         fn_enforce_reserve_up_requirements = partial(enforce_reserve_up_requirements_rule)
         fn_enforce_reserve_down_requirements = partial(enforce_reserve_down_requirements_rule)
         model.EnforceReserveUpRequirements = Constraint(model.TimePeriods, rule=fn_enforce_reserve_up_requirements)
         model.EnforceReserveDownRequirements = Constraint(model.TimePeriods, rule=fn_enforce_reserve_down_requirements)
 
-    if has_zonal_reserves is True:
+    if has_zonal_reserves:
         fn_enforce_zonal_reserve_down_requirement_rule = partial(enforce_zonal_reserve_down_requirement_rule,
-                                                                 PriceSenLoadFlag=PriceSenLoadFlag)
+                                                                 price_sen_load_flag=price_sen_load_flag)
         fn_enforce_zonal_reserve_up_requirement_rule = partial(enforce_zonal_reserve_up_requirement_rule,
-                                                               PriceSenLoadFlag=PriceSenLoadFlag)
+                                                               price_sen_load_flag=price_sen_load_flag)
         model.EnforceZonalReserveDownRequirements = Constraint(model.ReserveZones, model.TimePeriods,
                                                                rule=fn_enforce_zonal_reserve_down_requirement_rule)
         model.EnforceZonalReserveUpRequirements = Constraint(model.ReserveZones, model.TimePeriods,
@@ -425,14 +425,14 @@ def constraint_for_cost(model):
 
     model.ComputeHotStart = Constraint(model.Generators, model.TimePeriods, rule=compute_hot_start_rule)
     model.ComputeStartupCostsMinusM = Constraint(model.Generators, model.TimePeriods,
-                                                 rule=compute_startup_costs_rule_minusM)
+                                                 rule=compute_startup_costs_rule_minus)
     model.ComputeShutdownCosts = Constraint(model.Generators, model.TimePeriods, rule=compute_shutdown_costs_rule)
 
     model.Compute_commitment_in_stage_st_cost = Constraint(model.StageSet, rule=commitment_in_stage_st_cost_rule)
 
     model.Compute_generation_in_stage_st_cost = Constraint(model.StageSet, rule=generation_in_stage_st_cost_rule)
 
-    model.Compute_Stage_Cost = Constraint(model.StageSet, rule=StageCost_rule)
+    model.Compute_Stage_Cost = Constraint(model.StageSet, rule=stage_cost_rule)
 
 
 def constraint_for_benefit(model):
@@ -441,9 +441,9 @@ def constraint_for_benefit(model):
                                             f_rule=load_benefit_function, pw_constr_type='UB', warning_tol=1e-20)
 
 
-def objective_function(model, PriceSenLoadFlag=False):
-    if PriceSenLoadFlag is False:
+def objective_function(model, price_sen_load_flag=False):
+    if not price_sen_load_flag:
         model.TotalCostObjective = Objective(rule=total_cost_objective_rule, sense=minimize)
     else:
-        partial_total_cost_objective_rule = partial(total_cost_objective_rule, PriceSenLoadFlag=PriceSenLoadFlag)
+        partial_total_cost_objective_rule = partial(total_cost_objective_rule, price_sen_load_flag=price_sen_load_flag)
         model.TotalCostObjective = Objective(rule=partial_total_cost_objective_rule, sense=minimize)

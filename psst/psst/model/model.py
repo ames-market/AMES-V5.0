@@ -5,7 +5,7 @@ from pyomo.environ import Set, Param, Binary, ConcreteModel, NonNegativeReals, R
 
 
 def create_model():
-    model = ConcreteModel()
+    model = ConcreteModel("PSST")
     return model
 
 
@@ -30,7 +30,6 @@ def initialize_time_periods(model,
 
 
 def initialize_model(model,
-                     time_period_length=1.0,
                      stage_set=['FirstStage', 'SecondStage'],
                      positive_mismatch_penalty=1e5,
                      negative_mismatch_penalty=1e5
@@ -58,9 +57,9 @@ def initialize_model(model,
     model.UnitOn = Var(model.Generators, model.TimePeriods, within=Binary, initialize=1)
 
     # amount of power flowing along each line, at each time period
-    model.LinePower = Var(model.TransmissionLines, model.TimePeriods, initialize=0)
+    model.LinePower = Var(model.TransmissionLines, model.TimePeriods, within=Reals,  initialize=0)
 
-    model.NetPowerInjectionAtBus = Var(model.Buses, model.TimePeriods, initialize=0)
+    model.NetPowerInjectionAtBus = Var(model.Buses, model.TimePeriods, within=Reals, initialize=0)
 
     # Demand related variables
     # TotalDemand can be used to handle all kinds of loads, NDGs and DERs

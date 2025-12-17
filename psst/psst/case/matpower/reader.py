@@ -1,3 +1,6 @@
+# Copyright (c) 2020, Battelle Memorial Institute
+# Copyright 2007 - present: numerous others credited in AUTHORS.rst
+
 from __future__ import print_function, absolute_import
 
 import logging
@@ -10,11 +13,11 @@ logger = logging.getLogger(__file__)
 
 
 def find_name(string):
-    return re.search('function\s*mpc\s*=\s*(?P<data>.*?)\n', string).groupdict()['data']
+    return re.search(r'function\s*mpc\s*=\s*(?P<data>.*?)\n', string).groupdict()['data']
 
 
 def find_attributes(string):
-    pattern = 'mpc\.(?P<attribute>.*?)\s*=\s*'
+    pattern = r'mpc\.(?P<attribute>.*?)\s*=\s*'
     return re.findall(pattern, string, re.DOTALL)
 
 
@@ -43,8 +46,8 @@ def search_file(attribute, string):
         pattern = r'mpc\.{}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'.format(attribute)
     elif attribute in ['version', 'baseMVA']:
         pattern = r'mpc\.{}\s*=\s*(?P<data>.*?);'.format(attribute)
-    elif attribute == 'bus_name':
-        pattern = r'mpc\.{}\s*=\s*\{{[\n]?(?P<data>.*?)[\n]?\}};'.format('bus_name')
+    elif attribute in ['bus_name', 'gentype', 'genfuel']:
+        pattern = r'mpc\.{}\s*=\s*\{{[\n]?(?P<data>.*?)[\n]?\}};'.format(attribute)
     else:
         logger.warning('Unable to parse mpc.%s. Please contact the developer.', attribute)
         return None

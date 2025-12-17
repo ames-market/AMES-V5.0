@@ -3,7 +3,7 @@
 from pyomo.environ import *
 
 
-def initialize_price_senstive_load(model,
+def initialize_price_sensitive_load(model,
                                    price_sensitive_load_names=None,
                                    price_sensitive_load_at_bus=None):
     model.PriceSensitiveLoads = Set(initialize=price_sensitive_load_names)

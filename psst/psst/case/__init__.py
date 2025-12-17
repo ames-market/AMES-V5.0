@@ -96,12 +96,12 @@ class PSSTCase(object):
 
         mpc.name = matpower.find_name(string)
 
-        if auto_assign_names is True:
+        if auto_assign_names:
             mpc.bus_name = mpc.bus_name
             mpc.gen_name = mpc.gen_name
             mpc.branch_name = mpc.branch_name
 
-        if fill_loads is True:
+        if fill_loads:
             for i, row in mpc.bus.iterrows():
                 mpc.load.loc[:, i] = row['PD']
 

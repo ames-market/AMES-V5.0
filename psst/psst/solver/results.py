@@ -15,23 +15,19 @@ class PSSTResults(object):
     def production_cost(self):
         m = self._model
         st = 'SecondStage'
-        return sum(
-            [m.ProductionCost[g, t].value for t in m.GenerationTimeInStage[st] if t < self._maximum_hours for g in
-             m.Generators])
+        return sum([m.ProductionCost[g, t].value for t in m.GenerationTimeInStage[st] if t < self._maximum_hours for g in m.Generators])
 
     @property
     def commitment_cost(self):
         m = self._model
         st = 'FirstStage'
-        return sum([m.StartupCost[g, t].value + m.ShutdownCost[g, t].value for g in m.Generators for t in
-                    m.CommitmentTimeInStage[st] if t < self._maximum_hours])
+        return sum([m.StartupCost[g, t].value + m.ShutdownCost[g, t].value for g in m.Generators for t in m.CommitmentTimeInStage[st] if t < self._maximum_hours])
 
     @property
     def noload_cost(self):
         m = self._model
         st = 'FirstStage'
-        return sum([sum([m.UnitOn[g, t].value for t in m.CommitmentTimeInStage[st] if t < self._maximum_hours]) *
-                    m.MinimumProductionCost[g].value * m.TimePeriodLength.value for g in m.Generators])
+        return sum([sum([m.UnitOn[g, t].value for t in m.CommitmentTimeInStage[st] if t < self._maximum_hours]) * m.MinimumProductionCost[g].value * m.TimePeriodLength.value for g in m.Generators])
 
     @property
     def unit_commitment(self):
@@ -108,7 +104,7 @@ class PSSTResults(object):
                 set1 = set()
                 set2 = set()
                 if attribute == 'PowerBalance':
-                    index = getattr(model, attribute + '_index')
+                    index = getattr(model, attribute)
                     for i, j in index:
                         set1.add(i)
                         set2.add(j)
@@ -129,7 +125,7 @@ class PSSTResults(object):
                 _dict[s1] = list()
 
                 for s2 in set2:
-                    if dual is True:
+                    if dual:
                         _dict[s1].append(model.dual.get(getattr(model, attribute)[s1, s2]))
                     else:
                         _dict[s1].append(getattr(model, attribute)[s1, s2].value)

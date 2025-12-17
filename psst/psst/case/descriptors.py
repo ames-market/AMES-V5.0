@@ -1,3 +1,6 @@
+# Copyright (c) 2020, Battelle Memorial Institute
+# Copyright 2007 - present: numerous others credited in AUTHORS.rst
+
 from __future__ import print_function
 
 import logging
@@ -32,7 +35,8 @@ class Descriptor(object):
     def __delete__(self, instance):
         raise AttributeError("Cannot delete attribute {}".format(self.name))
 
-    def _is_valid(self, instance, value):
+    @staticmethod
+    def _is_valid(instance, value):
         return True
 
 
@@ -41,7 +45,7 @@ class IndexDescriptor(Descriptor):
 
     def __get__(self, instance, cls):
         try:
-            index = self.getattributeindex(instance)
+            index = self.get_attribute_index(instance)
             return index
         except AttributeError:
             super().__get__(instance, cls)
@@ -54,7 +58,7 @@ class IndexDescriptor(Descriptor):
             value = pd.Index(value.iloc[:, 0].rename(self.name))
 
         try:
-            self.setattributeindex(instance, value)
+            self.set_attribute_index(instance, value)
         except AttributeError:
             logger.debug('AttributeError on instance.{} when setting index as {}'
                          .format(self.name.replace('_name', ''), self.name))
@@ -62,10 +66,10 @@ class IndexDescriptor(Descriptor):
 
         super().__set__(instance, value)
 
-    def getattributeindex(self, instance):
+    def get_attribute_index(self, instance):
         raise AttributeError('IndexDescriptor does not have attribute')
 
-    def setattributeindex(self, instance, value):
+    def set_attribute_index(self, instance, value):
         raise AttributeError('IndexDescriptor does not have attribute')
 
 
@@ -103,10 +107,10 @@ class BusName(IndexDescriptor):
     name = 'bus_name'
     ty = pd.Index
 
-    def getattributeindex(self, instance):
+    def get_attribute_index(self, instance):
         return instance.bus.index
 
-    def setattributeindex(self, instance, value):
+    def set_attribute_index(self, instance, value):
         instance.branch['F_BUS'] = instance.branch['F_BUS'].apply(lambda x: value[value.get_loc(x)])
         instance.branch['T_BUS'] = instance.branch['T_BUS'].apply(lambda x: value[value.get_loc(x)])
         instance.gen['GEN_BUS'] = instance.gen['GEN_BUS'].apply(lambda x: value[value.get_loc(x)])
@@ -140,10 +144,10 @@ class BranchName(IndexDescriptor):
     name = 'branch_name'
     ty = pd.Index
 
-    def getattributeindex(self, instance):
+    def get_attribute_index(self, instance):
         return instance.branch.index
 
-    def setattributeindex(self, instance, value):
+    def set_attribute_index(self, instance, value):
         instance.branch.index = value
 
 
@@ -164,7 +168,7 @@ class GenName(IndexDescriptor):
     name = 'gen_name'
     ty = pd.Index
 
-    def getattributeindex(self, instance):
+    def get_attribute_index(self, instance):
         try:
             if not all(instance.gen.index == instance.gencost.index):
                 logger.warning('Indices for attributes `gen` and `gencost` do not match.'
@@ -176,7 +180,7 @@ class GenName(IndexDescriptor):
             logger.debug('Unable to compare `gen` indices to `gencost`')
         return instance.gen.index
 
-    def setattributeindex(self, instance, value):
+    def set_attribute_index(self, instance, value):
         instance.gen.index = value
         instance.gencost.index = value
 
@@ -208,11 +212,10 @@ class Period(IndexDescriptor):
     name = 'period'
     ty = pd.Index
 
-    def getattributeindex(self, instance):
+    def get_attribute_index(self, instance):
         return instance.load.index
 
-    def setattributeindex(self, instance, value):
-        hour = instance.load.index
+    def set_attribute_index(self, instance, value):
         instance.bus.index = value
 
 

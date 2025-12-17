@@ -2,6 +2,7 @@
 # has been modified by Swathi Battula to read Price Sensitive Load and Zonal data.
 
 import os
+
 import pandas as pd
 
 generator_data_str_format = '{bus}\t{Pg}\t{Qg}\t{Qmax}\t{Qmin}\t{Vg}\t{mBase}\t{status}\t{Pmax}\t{Pmin}\t{Pc1}\t{Pc2}\t{Qc1min}\t{Qc1max}\t{Qc2min}\t{Qc2max}\t{ramp_agc}\t{ramp_10}\t{ramp_30}\t{ramp_q}\t{apf}'.format
@@ -52,7 +53,6 @@ def make_interpolater(domain_min, domain_max, range_min, range_max):
 
 def create_gen_data(**kwargs):
     gen_data = dict()
-
     gen_data['bus'] = kwargs.pop('bus', 0)
     gen_data['Pg'] = kwargs.pop('Pg', 0)
     gen_data['Qg'] = kwargs.pop('Qg', 0)
@@ -74,7 +74,6 @@ def create_gen_data(**kwargs):
     gen_data['ramp_30'] = kwargs.pop('ramp_30', 0)
     gen_data['ramp_q'] = kwargs.pop('ramp_q', 0)
     gen_data['apf'] = kwargs.pop('apf', 0)
-
     return gen_data
 
 
@@ -93,22 +92,24 @@ def read_unit_commitment(ucfile):
         else:
             uc = []
             uc_dict[ln] = uc
-    NumEntry = len(uc) + 1
-    return pd.DataFrame(uc_dict, index=range(1, NumEntry))
+    num_entry = len(uc) + 1
+    return pd.DataFrame(uc_dict, index=range(1, num_entry))
 
 
 def find_generators(data):
-    DIRECTIVE = r'set ThermalGenerators :='
+    directive = r'set ThermalGenerators :='
     for ln in data.splitlines():
-        if ln.startswith(DIRECTIVE):
+        if ln.startswith(directive):
             return ln.split('=')[1].strip('; ').split()
+    return None
 
 
 def find_buses(data):
     for ln in data.splitlines():
-        DIRECTIVE = 'set Buses := '
-        if ln.startswith(DIRECTIVE):
-            return ln.split(DIRECTIVE)[1].strip(';').split()
+        directive = 'set Buses := '
+        if ln.startswith(directive):
+            return ln.split(directive)[1].strip(';').split()
+    return None
 
 
 def read_model(model_data):
@@ -129,14 +130,13 @@ def read_model(model_data):
         case.gencost.drop('GenCo0', inplace=True)
         case.gen_status.drop('GenCo0', inplace=True)
 
-    DIRECTIVE = 'set ThermalGeneratorsAtBus'
+    directive = 'set ThermalGeneratorsAtBus'
+    case.gen['GEN_BUS'] = ""
     for ln in data.splitlines():
-        if ln.startswith(DIRECTIVE):
-            bus, gen = ln.split(DIRECTIVE)[1].split(':=')
+        if ln.startswith(directive):
+            bus, gen = ln.split(directive)[1].split(':=')
             bus = bus.replace(']', '').replace('[', '').strip()
             gen = gen.replace(';', '').strip()
-            # case.gen.loc[gen, 'GEN_BUS'] = bus
-            case.gen['GEN_BUS'] = ""
             gen_ary = gen.split(' ')
             for gen_i in gen_ary:
                 case.gen.loc[gen_i, 'GEN_BUS'] = bus
@@ -156,64 +156,64 @@ def read_model(model_data):
         if ln.startswith('param UpReservePercent'):
             case.UpReservePercent = float(ln.split(':=')[1].split(';')[0].replace(' ', ''))
 
-    zonalData = {'NumberOfZones': 0, 'Zones': '', 'HasZonalReserves': False}
+    zonal_data = {'NumberOfZones': 0, 'Zones': [], 'HasZonalReserves': False}
 
     for ln in data.splitlines():
         if ln.startswith('param NumberOfZones'):
-            zonalData['NumberOfZones'] = float(ln.split(':=')[1].split(';')[0].replace(' ', ''))
+            zonal_data['NumberOfZones'] = int(ln.split(':=')[1].split(';')[0].replace(' ', ''))
 
     for ln in data.splitlines():
         if ln.startswith('param HasZonalReserves'):
             flag_str = ln.split(':=')[1].split(';')[0].replace(' ', '')
             if flag_str == 'True' or flag_str == 'true':
-                zonalData['HasZonalReserves'] = True
+                zonal_data['HasZonalReserves'] = True
 
-    # print('HasZonalReserves: ', zonalData['HasZonalReserves'])
+    # print('HasZonalReserves: ', zonal_data['HasZonalReserves'])
 
     for ln in data.splitlines():
-        DIRECTIVE = 'set Zones := '
-        if ln.startswith(DIRECTIVE):
-            zonalData['Zones'] = ln.split(DIRECTIVE)[1].strip(';').split()
+        directive = 'set Zones := '
+        if ln.startswith(directive):
+            zonal_data['Zones'] = ln.split(directive)[1].strip(';').split()
 
-    ZonalDownReservePercent = {}
-    ZonalUpReservePercent = {}
-    zonalBusData = {}
+    zonal_down_reserve_percent = {}
+    zonal_up_reserve_percent = {}
+    zonal_bus_data = {}
 
-    READ = False
+    is_read = False
     for ln in data.splitlines():
         if ln.strip() == ';':
-            READ = False
+            is_read = False
         if ln.startswith('param: Buses ZonalDownReservePercent ZonalUpReservePercent'):
-            READ = True
+            is_read = True
             continue
-        if READ is True:
-            z, Buses, RDZP, RUZP = ln.split(" ")
-            ZonalDownReservePercent[z] = float(RDZP)
-            ZonalUpReservePercent[z] = float(RUZP)
-            BusTrim = Buses[:-1]
-            BusSplit = BusTrim.split(',')
-            zonalBusData[z] = BusSplit
+        if is_read:
+            z, buses, rdzp, ruzp = ln.split(" ")
+            zonal_down_reserve_percent[z] = float(rdzp)
+            zonal_up_reserve_percent[z] = float(ruzp)
+            bus_trim = buses[:-1]
+            bus_split = bus_trim.split(',')
+            zonal_bus_data[z] = bus_split
 
-    READ = False
+    is_read = False
     for ln in data.splitlines():
         if ln.strip() == ';':
-            READ = False
+            is_read = False
 
         if ln == 'param: PowerGeneratedT0 ScaledUnitOnT0State InitialTimeON InitialTimeOFF MinimumPowerOutput MaximumPowerOutput ScaledMinimumUpTime ScaledMinimumDownTime ScaledRampUpLimit ScaledRampDownLimit ScaledStartupRampLimit ScaledShutdownRampLimit ScaledColdStartTime ColdStartCost HotStartCost ShutdownCost :=':
-            READ = True
+            is_read = True
             continue
 
-        if READ is True:
-            g, pg, status, ITO_g, ITF_g, min_g, max_g, \
-             scaled_min_up_time, scaled_min_down_time, \
-             scaled_ramp_up_rate, scaled_ramp_down_rate, \
-             scaled_startup_ramp_rate, scaled_shutdown_ramp_rate, \
-             scaled_cold_start_time, coldstartcost, hotstartcost, shutdowncost = ln.split()
+        if is_read:
+            g, pg, status, ito_g, itf_g, min_g, max_g, \
+                scaled_min_up_time, scaled_min_down_time, \
+                scaled_ramp_up_rate, scaled_ramp_down_rate, \
+                scaled_startup_ramp_rate, scaled_shutdown_ramp_rate, \
+                scaled_cold_start_time, cold_start_cost, hot_start_cost, shut_down_cost = ln.split()
 
             case.gen.loc[g, 'PG'] = float(pg.replace(',', '.'))
             case.gen.loc[g, 'UnitOnT0State'] = int(status.replace(',', '.'))
-            case.gen.loc[g, 'InitialTimeON'] = int(ITO_g)
-            case.gen.loc[g, 'InitialTimeOFF'] = int(ITF_g)
+            case.gen.loc[g, 'InitialTimeON'] = int(ito_g)
+            case.gen.loc[g, 'InitialTimeOFF'] = int(itf_g)
             case.gen.loc[g, 'PMIN'] = float(min_g.replace(',', '.'))
             case.gen.loc[g, 'PMAX'] = float(max_g.replace(',', '.'))
             case.gen.loc[g, 'SCALED_MINIMUM_UP_TIME'] = int(scaled_min_up_time)
@@ -230,20 +230,20 @@ def read_model(model_data):
             case.gen.loc[g, 'SCALED_SHUTDOWN_RAMP'] = 999999 if shutdown_ramp == 0 else shutdown_ramp
             scaled_cold_start_time = int(scaled_cold_start_time.replace(',', '.'))
             case.gencost.loc[g, 'SCALED_COLD_START_TIME'] = scaled_cold_start_time
-            cold_start_cost = float(coldstartcost.replace(',', '.'))
+            cold_start_cost = float(cold_start_cost.replace(',', '.'))
             case.gencost.loc[g, "STARTUP_COLD"] = cold_start_cost
-            hot_start_cost = float(hotstartcost.replace(',', '.'))
+            hot_start_cost = float(hot_start_cost.replace(',', '.'))
             case.gencost.loc[g, "STARTUP_HOT"] = hot_start_cost
-            shutdown_cost = float(shutdowncost.replace(',', '.'))
+            shutdown_cost = float(shut_down_cost.replace(',', '.'))
             case.gencost.loc[g, "SHUTDOWN_COST"] = shutdown_cost
 
     branch_number = 1
     for ln in data.splitlines():
         if ln.strip() == ';':
-            READ = False
+            is_read = False
 
         if ln == 'param: BusFrom BusTo ThermalLimit Reactance :=':
-            READ = True
+            is_read = True
             # Set data type for columns
             case.branch['F_BUS'] = ""
             case.branch['T_BUS'] = ""
@@ -251,7 +251,7 @@ def read_model(model_data):
             case.branch['RATE_A'] = float(1.0)
             continue
 
-        if READ is True:
+        if is_read:
             _, b1, b2, tl, r = ln.split()
             case.branch.loc[branch_number] = case.branch.loc[0]
             case.branch.loc[branch_number, 'F_BUS'] = b1
@@ -269,20 +269,20 @@ def read_model(model_data):
     if 'Bus1' not in ag:
         case.bus.drop('Bus1', inplace=True)
 
-    READ = False
-    DIRECTIVE = 'param: NetFixedLoadForecast :='
+    is_read = False
+    directive = 'param: NetFixedLoadForecast :='
     for ln in data.splitlines():
         if ln.strip() == ';':
-            READ = False
+            is_read = False
 
         if ln.strip() == '':
             continue
 
-        if ln == DIRECTIVE:
-            READ = True
+        if ln == directive:
+            is_read = True
             continue
 
-        if READ is True:
+        if is_read:
             b, t, v = ln.split()
             case.load.loc[t, b] = float(v.replace(',', '.'))
 
@@ -293,52 +293,51 @@ def read_model(model_data):
     # Make Bus1 slack
     case.bus.loc['Bus1', 'TYPE'] = 3.0
 
-    READ = False
-    DIRECTIVE = 'param: a b c NS :='
+    is_read = False
+    directive = 'param: a b c NS :='
     for ln in data.splitlines():
         if ln.strip() == ';':
-            READ = False
+            is_read = False
 
         if ln.strip() == '':
             continue
 
-        if ln == DIRECTIVE:
-            READ = True
+        if ln == directive:
+            is_read = True
             continue
 
-        if READ is True:
-            g, a, b, c, NS = ln.split()
+        if is_read:
+            g, a, b, c, ns = ln.split()
             case.gencost.loc[g, "c"] = float(c.replace(',', '.'))
             case.gencost.loc[g, "b"] = float(b.replace(',', '.'))
             case.gencost.loc[g, "a"] = float(a.replace(',', '.'))
-            case.gencost.loc[g, "NS"] = int(NS.replace(',', '.'))
+            case.gencost.loc[g, "NS"] = int(ns.replace(',', '.'))
 
-    priceSenLoadData = {}
-    DIRECTIVE = 'set PriceSensitiveLoadNames :='
+    price_sen_load_data = {}
+    directive = 'set PriceSensitiveLoadNames :='
     for ln in data.splitlines():
-        if ln.startswith(DIRECTIVE):
+        if ln.startswith(directive):
             continue
 
-    READ = False
-    DIRECTIVE = 'param: Name ID atBus hourIndex d e f SLMax NS :='
-
-    # Name	   ID	  atBus	 hourIndex	   d   e     f	   SLMax	   NS
+    is_read = False
+    directive = 'param: Name ID atBus hourIndex d e f SLMax NS :='
+    # Name ID atBus hourIndex d e f SLMax NS
     for ln in data.splitlines():
         if ln.strip() == ';':
-            READ = False
+            is_read = False
 
         if ln.strip() == '':
             continue
 
-        if ln == DIRECTIVE:
-            READ = True
+        if ln == directive:
+            is_read = True
             continue
 
-        if READ is True:
-            Name, ID, atBus, hourIndex, d, e, f, SLMax, NS = ln.split()
-            priceSenLoadData[Name, (int(hourIndex))] = {'ID': ID, 'atBus': atBus, 'hourIndex': int(hourIndex),
-                                                        'd': float(d), 'e': float(e), 'f': float(f),
-                                                        'Pmax': float(SLMax), 'NS': int(NS)}
+        if is_read:
+            name, idx, at_bus, hour_index, d, e, f, sl_max, ns = ln.split()
+            price_sen_load_data[name, (int(hour_index))] = {'ID': idx, 'atBus': at_bus, 'hourIndex': int(hour_index),
+                                                            'd': float(d), 'e': float(e), 'f': float(f),
+                                                            'Pmax': float(sl_max), 'NS': int(ns)}
 
     case.PositiveMismatchPenalty = 1e6
     case.NegativeMismatchPenalty = 1e6
@@ -361,8 +360,8 @@ def read_model(model_data):
         if ln.startswith('param NumTimePeriods'):
             case.NumTimePeriods = int(ln.split(':=')[1].split(';')[0].replace(' ', ''))
 
-    ZonalDataComplete = {'zonalData': zonalData, 'zonalBusData': zonalBusData,
-                         'ZonalDownReservePercent': ZonalDownReservePercent,
-                         'ZonalUpReservePercent': ZonalUpReservePercent}
+    zonal_data_complete = {'zonal_data': zonal_data, 'zonal_bus_data': zonal_bus_data,
+                           'zonal_down_reserve_percent': zonal_down_reserve_percent,
+                           'zonal_up_reserve_percent': zonal_up_reserve_percent}
 
-    return case, ZonalDataComplete, priceSenLoadData  # , NDGData
+    return case, zonal_data_complete, price_sen_load_data  # , NDGData

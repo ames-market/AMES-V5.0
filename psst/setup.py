@@ -7,17 +7,17 @@ with open('../README.rst') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    'Click>=6.0',
-    'sphinx>=1.4.1',
-    'ghp-import>=0.4.1',
-    'sphinxcontrib-fulltoc>=1.1',
-    'sphinxcontrib-jsdemo>=0.1.4',
-    'pandas>=2.0.1',
-    'future',
-    'networkx',
-    'matplotlib',
-    'pyomo',
-    'pypower'
+    'click~=8.2.1',
+    'sphinx~=8.2.3',
+    'ghp-import~=2.1.0',
+    'sphinxcontrib-fulltoc~=1.2.0',
+    'sphinxcontrib-jsdemo~=0.1.4',
+    'pandas~=2.3.1',
+    'future~=1.0.0',
+    'networkx~=3.5',
+    'matplotlib~=3.10.7',
+    'pyomo~=6.9.3',
+    'pypower~=5.1.19'
 ]
 
 test_requirements = [
@@ -59,6 +59,7 @@ setup(
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.10',
     ],
     test_suite='tests',
     tests_require=test_requirements

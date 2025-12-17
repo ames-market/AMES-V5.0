@@ -1,4 +1,4 @@
-from pyomo.environ import Set, Param
+from pyomo.environ import Set, Param, Any
 
 
 def initialize_network(model,
@@ -7,8 +7,8 @@ def initialize_network(model,
                        bus_to=None):
     model.TransmissionLines = Set(initialize=transmission_lines)
 
-    model.BusFrom = Param(model.TransmissionLines, initialize=bus_from)
-    model.BusTo = Param(model.TransmissionLines, initialize=bus_to)
+    model.BusFrom = Param(model.TransmissionLines, within=Any, initialize=bus_from)
+    model.BusTo = Param(model.TransmissionLines, within=Any, initialize=bus_to)
 
 
 # Alternative to lines_to
@@ -28,7 +28,7 @@ def derive_network(model,
     model.LinesFrom = Set(model.Buses, initialize=lines_from)
 
 
-def _get_b_from_Reactance(m, ln):
+def _get_b_from_reactance(m, ln):
     if m.Reactance[ln] < 0:
         return 0
     if m.Reactance[ln] == 0:
@@ -39,9 +39,9 @@ def _get_b_from_Reactance(m, ln):
 
 def calculate_network_parameters(model,
                                  reactance=None,
-                                 suseptance=_get_b_from_Reactance):
+                                 susceptance=_get_b_from_reactance):
     model.Reactance = Param(model.TransmissionLines, initialize=reactance)
-    model.B = Param(model.TransmissionLines, initialize=suseptance)
+    model.B = Param(model.TransmissionLines, initialize=susceptance)
 
 
 def enforce_thermal_limits(model,

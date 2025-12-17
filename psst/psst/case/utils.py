@@ -1,3 +1,6 @@
+# Copyright (c) 2020, Battelle Memorial Institute
+# Copyright 2007 - present: numerous others credited in AUTHORS.rst
+
 import logging
 import os
 import numpy as np
@@ -18,13 +21,13 @@ def generate_segments(case, number_of_segments):
     segments = []
     for g in case.gen_name:
         pmin, pmax = case.gen.loc[g, ['PMIN', 'PMAX']]
-        N = int(case.gencost.loc[g, 'NCOST'])
-        cost = case.gencost.loc[g, ['COST_{}'.format(i) for i in range(0, N)]]
+        ncost = int(case.gencost.loc[g, 'NCOST'])
+        cost = case.gencost.loc[g, ['COST_{}'.format(i) for i in range(0, ncost)]]
         x = np.linspace(pmin, pmax, number_of_segments + 1)
         for i, p in enumerate(x[:-1]):
             # p = ( x[i] + x[i+1] ) / 2.0
             p_seg = dict()
-            p_seg['slope'] = incremental_cost(p, cost, N)
+            p_seg['slope'] = incremental_cost(p, cost, ncost)
             p_seg['segment'] = (x[i], x[i + 1])
             p_seg['name'] = g
             segments.append(p_seg)
