@@ -7,17 +7,18 @@ with open('../README.rst') as readme_file:
     readme = readme_file.read()
 
 requirements = [
-    'click~=8.2.1',
-    'sphinx~=8.2.3',
+    'click~=8.3.1',
     'ghp-import~=2.1.0',
-    'sphinxcontrib-fulltoc~=1.2.0',
-    'sphinxcontrib-jsdemo~=0.1.4',
-    'pandas~=2.3.1',
+    'pandas~=2.3.3',
     'future~=1.0.0',
     'networkx~=3.5',
+    'numpy~=2.3.5',
     'matplotlib~=3.10.7',
     'pyomo~=6.9.3',
-    'pypower~=5.1.19'
+    'pypower~=5.1.19',
+    'sphinx~=8.2.3',
+    'sphinxcontrib-fulltoc~=1.2.0',
+    'sphinxcontrib-jsdemo~=0.1.4'
 ]
 
 test_requirements = [
@@ -26,7 +27,7 @@ test_requirements = [
 
 setup(
     name='psst',
-    version='0.1.1a',
+    version='0.1.10',
     description="Power System Simulation Toolbox",
     long_description=readme,
     author="Dheepak Krishnamurthy",
@@ -52,13 +53,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        "Programming Language :: Python :: 2",
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.10',
     ],
     test_suite='tests',
