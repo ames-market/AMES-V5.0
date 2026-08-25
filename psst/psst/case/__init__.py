@@ -9,7 +9,7 @@ import pandas as pd
 
 from . import matpower
 from .descriptors import (Name, Version, BaseMVA, BusName, Bus, Branch, BranchName,
-                          Gen, GenName, GenCost, Load, Period, _Attributes)
+                          Gen, GenName, GenCost, GenStatus, Load, Period, _Attributes)
 
 logger = logging.getLogger(__name__)
 pd.options.display.max_rows = 999
@@ -29,6 +29,7 @@ class PSSTCase(object):
     gen = Gen()
     gencost = GenCost()
     gen_name = GenName()
+    gen_status = GenStatus()
     load = Load()
     period = Period()
     _attributes = _Attributes()

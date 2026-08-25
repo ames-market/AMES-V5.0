@@ -13,25 +13,25 @@ from psst.utils import read_unit_commitment, read_model
 np.seterr(all='raise')
 
 SOLVER = os.getenv('PSST_SOLVER')
+#SOLVER = "/home/d3j331/grid/tenv/ibm/cplex/bin/x86-64_linux/cplexamp"
 
-
-# @click.group()
-# @click.version_option('0.1.0', '--version')
+@click.group()
+@click.version_option('0.1.0', '--version')
 def cli():
     pass
 
 
-# @cli.command()
-# @click.option('--uc', default=None, type=click.Path(), help='Path to unit commitment file')
-# @click.option('--data', default=None, type=click.Path(), help='Path to model data')
-# @click.option('--output', default=None, type=click.Path(), help='Path to output file')
-# @click.option('--solver', default=SOLVER, help='Solver')
+@cli.command()
+@click.option('--uc', default=None, type=click.Path(), help='Path to unit commitment file')
+@click.option('--data', default=None, type=click.Path(), help='Path to model data')
+@click.option('--output', default=None, type=click.Path(), help='Path to output file')
+@click.option('--solver', default=SOLVER, help='Solver')
 def scuc(uc, data, output, solver):
     click.echo("Running combined DAM SCUC/SCED using Modified version of PSST")
 
     if SOLVER is not None:
         solver = SOLVER
-    click.echo("Solver : " + str(solver))
+    click.echo("Solver: " + str(solver))
 
     c, zonal_data_complete, price_sen_load_data = read_model(data.strip("'"))
     model = build_model(c, ZonalDataComplete=zonal_data_complete, PriceSenLoadData=price_sen_load_data, Op='scuc')
@@ -106,17 +106,17 @@ def scuc(uc, data, output, solver):
             f.write("\nEND_SOLUTION_STATUS\n")
 
 
-# @cli.command()
-# @click.option('--uc', default=None, type=click.Path(), help='Path to unit commitment file')
-# @click.option('--data', default=None, type=click.Path(), help='Path to model data')
-# @click.option('--output', default='./output.dat', type=click.Path(), help='Path to output file')
-# @click.option('--solver', default=SOLVER, help='Solver')
+@cli.command()
+@click.option('--uc', default=None, type=click.Path(), help='Path to unit commitment file')
+@click.option('--data', default=None, type=click.Path(), help='Path to model data')
+@click.option('--output', default='./output.dat', type=click.Path(), help='Path to output file')
+@click.option('--solver', default=SOLVER, help='Solver')
 def sced(uc, data, output, solver):
     click.echo("Running RTM SCED using Modified version of PSST")
 
     if SOLVER is not None:
         solver = SOLVER
-    click.echo("Solver : " + str(solver))
+    click.echo("Solver: " + str(solver))
 
     uc_df = read_unit_commitment(uc.strip("'"))
 
@@ -183,8 +183,8 @@ def sced(uc, data, output, solver):
 
 
 if __name__ == "__main__":
-    # cli()
-    path = "/home/d3j331/grid/repo/AMES-V5.0/DATA/"
-    # path = "/home/d3j331/grid/tesp/examples/analysis/glm_dsot/code/gld_feeder_test_pv_bt_fl_ev/"
+    cli()
+    # small test cases
+    # path = "../../DATA/"
     # scuc(path+"uc.dat",path+"dam.dat",path+"res.out", SOLVER)
-    sced(path+"uc.dat",path+"rtm.dat",path+"res.out", SOLVER)
+    # sced(path+"uc.dat",path+"rtm.dat",path+"res.out", SOLVER)

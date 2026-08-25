@@ -163,6 +163,12 @@ class GenCost(Descriptor):
     ty = pd.DataFrame
 
 
+class GenStatus(Descriptor):
+    """ GenCost Descriptor for a case """
+    name = 'gen_status'
+    ty = pd.DataFrame
+
+
 class GenName(IndexDescriptor):
     """ Gen Name for a case """
     name = 'gen_name'

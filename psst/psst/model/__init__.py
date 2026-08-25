@@ -49,7 +49,7 @@ def build_model(case,
                 previous_unit_commitment_df=None,
                 config=None):
 
-    # Configuration
+    #  Configuration
     if config is None:
         config = dict()
 
