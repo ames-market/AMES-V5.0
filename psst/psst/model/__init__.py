@@ -148,9 +148,9 @@ def build_model(case,
             check_row = diff_s.tail(1)
 
         if check_row.values == -1 or check_row.values == 0:
-            initial_state_dict[col] = -1 * (len(load_df) - int(check_row.index.values))
+            initial_state_dict[col] = -1 * (len(load_df) - int(check_row.index.values.item()))
         else:
-            initial_state_dict[col] = len(load_df) - int(check_row.index.values)
+            initial_state_dict[col] = len(load_df) - int(check_row.index.values.item())
 
     logger.debug("Initial State of generators is {}".format(initial_state_dict))
     initial_state_dict = generator_df['UnitOnT0State'].to_dict()
