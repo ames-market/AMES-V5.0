@@ -1,7 +1,16 @@
 # This PSST file, originally due to Dheepak Krishnamurthy,
 # has been modified by Swathi Battula to include both Positive and Negative Mismatch Penalty Terms.
 
-from pyomo.environ import Set, Param, Binary, ConcreteModel, NonNegativeReals, Reals, Suffix, Var
+from pyomo.environ import (
+    Binary,
+    ConcreteModel,
+    NonNegativeReals,
+    Param,
+    Reals,
+    Set,
+    Suffix,
+    Var,
+)
 
 
 def create_model():
@@ -41,11 +50,11 @@ def initialize_model(model,
     model.CommitmentTimeInStage = Set(model.StageSet,
                                       within=model.TimePeriods,
                                       initialize={'FirstStage': model.TimePeriods,
-                                                  'SecondStage': list()})
+                                                  'SecondStage': []})
 
     model.GenerationTimeInStage = Set(model.StageSet,
                                       within=model.TimePeriods,
-                                      initialize={'FirstStage': list(),
+                                      initialize={'FirstStage': [],
                                                   'SecondStage': model.TimePeriods})
 
     model.CommitmentStageCost = Var(model.StageSet, within=NonNegativeReals)

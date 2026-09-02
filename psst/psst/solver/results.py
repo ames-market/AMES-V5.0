@@ -4,7 +4,7 @@
 import pandas as pd
 
 
-class PSSTResults(object):
+class PSSTResults:
 
     def __init__(self, model):
 
@@ -92,7 +92,7 @@ class PSSTResults(object):
 
     @staticmethod
     def _get(attribute, model, set1=None, set2=None, dual=False):
-        _dict = dict()
+        _dict = {}
 
         if set1 is not None and set2 is None:
             for s1 in set1:
@@ -108,21 +108,15 @@ class PSSTResults(object):
                     for i, j in index:
                         set1.add(i)
                         set2.add(j)
-                elif attribute == 'EnforceReserveDownRequirements':
+                elif attribute == 'EnforceReserveDownRequirements' or attribute == 'EnforceReserveUpRequirements':
                     index = getattr(model, attribute)
-                    _dict = list()
-                    for i in index:
-                        _dict.append(model.dual.get(getattr(model, attribute)[i]))
-                    return pd.DataFrame(_dict)
-                elif attribute == 'EnforceReserveUpRequirements':
-                    index = getattr(model, attribute)
-                    _dict = list()
+                    _dict = []
                     for i in index:
                         _dict.append(model.dual.get(getattr(model, attribute)[i]))
                     return pd.DataFrame(_dict)
 
             for s1 in set1:
-                _dict[s1] = list()
+                _dict[s1] = []
 
                 for s2 in set2:
                     if dual:

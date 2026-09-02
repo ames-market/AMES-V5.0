@@ -1,7 +1,6 @@
 # Copyright (c) 2020, Battelle Memorial Institute
 # Copyright 2007 - present: numerous others credited in AUTHORS.rst
 
-from __future__ import print_function, absolute_import
 
 import logging
 import re
@@ -9,7 +8,7 @@ import re
 from ...utils import int_else_float_except_string
 
 logging.basicConfig()
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 
 def find_name(string):
@@ -26,7 +25,7 @@ def parse_file(attribute, string):
 
     if match is not None:
         match = match.strip("'").strip('"')
-        _list = list()
+        _list = []
         for line in match.splitlines():
             line = line.split('%')[0]
             line = line.replace(';', '')
@@ -43,11 +42,11 @@ def parse_file(attribute, string):
 
 def search_file(attribute, string):
     if attribute in ['gen', 'gencost', 'bus', 'branch']:
-        pattern = r'mpc\.{}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'.format(attribute)
+        pattern = rf'mpc\.{attribute}\s*=\s*\[[\n]?(?P<data>.*?)[\n]?\];'
     elif attribute in ['version', 'baseMVA']:
-        pattern = r'mpc\.{}\s*=\s*(?P<data>.*?);'.format(attribute)
+        pattern = rf'mpc\.{attribute}\s*=\s*(?P<data>.*?);'
     elif attribute in ['bus_name', 'gentype', 'genfuel']:
-        pattern = r'mpc\.{}\s*=\s*\{{[\n]?(?P<data>.*?)[\n]?\}};'.format(attribute)
+        pattern = rf'mpc\.{attribute}\s*=\s*\{{[\n]?(?P<data>.*?)[\n]?\}};'
     else:
         logger.warning('Unable to parse mpc.%s. Please contact the developer.', attribute)
         return None

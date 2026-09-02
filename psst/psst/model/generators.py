@@ -2,7 +2,15 @@
 # has been modified by Swathi Battula to make the
 # code consistent with AMES V5.0 documentation dated 7-2-2020.
 
-from pyomo.environ import Set, Param, Binary, NonNegativeIntegers, NonNegativeReals, Reals, value
+from pyomo.environ import (
+    Binary,
+    NonNegativeIntegers,
+    NonNegativeReals,
+    Param,
+    Reals,
+    Set,
+    value,
+)
 
 
 def initialize_generators(model,

@@ -27,9 +27,9 @@ def dict_to_repr(d):
     string = ''
     for i, (k, v) in enumerate(d.items()):
         if i == 0:
-            string = string + '{}={}'.format(k, v)
+            string = string + f'{k}={v}'
         else:
-            string = string + ', {}={}'.format(k, v)
+            string = string + f', {k}={v}'
     return string
 
 
@@ -52,7 +52,7 @@ def make_interpolater(domain_min, domain_max, range_min, range_max):
 
 
 def create_gen_data(**kwargs):
-    gen_data = dict()
+    gen_data = {}
     gen_data['bus'] = kwargs.pop('bus', 0)
     gen_data['Pg'] = kwargs.pop('Pg', 0)
     gen_data['Qg'] = kwargs.pop('Qg', 0)
@@ -81,7 +81,7 @@ def read_unit_commitment(ucfile):
     with open(ucfile) as f:
         data = f.read()
 
-    uc_dict = dict()
+    uc_dict = {}
     uc = []
     for ln in data.splitlines():
 
@@ -247,8 +247,8 @@ def read_model(model_data):
             # Set data type for columns
             case.branch['F_BUS'] = ""
             case.branch['T_BUS'] = ""
-            case.branch['BR_X'] = float(1.0)
-            case.branch['RATE_A'] = float(1.0)
+            case.branch['BR_X'] = 1.0
+            case.branch['RATE_A'] = 1.0
             continue
 
         if is_read:

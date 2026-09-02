@@ -1,22 +1,32 @@
 # Copyright (c) 2020, Battelle Memorial Institute
 # Copyright 2007 - present: numerous others credited in AUTHORS.rst
 
-# -*- coding: utf-8 -*-
 """
 Python class to read a Matpower Case file
 Copyright (C) 2016 Dheepak Krishnamurthy
 """
 
-from __future__ import print_function, absolute_import
 
 import logging
 
-from pyparsing import Word, nums, alphanums, LineEnd, Suppress, Literal, restOfLine
-from pyparsing import OneOrMore, Optional, Keyword, Group, printables
+from pyparsing import (
+    Group,
+    Keyword,
+    LineEnd,
+    Literal,
+    OneOrMore,
+    Optional,
+    Suppress,
+    Word,
+    alphanums,
+    nums,
+    printables,
+    restOfLine,
+)
 
 from ...utils import int_else_float_except_string
 
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 Float = Word(nums + '.' + '-' + '+' + 'e')
 Name = Word(alphanums)
@@ -37,7 +47,7 @@ def parse_file(attribute, string):
 
 def parse_line(attribute, string):
     Grammar = Suppress(
-        Keyword('mpc.{}'.format(attribute)) + Keyword('=')) + String('data') + Suppress(Literal(';') + Optional(Comments))
+        Keyword(f'mpc.{attribute}') + Keyword('=')) + String('data') + Suppress(Literal(';') + Optional(Comments))
     result, i, j = Grammar.scanString(string).next()
 
     return [int_else_float_except_string(s) for s in result['data'].asList()]
@@ -46,10 +56,10 @@ def parse_line(attribute, string):
 def parse_table(attribute, string):
     Line = OneOrMore(Float)('data') + Literal(';') + Optional(Comments, default='')('name')
     Grammar = Suppress(
-        Keyword('mpc.{}'.format(attribute)) + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
+        Keyword(f'mpc.{attribute}') + Keyword('=') + Keyword('[') + Optional(Comments)) + OneOrMore(Group(Line)) + Suppress(Keyword(']') + Optional(Comments))
     result, i, j = Grammar.scanString(string).next()
 
-    _list = list()
+    _list = []
     for r in result:
         _list.append([int_else_float_except_string(s) for s in r['data'].asList()])
 

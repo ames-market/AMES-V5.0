@@ -2,14 +2,20 @@
 # has been modified by Swathi Battula to include
 # Price Sensitive Load and Zonal data constraints and modified ramping constraints.
 
+import logging
 from functools import partial
 
-import logging
 import numpy as np
+from pyomo.environ import (
+    Constraint,
+    Objective,
+    Piecewise,
+    minimize,
+    simple_constraint_rule,
+    value,
+)
 
-from pyomo.environ import Constraint, Objective, Piecewise, minimize, value, simple_constraint_rule
-
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 eps = 1e-3
 
 
@@ -38,7 +44,7 @@ def line_power_ptdf_rule(m, l, t):
 def line_power_rule(m, l, t):
     if m.B[l] == 99999999:
         logger.debug(
-            " Line Power Angle constraint skipped for line between {} and {} ".format(m.BusFrom[l], m.BusTo[l]))
+            f" Line Power Angle constraint skipped for line between {m.BusFrom[l]} and {m.BusTo[l]} ")
         return Constraint.Skip
     else:
         return m.LinePower[l, t] == m.B[l] * (m.Angle[m.BusFrom[l], t] - m.Angle[m.BusTo[l], t])
@@ -57,19 +63,19 @@ def calculate_total_demand(m, t, price_sen_load_flag=False):
 
 
 def neg_load_generate_mismatch_tolerance_rule(m, b):
-    return sum((m.negLoadGenerateMismatch[b, t] for t in m.TimePeriods)) >= 0.0
+    return sum(m.negLoadGenerateMismatch[b, t] for t in m.TimePeriods) >= 0.0
 
 
 def pos_load_generate_mismatch_tolerance_rule(m, b):
-    return sum((m.posLoadGenerateMismatch[b, t] for t in m.TimePeriods)) >= 0.0
+    return sum(m.posLoadGenerateMismatch[b, t] for t in m.TimePeriods) >= 0.0
 
 
 def neg_global_reserve_mismatch_tolerance_rule(m):
-    return sum((m.negGlobalReserveMismatch[t] for t in m.TimePeriods)) >= 0.0
+    return sum(m.negGlobalReserveMismatch[t] for t in m.TimePeriods) >= 0.0
 
 
 def pos_global_reserve_mismatch_tolerance_rule(m):
-    return sum((m.posGlobalReserveMismatch[t] for t in m.TimePeriods)) >= 0.0
+    return sum(m.posGlobalReserveMismatch[t] for t in m.TimePeriods) >= 0.0
 
 
 def power_balance(m, b, t):
@@ -89,7 +95,7 @@ def net_power_at_bus_rule(m, b, t, price_sen_load_flag=False):
         _constraint = sum(
             (1 - m.GeneratorForcedOutage[g, t]) * m.GeneratorBusContributionFactor[g, b] * m.PowerGenerated[g, t] for g in
             m.GeneratorsAtBus[b])
-    except:
+    except Exception:
         _constraint = 0
 
     _constraint = _constraint - m.NetFixedLoad[b, t]
@@ -224,7 +230,7 @@ def compute_hot_start_rule(m, g, t):
             m.HotStart[g, t].fixed = True
             return Constraint.Skip
         else:
-            return m.HotStart[g, t] <= sum(m.UnitOn[g, i] for i in range(0, t))
+            return m.HotStart[g, t] <= sum(m.UnitOn[g, i] for i in range(t))
     else:
         return m.HotStart[g, t] <= sum(m.UnitOn[g, i] for i in range(t - m.ScaledColdStartTime[g], t))
 

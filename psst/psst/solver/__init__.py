@@ -7,8 +7,6 @@ import warnings
 from pyomo.common.tempfiles import TempfileManager
 from pyomo.environ import SolverFactory
 
-from .results import PSSTResults
-
 PSST_WARNING = os.getenv('PSST_WARNING', 'ignore')
 
 

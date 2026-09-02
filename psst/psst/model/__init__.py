@@ -5,37 +5,61 @@ import logging
 
 import numpy as np
 import pandas as pd
-from matplotlib.sphinxext.plot_directive import exception_template
+from pyomo.environ import Suffix
 
-from .constraints import (constraint_line, constraint_total_demand, constraint_net_power,
-                          constraint_load_generation_mismatch,
-                          constraint_power_balance,
-                          constraint_reserves,
-                          constraint_generator_power,
-                          constraint_up_down_time,
-                          constraint_for_cost,
-                          constraint_for_benefit,
-                          objective_function)
-from .demand import (initialize_demand)
-from .generators import (initialize_generators, initial_state, maximum_minimum_power_output_generators,
-                         ramp_up_ramp_down_limits, start_up_shut_down_ramp_limits, minimum_up_minimum_down_time,
-                         piece_wise_linear_cost,
-                         production_cost, minimum_production_cost,
-                         hot_start_cold_start_costs,
-                         forced_outage,
-                         generator_bus_contribution_factor)
-from .model import (create_model, initialize_buses,
-                    initialize_time_periods, initialize_model, Suffix
-                    )
-from .network import (initialize_network, derive_network, calculate_network_parameters, enforce_thermal_limits)
-from .price_sensitive_load import (initialize_price_sensitive_load, maximum_power_demand_loads,
-                                   piece_wise_linear_benefit, initialize_load_demand,
-                                   load_benefit)
-from .reserves import initialize_global_reserves, initialize_zonal_reserves
 from ..case.utils import calculate_PTDF
-from ..solver import solve_model, PSSTResults
+from ..solver.results import PSSTResults
+from ..solver import solve_model
+from .constraints import (
+    constraint_for_benefit,
+    constraint_for_cost,
+    constraint_generator_power,
+    constraint_line,
+    constraint_load_generation_mismatch,
+    constraint_net_power,
+    constraint_power_balance,
+    constraint_reserves,
+    constraint_total_demand,
+    constraint_up_down_time,
+    objective_function,
+)
+from .demand import initialize_demand
+from .generators import (
+    forced_outage,
+    generator_bus_contribution_factor,
+    hot_start_cold_start_costs,
+    initial_state,
+    initialize_generators,
+    maximum_minimum_power_output_generators,
+    minimum_production_cost,
+    minimum_up_minimum_down_time,
+    piece_wise_linear_cost,
+    production_cost,
+    ramp_up_ramp_down_limits,
+    start_up_shut_down_ramp_limits,
+)
+from .model import (
+    create_model,
+    initialize_buses,
+    initialize_model,
+    initialize_time_periods,
+)
+from .network import (
+    calculate_network_parameters,
+    derive_network,
+    enforce_thermal_limits,
+    initialize_network,
+)
+from .price_sensitive_load import (
+    initialize_load_demand,
+    initialize_price_sensitive_load,
+    load_benefit,
+    maximum_power_demand_loads,
+    piece_wise_linear_benefit,
+)
+from .reserves import initialize_global_reserves, initialize_zonal_reserves
 
-logger = logging.getLogger(__file__)
+logger = logging.getLogger(__name__)
 
 
 def build_model(case,
@@ -51,7 +75,7 @@ def build_model(case,
 
     #  Configuration
     if config is None:
-        config = dict()
+        config = {}
 
     zonal_data = ZonalDataComplete['zonal_data']
     zonal_bus_data = ZonalDataComplete['zonal_bus_data']
@@ -89,8 +113,8 @@ def build_model(case,
     initialize_network(mdl, transmission_lines=list(branch_df.index), bus_from=branch_df['F_BUS'].to_dict(),
                        bus_to=branch_df['T_BUS'].to_dict())
 
-    lines_to = {b: list() for b in bus_df.index.unique()}
-    lines_from = {b: list() for b in bus_df.index.unique()}
+    lines_to = {b: [] for b in bus_df.index.unique()}
+    lines_from = {b: [] for b in bus_df.index.unique()}
 
     for i, l in branch_df.iterrows():
         lines_from[l['F_BUS']].append(i)
@@ -101,7 +125,7 @@ def build_model(case,
     enforce_thermal_limits(mdl, thermal_limit=branch_df['RATE_A'].to_dict())
 
     # Build generator data
-    generator_at_bus = {b: list() for b in generator_df['GEN_BUS'].unique()}
+    generator_at_bus = {b: [] for b in generator_df['GEN_BUS'].unique()}
 
     for i, g in generator_df.iterrows():
         generator_at_bus[g['GEN_BUS']].append(i)
@@ -130,7 +154,7 @@ def build_model(case,
     generator_bus_contribution_factor(mdl)
 
     if previous_unit_commitment_df is None:
-        previous_unit_commitment = dict()
+        previous_unit_commitment = {}
         for g in generator_df.index:
             previous_unit_commitment[g] = [0] * len(load_df)
         previous_unit_commitment_df = pd.DataFrame(previous_unit_commitment)
@@ -138,7 +162,7 @@ def build_model(case,
 
     diff = previous_unit_commitment_df.diff()
 
-    initial_state_dict = dict()
+    initial_state_dict = {}
     for col in diff.columns:
         s = diff[col].dropna()
         diff_s = s[s != 0]
@@ -152,7 +176,7 @@ def build_model(case,
         else:
             initial_state_dict[col] = len(load_df) - int(check_row.index.values.item())
 
-    logger.debug("Initial State of generators is {}".format(initial_state_dict))
+    logger.debug(f"Initial State of generators is {initial_state_dict}")
     initial_state_dict = generator_df['UnitOnT0State'].to_dict()
     initial_power_generated_dict = generator_df['PG'].to_dict()
     initial_time_periods_online_dict = generator_df['InitialTimeON'].to_dict()
@@ -164,8 +188,8 @@ def build_model(case,
 
     # setup production cost for generators
 
-    points = dict()
-    values = dict()
+    points = {}
+    values = {}
 
     for i, g in generator_df.iterrows():
         points[i] = np.linspace(g['PMIN'], g['PMAX'], num=int(g['NS'] + 1))
@@ -191,7 +215,7 @@ def build_model(case,
                                scaled_cold_start_time=scaled_cold_start_time, shutdown_cost=shutdown_cost)
 
     # Build load data
-    load_dict = dict()
+    load_dict = {}
     columns = load_df.columns
     for i, t in load_df.iterrows():
         for col in columns:
@@ -211,9 +235,9 @@ def build_model(case,
 
     # adding segments for price sensitive loads
     segments = config.pop('segments', 10)
-    psl_points = dict()
-    psl_values = dict()
-    pmax_values = dict()
+    psl_points = {}
+    psl_values = {}
+    pmax_values = {}
 
     # print('segments=',segments)
     if price_sen_load_flag:
@@ -224,7 +248,7 @@ def build_model(case,
                 if name not in psl_names:
                     psl_names.append(name)
                 psl_record = PriceSenLoadData[name, hour]
-                if psl_record['atBus'] not in psl_at_buses.keys():
+                if psl_record['atBus'] not in psl_at_buses:
                     psl_at_buses[psl_record['atBus']] = []
                 if name not in psl_at_buses[psl_record['atBus']]:
                     psl_at_buses[psl_record['atBus']].append(name)
@@ -298,7 +322,7 @@ def build_model(case,
     return PSSTModel(mdl)
 
 
-class PSSTModel(object):
+class PSSTModel:
 
     def __init__(self, _model, is_solved=False):
         self._model = _model
@@ -307,8 +331,8 @@ class PSSTModel(object):
         self._results = None
 
     def __repr__(self):
-        repr_string = 'status={}'.format(self._status)
-        string = '<{}.{}({})>'.format(self.__class__.__module__, self.__class__.__name__, repr_string)
+        repr_string = f'status={self._status}'
+        string = f'<{self.__class__.__module__}.{self.__class__.__name__}({repr_string})>'
         return string
 
     def solve(self, solver='glpk', verbose=False, keep_files=True, **kwargs):

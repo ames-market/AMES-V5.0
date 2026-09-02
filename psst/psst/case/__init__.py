@@ -8,8 +8,22 @@ import numpy as np
 import pandas as pd
 
 from . import matpower
-from .descriptors import (Name, Version, BaseMVA, BusName, Bus, Branch, BranchName,
-                          Gen, GenName, GenCost, GenStatus, Load, Period, _Attributes)
+from .descriptors import (
+    BaseMVA,
+    Branch,
+    BranchName,
+    Bus,
+    BusName,
+    Gen,
+    GenCost,
+    GenName,
+    GenStatus,
+    Load,
+    Name,
+    Period,
+    Version,
+    _Attributes,
+)
 
 logger = logging.getLogger(__name__)
 pd.options.display.max_rows = 999
@@ -18,7 +32,7 @@ pd.options.display.max_columns = 999
 current_directory = os.path.realpath(os.path.dirname(__file__))
 
 
-class PSSTCase(object):
+class PSSTCase:
     name = Name()
     version = Version()
     baseMVA = BaseMVA()
@@ -35,7 +49,7 @@ class PSSTCase(object):
     _attributes = _Attributes()
 
     def __init__(self, filename=None, mode='r'):
-        self._attributes = list()
+        self._attributes = []
         if filename is not None:
             self._filename = filename
         else:
@@ -48,10 +62,10 @@ class PSSTCase(object):
         gen_name = getattr(self, 'gen_name', None)
         bus_name = getattr(self, 'bus_name', None)
         branch_name = getattr(self, 'branch_name', None)
-        name_string = 'name={}'.format(name) if name is not None else ''
-        gen_string = 'Generators={}'.format(len(gen_name)) if gen_name is not None else ''
-        bus_string = 'Buses={}'.format(len(bus_name)) if bus_name is not None else ''
-        branch_string = 'Branches={}'.format(len(branch_name)) if branch_name is not None else ''
+        name_string = f'name={name}' if name is not None else ''
+        gen_string = f'Generators={len(gen_name)}' if gen_name is not None else ''
+        bus_string = f'Buses={len(bus_name)}' if bus_name is not None else ''
+        branch_string = f'Branches={len(branch_name)}' if branch_name is not None else ''
         lns = [s for s in [name_string, gen_string, bus_string, branch_string] if s != '']
         if len(lns) > 1:
             repr_string = ', '.join(lns)
@@ -60,7 +74,7 @@ class PSSTCase(object):
         else:
             repr_string = ''
 
-        return '<{}.{}({})>'.format(self.__class__.__module__, self.__class__.__name__, repr_string)
+        return f'<{self.__class__.__module__}.{self.__class__.__name__}({repr_string})>'
 
     @classmethod
     def _read_matpower(cls, mpc, auto_assign_names=True, fill_loads=True, remove_empty=True,
@@ -80,12 +94,12 @@ class PSSTCase(object):
                     setattr(mpc, attribute, _list[0][0])
                 else:
                     cols = max([len(ln) for ln in _list])
-                    columns = matpower.COLUMNS.get(attribute, [i for i in range(0, cols)])
+                    columns = matpower.COLUMNS.get(attribute, [i for i in range(cols)])
                     columns = columns[:cols]
                     if cols > len(columns):
                         if attribute != 'gencost':
                             logger.warning('Number of columns greater than expected number.')
-                        columns = columns[:-1] + ['{}_{}'.format(columns[-1], i) for i in
+                        columns = columns[:-1] + [f'{columns[-1]}_{i}' for i in
                                                   range(cols - len(columns), -1, -1)]
                     df = pd.DataFrame(_list, columns=columns)
 

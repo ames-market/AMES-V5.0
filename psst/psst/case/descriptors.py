@@ -1,11 +1,9 @@
 # Copyright (c) 2020, Battelle Memorial Institute
 # Copyright 2007 - present: numerous others credited in AUTHORS.rst
 
-from __future__ import print_function
 
 import logging
 import traceback
-from builtins import super
 
 import pandas as pd
 
@@ -13,7 +11,7 @@ logger = logging.getLogger(__name__)
 logging.basicConfig()
 
 
-class Descriptor(object):
+class Descriptor:
     """ Descriptor Base class for psst case """
     name = None
     ty = None
@@ -22,7 +20,7 @@ class Descriptor(object):
         try:
             return instance.__dict__[self.name]
         except KeyError:
-            raise AttributeError("'{}' object has no attribute {}".format(instance.__class__.__name__, self.name))
+            raise AttributeError(f"'{instance.__class__.__name__}' object has no attribute {self.name}")
 
     def __set__(self, instance, value):
         if self.ty is not None and not isinstance(value, self.ty):
@@ -30,10 +28,10 @@ class Descriptor(object):
         if self._is_valid(instance, value):
             instance.__dict__[self.name] = value
         else:
-            raise AttributeError('Validation for {} failed. Please check {}'.format(self.name, value))
+            raise AttributeError(f'Validation for {self.name} failed. Please check {value}')
 
     def __delete__(self, instance):
-        raise AttributeError("Cannot delete attribute {}".format(self.name))
+        raise AttributeError(f"Cannot delete attribute {self.name}")
 
     @staticmethod
     def _is_valid(instance, value):
@@ -51,7 +49,7 @@ class IndexDescriptor(Descriptor):
             super().__get__(instance, cls)
 
     def __set__(self, instance, value):
-        if isinstance(value, pd.Series) or isinstance(value, list):
+        if isinstance(value, (pd.Series, list)):
             value = pd.Index(value)
         elif isinstance(value, pd.DataFrame):
             # Assume the first column in the dataframe as index.
@@ -116,9 +114,9 @@ class BusName(IndexDescriptor):
         instance.gen['GEN_BUS'] = instance.gen['GEN_BUS'].apply(lambda x: value[value.get_loc(x)])
 
         bus_name = instance.bus.index
-        if isinstance(bus_name, pd.RangeIndex) or isinstance(bus_name, pd.Index):
+        if isinstance(bus_name, (pd.RangeIndex, pd.Index)):
             logger.debug('Forcing string types for all bus names')
-            bus_name = ['Bus{}'.format(b) for b in bus_name]
+            bus_name = [f'Bus{b}' for b in bus_name]
             instance.bus.index = bus_name
 
         try:
@@ -126,7 +124,7 @@ class BusName(IndexDescriptor):
         except ValueError:
             instance.load.columns = bus_name
         except AttributeError:
-            instance.load = pd.DataFrame(0, index=range(0, 1), columns=bus_name, dtype='float')
+            instance.load = pd.DataFrame(0, index=range(1), columns=bus_name, dtype='float')
 
 
 class Branch(Descriptor):
@@ -191,9 +189,9 @@ class GenName(IndexDescriptor):
         instance.gencost.index = value
 
         gen_name = instance.gen.index
-        if isinstance(gen_name, pd.RangeIndex) or isinstance(gen_name, pd.Index):
+        if isinstance(gen_name, (pd.RangeIndex, pd.Index)):
             logger.debug('Forcing string types for all gen names')
-            gen_name = ['GenCo{}'.format(g) for g in gen_name]
+            gen_name = [f'GenCo{g}' for g in gen_name]
             instance.gen.index = gen_name
             instance.gencost.index = gen_name
 
@@ -205,7 +203,7 @@ class Load(Descriptor):
     def __set__(self, instance, value):
         try:
             matching_indices = set(instance.bus_name).intersection(set(value.columns)) == set(value.columns)
-        except:
+        except Exception:
             raise AttributeError("Unable to set load. Please check that columns in load match bus names")
 
         if matching_indices:

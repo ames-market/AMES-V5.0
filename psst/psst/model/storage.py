@@ -3,7 +3,14 @@
 # consistent with AMES V5.0 documentation dated 7-2-2020.
 
 
-from pyomo.environ import Set, Param, PercentFraction, NonNegativeIntegers, NonNegativeReals, value
+from pyomo.environ import (
+    NonNegativeIntegers,
+    NonNegativeReals,
+    Param,
+    PercentFraction,
+    Set,
+    value,
+)
 
 
 def initialize_storage(model, storage_names=None, storage_at_bus=None):

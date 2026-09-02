@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 #
 # psst documentation build configuration file, created by
 # sphinx-quickstart on Tue Jul  9 22:26:36 2013.
@@ -13,8 +12,8 @@
 # All configuration values have a default; values that are commented out
 # serve to show the default.
 
-import sys
 import os
+import sys
 
 # If extensions (or modules to document with autodoc) are in another
 # directory, add these directories to sys.path here. If the directory is
@@ -61,8 +60,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'psst'
-copyright = u"2016, Dheepak Krishnamurthy"
+project = 'psst'
+copyright = "2016, Dheepak Krishnamurthy"
 
 # The version info for the project you're documenting, acts as replacement
 # for |version| and |release|, also used in various other places throughout
@@ -215,8 +214,8 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'psst.tex',
-     u'psst Documentation',
-     u'Dheepak Krishnamurthy', 'manual'),
+     'psst Documentation',
+     'Dheepak Krishnamurthy', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -246,8 +245,8 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'psst',
-     u'psst Documentation',
-     [u'Dheepak Krishnamurthy'], 1)
+     'psst Documentation',
+     ['Dheepak Krishnamurthy'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -261,8 +260,8 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     ('index', 'psst',
-     u'psst Documentation',
-     u'Dheepak Krishnamurthy',
+     'psst Documentation',
+     'Dheepak Krishnamurthy',
      'psst',
      'One line description of project.',
      'Miscellaneous'),

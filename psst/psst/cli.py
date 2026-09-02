@@ -1,6 +1,5 @@
 # This PSST file, originally due to Dheepak Krishnamurthy,
 # has been modified by Swathi Battula to include Price Sensitive Load and Zonal data.
-# -*- coding: utf-8 -*-
 
 import os
 
@@ -8,7 +7,7 @@ import click
 import numpy as np
 
 from psst.model import build_model
-from psst.utils import read_unit_commitment, read_model
+from psst.utils import read_model, read_unit_commitment
 
 np.seterr(all='raise')
 
@@ -36,7 +35,7 @@ def scuc(uc, data, output, solver):
     c, zonal_data_complete, price_sen_load_data = read_model(data.strip("'"))
     model = build_model(c, ZonalDataComplete=zonal_data_complete, PriceSenLoadData=price_sen_load_data, Op='scuc')
     model_name, solver_status = model.solve(solver=solver)
-    click.echo("Model for DAM combined SCUC/SCED is solved. Status: " + solver_status)
+    click.echo(f'DAM combined SCUC/SCED is solved. Model: {model_name}, Status: {solver_status}')
 
     if solver_status == 'optimal':
         with open(uc.strip("'"), 'w') as outfile:
@@ -47,9 +46,9 @@ def scuc(uc, data, output, solver):
                     results[(g, t)] = instance.UnitOn[g, t]
 
             for g in sorted(instance.Generators.data()):
-                outfile.write("%s\n" % str(g).ljust(8))
+                outfile.write(f"{str(g).ljust(8)}\n")
                 for t in sorted(instance.TimePeriods):
-                    outfile.write("% 1d \n" % (int(results[(g, t)].value + 0.5)))
+                    outfile.write(f"{int(results[(g, t)].value + 0.5): 1d} \n")
 
         uc_df = read_unit_commitment(uc.strip("'"))
         c.gen_status = uc_df.astype(int)
@@ -71,9 +70,9 @@ def scuc(uc, data, output, solver):
             outfile.write("\nEND_SOLUTION_STATUS\n")
 
             for g in sorted(instance.Generators.data()):
-                outfile.write("%s\n" % str(g).ljust(8))
+                outfile.write(f"{str(g).ljust(8)}\n")
                 for t in sorted(instance.TimePeriods):
-                    outfile.write("% 1d %6.4f\n" % (int(results[(g, t)].value + 0.5), results_power_gen[(g, t)].value))
+                    outfile.write(f"{int(results[(g, t)].value + 0.5): 1d} {results_power_gen[(g, t)].value:6.4f}\n")
             outfile.write("DAMLMP\n")
             for h, r in model.results.lmp.iterrows():
                 bn = 1
@@ -93,9 +92,9 @@ def scuc(uc, data, output, solver):
                         price_sen_load_demand[(ld, t)] = instance.PSLoadDemand[ld, t].value
 
                 for ld in sorted(instance.PriceSensitiveLoads.data()):
-                    outfile.write("%s\n" % str(ld).ljust(8))
+                    outfile.write(f"{str(ld).ljust(8)}\n")
                     for t in sorted(instance.TimePeriods):
-                        outfile.write(" %d %6.4f \n" % (t, price_sen_load_demand[(ld, t)]))
+                        outfile.write(f" {t:d} {price_sen_load_demand[(ld, t)]:6.4f} \n")
                 # print ('PriceSenLoadDemand = \n',price_sen_load_demand)
                 outfile.write("END_PSLResults\n")
 
@@ -125,7 +124,7 @@ def sced(uc, data, output, solver):
 
     model = build_model(c, ZonalDataComplete=zonal_data_complete, PriceSenLoadData=price_sen_load_data, Op='sced')
     model_name, solver_status = model.solve(solver=solver)
-    click.echo("Model for RTM SCED is solved. Status: " + solver_status)
+    click.echo(f'RTM SCED is solved. Model: {model_name}, Status: {solver_status}')
 
     if solver_status == 'optimal':
         with open(output.strip("'"), 'w') as f:
@@ -148,10 +147,10 @@ def sced(uc, data, output, solver):
             instance = model._model
 
             for g in instance.Generators.data():
-                f.write("%s\n" % str(g).ljust(8))
+                f.write(f"{str(g).ljust(8)}\n")
                 for t in instance.TimePeriods:
-                    f.write("Interval: {}\n".format(str(t)))
-                    f.write("\tPowerGenerated: {}\n".format(round(instance.PowerGenerated[g, t].value, 4)))
+                    f.write(f"Interval: {t!s}\n")
+                    f.write(f"\tPowerGenerated: {round(instance.PowerGenerated[g, t].value, 4)}\n")
             f.write("END_GenCoResults\n")
 
             if len(price_sen_load_data) != 0:
@@ -163,16 +162,16 @@ def sced(uc, data, output, solver):
                         price_sen_load_demand[(ld, t)] = instance.PSLoadDemand[ld, t].value
 
                 for ld in sorted(instance.PriceSensitiveLoads.data()):
-                    f.write("%s\n" % str(ld).ljust(8))
+                    f.write(f"{str(ld).ljust(8)}\n")
                     for t in sorted(instance.TimePeriods):
-                        f.write(" %d %6.4f \n" % (t, price_sen_load_demand[(ld, t)]))
+                        f.write(f" {t:d} {price_sen_load_demand[(ld, t)]:6.4f} \n")
                 # print ('PriceSenLoadDemand = \n',price_sen_load_demand)
                 f.write("END_PSLResults\n")
 
             f.write("VOLTAGE_ANGLES\n")
             for bus in sorted(instance.Buses):
                 for t in instance.TimePeriods:
-                    f.write('{} {} : {}\n'.format(str(bus), str(t), str(round(instance.Angle[bus, t].value, 3))))
+                    f.write(f'{bus!s} {t!s} : {round(instance.Angle[bus, t].value, 3)!s}\n')
             f.write("END_VOLTAGE_ANGLES\n")
 
     elif solver_status == 'infeasible':
@@ -186,5 +185,6 @@ if __name__ == "__main__":
     cli()
     # small test cases
     # path = "../../DATA/"
+    # path= "/home/d3j331/grid/tesp/examples/analysis/dsot/code/lean_aug_8_pv_fl_ev_f/"
     # scuc(path+"uc.dat",path+"dam.dat",path+"res.out", SOLVER)
     # sced(path+"uc.dat",path+"rtm.dat",path+"res.out", SOLVER)
